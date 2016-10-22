@@ -1,0 +1,171 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.MenuBar;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
+
+import utils.TabbedPane;
+import utils.ToolBar;
+
+@SuppressWarnings("all")
+public class FrMain extends JFrame implements MouseListener,ActionListener{
+
+	private JPanel contentPane;
+
+	private JMenu jmSystem;
+    private JMenu jmActivity;
+    private JMenu jmWarehouse;
+    private JMenu jmPrecious;
+    private JMenu jmPersonel;
+    private JMenu jmManager;
+    private JMenu jmHelp;
+    
+    private ToolBar standart;
+    private JTabbedPane tabHome;
+    private TabbedPane tabRoom;
+    private TabbedPane tabUser;
+    private TabbedPane tabBooking;
+    private TabbedPane tabService;
+    
+    private MenuBar mb;
+    
+    private JButton btn1;
+    private JButton btn2;
+    private JButton btn3;
+    private JButton btn4;
+    private JButton btn5;
+    
+    private JLabel txtWelcome;
+    private JLabel txtAdmin;
+    
+    private Panel bottom;
+    
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FrMain frame = new FrMain();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FrMain() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		
+		// Initial component when you drag and drop
+		initComponents();
+		
+		this.setTitle("PHẦN MỀM TIỆM INTERNET CÔNG CỘNG");
+        this.setLocationRelativeTo(this);
+        initMenu();
+        initMenuItem();
+        initToolbar();
+        initCenter();
+        initBottom();
+		
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel Center = new JPanel();
+		contentPane.add(Center, BorderLayout.CENTER);
+		
+		JPanel Top = new JPanel();
+		contentPane.add(Top, BorderLayout.NORTH);
+		
+		JPanel Bottom = new JPanel();
+		contentPane.add(Bottom, BorderLayout.SOUTH);
+	}
+
+	private void initComponents() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initBottom() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initCenter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initToolbar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initMenuItem() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initMenu() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

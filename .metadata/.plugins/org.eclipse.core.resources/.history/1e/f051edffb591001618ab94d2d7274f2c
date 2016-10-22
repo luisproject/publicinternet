@@ -1,0 +1,191 @@
+/**
+ * A naive/hasty implementation of http://en.wikipedia.org/wiki/Knight's_tour#Warnsdorff.27s_rule
+ * 
+ * The output is a JSON structure of the form:
+ * {"x1,y1": {
+ *    "initPos": "x1, y1",
+ *    "seq": ["x1, y1", "xi, yi", ...]},
+ *  "x2, y2": {
+ *    "initPos": "x2, y2",
+ *    "seq": ["x2, y2", "xi, yi", ...]},
+ *  ...}
+ *  
+ *  where the "initPos" is the position where the Knight starts the tour and
+ *  seq is the sequence of coordinates visited by the Knight considering the top left cell
+ *  of the chess board is (0,0) and the bottom right cell of the chess board is (7,7).
+ *  
+ *  Dependencies:
+ *  1) http://json-simple.googlecode.com/files/json-simple-1.1.1.jar
+ *  2) http://code.google.com/p/google-gson/downloads/detail?name=google-gson-2.2.2-release.zip
+ *  
+ *  How to run from a *nix terminal:
+ *  Download this file and name it Main.java; 
+ *  cd <dir_containing_Main.java>;
+ *  javac -cp <location_of_gson-2.2.2.jar>:<location_of_json-simple-1.1.1.jar> Main.java;
+ *  java -cp <location_of_gson-2.2.2.jar>:<location_of_json-simple-1.1.1.jar>.jar:. Main > kinght_tours.json;
+ *  The JSON file will look similar to: https://gist.github.com/4116894
+ */
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+
+// Represents chess board coordinates.
+class BoardPosition {
+	private int x;
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	private int y;
+
+	public BoardPosition(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	static boolean isInBounds(BoardPosition bp, int maxX, int maxY) {
+		int x = bp.getX(), y = bp.getY();
+		return x >= 0 && x < maxX && y >= 0 && y < maxY;
+	}
+
+	static boolean isVisited(BoardPosition bp, int board[][]) {
+		return board[bp.getX()][bp.getY()] != -1;
+	}
+
+	static void visit(BoardPosition bp, int board[][], int val) {
+		board[bp.getX()][bp.getY()] = val;
+	}
+}
+
+// Driver class.
+public class Main {
+	// Dimensions of this chess board.
+	public static int COL = 8;
+	public static int ROW = 8;
+	
+	// Moves of a knight.
+	public static int dxKnight[] = { -2, -2, -1, 1, 2, 2, -1, 1 };
+	public static int dyKnight[] = { 1, -1, 2, 2, 1, -1, -2, -2 };
+	private int board[][];
+
+	public int[][] getBoard() {
+		return board;
+	}
+
+	public void setBoard(int[][] board) {
+		this.board = board;
+	}
+
+	private void initBoard() {
+		board = new int[ROW][COL];
+		for (int i = 0; i < ROW; ++i) {
+			Arrays.fill(board[i], -1);
+		}
+	}
+
+	public String performAllTours() {
+		JSONObject tours = new JSONObject();
+		for (int x = 0; x < ROW; x++) {
+			for (int y = 0; y < COL; y++) {
+				initBoard();
+				int currStep = 1;
+				BoardPosition initBoardPosition = new BoardPosition(x, y);
+				BoardPosition.visit(initBoardPosition, board, currStep);
+				if (!solve(board, initBoardPosition, currStep + 1)) {
+				  System.out.println("Failed to perform Kinght's Tour starting at: " + "[" + x + ", " + y + "]!");	
+				} else {
+				 tours.put(x + ", " + y, jsonifyTour(x, y)); 
+				}
+			}
+		}
+		// Pretty print.
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		return gson.toJson(tours);
+	}
+
+	// Returns the number of accessible positions.
+	private int weight(BoardPosition bp) {
+		return getNeighbours(bp).size();
+	}
+
+	// Tries to traverse the entire board recursively.
+	private boolean solve(int board[][], BoardPosition bp, int currStep) {
+		// End of the step sequence.
+		if (currStep == ((ROW * COL) + 1)) {
+			return true;
+		}
+		List<BoardPosition> neighbours = getNeighbours(bp);
+		BoardPosition chosen = null;
+		int minWeight = Integer.MAX_VALUE;
+		// Choose the candidate with the min weight.
+		for (BoardPosition pos : neighbours) {
+			// Not subtracting 1 from this i.e not subtracting the current cell
+			// from this weight because
+			// it's normalized across all cells.
+			int currWeight = weight(pos);
+			if (currWeight < minWeight) {
+				chosen = pos;
+				minWeight = currWeight;
+			}
+		}
+		if (chosen == null) {
+			return false;
+		}
+		BoardPosition.visit(chosen, board, currStep);
+		return solve(board, chosen, currStep + 1);
+	}
+
+	// Returns accessible neighbours.
+	private List<BoardPosition> getNeighbours(BoardPosition bp) {
+		List<BoardPosition> candidates = new LinkedList<BoardPosition>();
+		for (int i = 0; i < dxKnight.length; ++i) {
+			BoardPosition newBoardPosition = new BoardPosition(dxKnight[i]
+					+ bp.getX(), dyKnight[i] + bp.getY());
+			if (BoardPosition.isInBounds(newBoardPosition, ROW, COL)
+					&& !BoardPosition.isVisited(newBoardPosition, board)) {
+				candidates.add(newBoardPosition);
+			}
+		}
+		return candidates;
+	}
+
+	public JSONObject jsonifyTour(int x, int y) {
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("initPos", x + ", " + y);
+
+		HashMap<Integer, String> posMap = new HashMap<Integer, String>();
+		for (int i = 0; i < ROW; ++i) {
+			for (int j = 0; j < COL; ++j) {
+				posMap.put(board[i][j], i + ", " + j);
+			}
+		}
+		JSONArray jsonArr = new JSONArray();
+		for (int seq = 1; seq <= ROW * COL; ++seq) {
+			if (posMap.containsKey(seq)) {
+				jsonArr.add(posMap.get(seq));
+			}
+		}
+		jsonObj.put("seq", jsonArr);
+		return jsonObj;
+	}
+
+	public static void main(String[] args) {
+		Main k = new Main();
+		System.out.println(k.performAllTours());
+	}
+}

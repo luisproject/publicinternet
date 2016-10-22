@@ -8,8 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import library.LibraryConnectDb;
+
 import model.bean.PhienNguoiDung;
+import utils.LibraryConnectDb;
 
 @SuppressWarnings("all")
 public class PhienNguoiDungDAO {

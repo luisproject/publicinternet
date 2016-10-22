@@ -1,0 +1,360 @@
+package view;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
+
+import utils.TabbedPane;
+import utils.ToolBar;
+
+@SuppressWarnings("all")
+public class FrMain extends JFrame implements MouseListener,ActionListener{
+
+	private JPanel contentPane;
+
+	private JMenu jmSystem;
+    private JMenu jmActivity;
+    private JMenu jmWarehouse;
+    private JMenu jmPrecious;
+    private JMenu jmPersonel;
+    private JMenu jmManager;
+    private JMenu jmHelp;
+    
+    private ToolBar standart;
+    private JTabbedPane tabHome;
+    private TabbedPane tabRoom;
+    private TabbedPane tabUser;
+    private TabbedPane tabBooking;
+    private TabbedPane tabService;
+    
+    private MenuBar mb;
+    
+    private JButton btn1;
+    private JButton btn2;
+    private JButton btn3;
+    private JButton btn4;
+    private JButton btn5;
+    
+    private JLabel txtWelcome;
+    private JLabel txtAdmin;
+    
+    private Panel bottom;
+    
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FrMain frame = new FrMain();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public FrMain() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		
+		// Initial component when you drag and drop
+		initComponents();
+		
+		this.setTitle("PHẦN MỀM TIỆM INTERNET CÔNG CỘNG");
+        this.setLocationRelativeTo(this);
+        initMenu();
+        initMenuItem();
+        initToolbar();
+        initCenter();
+        initBottom();
+		
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		setContentPane(contentPane);
+		
+		JPanel Center = new JPanel();
+		contentPane.add(Center, BorderLayout.CENTER);
+		
+		JPanel Top = new JPanel();
+		contentPane.add(Top, BorderLayout.NORTH);
+		
+		JPanel Bottom = new JPanel();
+		contentPane.add(Bottom, BorderLayout.SOUTH);
+	}
+
+	private void initComponents() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initBottom() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initCenter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initToolbar() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void initMenuItem() {
+		// TODO Auto-generated method stub
+		// jmSystem => View All Room, Logout and Exit
+        JMenuItem jmSys1 = new JMenuItem();
+        jmSys1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmSys1.setText("Danh sách các phòng");
+        jmSys1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, InputEvent.CTRL_MASK));
+        jmSys1.setIcon(new ImageIcon(getClass().getResource("/images/room.png"))); 
+        jmSystem.add(jmSys1);
+        
+        JMenuItem jmSys2 = new JMenuItem();
+        jmSys2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmSys2.setText("Đăng xuất");
+        jmSys2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, InputEvent.CTRL_MASK));
+        jmSys2.setIcon(new ImageIcon(getClass().getResource("/images/logout.png"))); 
+        jmSystem.add(jmSys2);
+        
+        // http://icons.iconarchive.com + 16bit
+        JMenuItem jmSys3 = new JMenuItem();
+        jmSys3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmSys3.setText("Thoát");
+        jmSys3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, InputEvent.CTRL_MASK));
+        jmSys3.setIcon(new ImageIcon(getClass().getResource("/images/exit.png"))); 
+        jmSystem.add(jmSys3);
+        
+        // jmActivity => Đăng ký, Đặt phòng, Kiểm tra
+        JMenuItem jmAct1 = new JMenuItem();
+        jmAct1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmAct1.setText("Đăng ký");
+        jmAct1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, InputEvent.CTRL_MASK));
+        jmAct1.setIcon(new ImageIcon(getClass().getResource("/images/check_in.png"))); 
+        jmActivity.add(jmAct1);
+        
+        JMenuItem jmAct2 = new JMenuItem();
+        jmAct2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmAct2.setText("Đặt phòng");
+        jmAct2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_5, InputEvent.CTRL_MASK));
+        jmAct2.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
+        jmActivity.add(jmAct2);
+        
+        JMenuItem jmAct3 = new JMenuItem();
+        jmAct3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmAct3.setText("Kiểm tra");
+        jmAct3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_6, InputEvent.CTRL_MASK));
+        jmAct3.setIcon(new ImageIcon(getClass().getResource("/images/checkout.png"))); 
+        jmActivity.add(jmAct3);
+        
+        // jmWarehouse => Checking + Booking
+        JMenuItem jmWare1 = new JMenuItem();
+        jmWare1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmWare1.setText("Đăng ký");
+        jmWare1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_7, InputEvent.CTRL_MASK));
+        jmWare1.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
+        jmWarehouse.add(jmWare1);
+        
+        JMenuItem jmWare2 = new JMenuItem();
+        jmWare2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmWare2.setText("Đăng ký");
+        jmWare2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_8, InputEvent.CTRL_MASK));
+        jmWare2.setIcon(new ImageIcon(getClass().getResource("/images/checkout.png"))); 
+        jmWarehouse.add(jmWare2);
+        
+        // jmPrecious => Information Customer,Set Room Price, Room Information
+        JMenuItem jmPre1 = new JMenuItem();
+        jmPre1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmPre1.setText("Thông tin khách hàng");
+        jmPre1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_9, InputEvent.CTRL_MASK));
+        jmPre1.setIcon(new ImageIcon(getClass().getResource("/images/customer.png"))); 
+        jmPrecious.add(jmPre1);
+        
+        JMenuItem jmPre2 = new JMenuItem();
+        jmPre2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmPre2.setText("Thiết lập giá phòng");
+        jmPre2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, InputEvent.CTRL_MASK));
+        jmPre2.setIcon(new ImageIcon(getClass().getResource("/images/price.png"))); 
+        jmPrecious.add(jmPre2);
+        
+        JMenuItem jmPre3 = new JMenuItem();
+        jmPre3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmPre3.setText("Thông tin phòng");
+        jmPre3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        jmPre3.setIcon(new ImageIcon(getClass().getResource("/images/roomdetail.png"))); 
+        jmPrecious.add(jmPre3);
+        
+        //jmPersonal => Set Up User,Change Username/Password
+        JMenuItem jmPer1 = new JMenuItem();
+        jmPer1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmPer1.setText("Thiết lập người dùng");
+        jmPer1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        jmPer1.setIcon(new ImageIcon(getClass().getResource("/images/user.png"))); 
+        jmPersonel.add(jmPer1);
+        
+        JMenuItem jmPer2 = new JMenuItem();
+        jmPer2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmPer2.setText("Thay đổi username và password");
+        jmPer2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        jmPer2.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+        jmPersonel.add(jmPer2);
+        
+        //jManager => Check in/Book ing/ Check out
+        JMenuItem jmMa1 = new JMenuItem();
+        jmMa1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmMa1.setText("Đăng ký tài khoản");
+        jmMa1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        jmMa1.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+        jmManager.add(jmMa1);
+        
+        JMenuItem jmMa2 = new JMenuItem();
+        jmMa2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmMa2.setText("Đặt phòng");
+        jmMa2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        jmMa2.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+        jmManager.add(jmMa2);
+        
+        JMenuItem jmMa3 = new JMenuItem();
+        jmMa3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        jmMa3.setText("Kiểm tra phòng");
+        jmMa3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+        jmMa3.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+        jmManager.add(jmMa3);
+	}
+
+	private void initMenu() {
+		// TODO Auto-generated method stub
+		mb = new MenuBar();
+        
+        jmSystem = new JMenu();
+        jmSystem.setText("<html><p style=\"color:#2a4280; font-weight:bold; padding: 4px 4px;\">Hệ thống</p></html>");
+        jmSystem.addMouseListener(this);
+        mb.add(jmSystem);
+        
+        jmActivity = new JMenu();
+        jmActivity.setText("<html><p style=\"color:#2a4280; font-weight:bold; padding: 4px 4px;\">Giao dịch</p></html>");
+        jmActivity.addMouseListener(this);
+        mb.add(jmActivity);
+        
+        jmWarehouse = new JMenu();
+        jmWarehouse.setText("<html><p style=\"color:#2a4280; font-weight:bold; padding: 4px 4px;\">Tìm kiếm</p></html>");
+        jmWarehouse.addMouseListener(this);
+        mb.add(jmWarehouse);
+        
+        jmPrecious = new JMenu();
+        jmPrecious.setText("<html><p style=\"color:#2a4280; font-weight:bold; padding: 4px 4px;\">Tiện ích</p></html>");
+        jmPrecious.addMouseListener(this);
+        mb.add(jmPrecious);
+        
+        jmPersonel = new JMenu();
+        jmPersonel.setText("<html><p style=\"color:#2a4280; font-weight:bold; padding: 4px 4px;\">Bảo mật</p></html>");
+        jmPersonel.addMouseListener(this);
+        mb.add(jmPersonel);
+        
+        jmManager = new JMenu();
+        jmManager.setText("<html><p style=\"color:#2a4280; font-weight:bold; padding: 4px 4px;\">Báo cáo</p></html>");
+        jmManager.addMouseListener(this);
+        mb.add(jmManager);
+        
+        jmHelp = new JMenu();
+        jmHelp.setText("<html><p style=\"color:#2a4280; font-weight:bold; padding: 4px 4px;\">Trợ giúp</p></html>");
+        jmHelp.addMouseListener(this);
+        mb.add(jmHelp);
+        
+        this.setJMenuBar(mb);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		JMenu jmX = (JMenu)arg0.getSource();
+        if(jmX.equals(jmSystem)){
+            jmX.setSelected(true);
+        }else if(jmX.equals(jmActivity)){
+            jmX.setSelected(true);
+        }else if(jmX.equals(jmWarehouse)){
+            jmX.setSelected(true);
+        }else if(jmX.equals(jmPrecious)){
+            jmX.setSelected(true);
+        }else if(jmX.equals(jmPersonel)){
+            jmX.setSelected(true);
+        }else if(jmX.equals(jmManager)){
+            jmX.setSelected(true);
+        }else if(jmX.equals(jmHelp)){
+            jmX.setSelected(true);
+        }
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		JMenu jmX = (JMenu)arg0.getSource();
+        if(jmX.equals(jmSystem)){
+            jmX.setSelected(false);
+        }else if(jmX.equals(jmActivity)){
+            jmX.setSelected(false);
+        }else if(jmX.equals(jmWarehouse)){
+            jmX.setSelected(false);
+        }else if(jmX.equals(jmPrecious)){
+            jmX.setSelected(false);
+        }else if(jmX.equals(jmPersonel)){
+            jmX.setSelected(false);
+        }else if(jmX.equals(jmManager)){
+            jmX.setSelected(false);
+        }else if(jmX.equals(jmHelp)){
+            jmX.setSelected(false);
+        }
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

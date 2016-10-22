@@ -1,0 +1,61 @@
+package model.bean;
+
+@SuppressWarnings("all")
+public class PhienNguoiDung {
+	private int id;
+    private int idmay;
+    private Timestamp thoiGianBatDau;
+    private Timestamp tongThoiGian;
+    private Timestamp thoiGianKetThuc;
+
+    public PhienNguoiDung() {
+    }
+
+    public PhienNguoiDung(int id, int idmay, Timestamp thoiGianBatDau, Timestamp tongThoiGian, Timestamp thoiGianKetThuc) {
+        this.id = id;
+        this.idmay = idmay;
+        this.thoiGianBatDau = thoiGianBatDau;
+        this.tongThoiGian = tongThoiGian;
+        this.thoiGianKetThuc = thoiGianKetThuc;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getIdmay() {
+        return idmay;
+    }
+
+    public Timestamp getThoiGianBatDau() {
+        return thoiGianBatDau;
+    }
+
+    public Timestamp getTongThoiGian() {
+        return tongThoiGian;
+    }
+
+    public Timestamp getThoiGianKetThuc() {
+        return thoiGianKetThuc;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setIdmay(int idmay) {
+        this.idmay = idmay;
+    }
+
+    public void setThoiGianBatDau(Timestamp thoiGianBatDau) {
+        this.thoiGianBatDau = thoiGianBatDau;
+    }
+
+    public void setTongThoiGian(Timestamp tongThoiGian) {
+        this.tongThoiGian = tongThoiGian;
+    }
+
+    public void setThoiGianKetThuc(Timestamp thoiGianKetThuc) {
+        this.thoiGianKetThuc = thoiGianKetThuc;
+    }
+}
