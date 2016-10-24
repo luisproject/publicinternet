@@ -3,6 +3,7 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.nio.charset.MalformedInputException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import controller.ControllerMay;
 import model.bean.May;
 import utils.ButtonGroupTT;
+import utils.ValidateDbMay;
 import utils.render.TinhTrangComboboxModel;
 
 @SuppressWarnings("all")
@@ -89,6 +91,7 @@ public class PnMay extends JPanel {
 		initComponents();
 		controller = new ControllerMay(tbMain);
 		controller.loadTable();
+		cbTinhTrang.setModel(new TinhTrangComboboxModel());
 	}
 
 	private void initComponents() {
@@ -498,64 +501,81 @@ public class PnMay extends JPanel {
 
 	protected void btnThemActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-//		try{
-//            String hoTen = tfKhachHang.getText();
-//            String gioiTinh = new ButtonGroupGT().getText(btnGioiTinh);
-//            
-//            Date utilDate = new JChooserDateToDate().getTime(tfNgaySinh.getDate());
-//            java.sql.Timestamp ngaySinh = new java.sql.Timestamp(utilDate.getTime());
-//            
-//            String quocTich = (String) new QuocTichComboboxModel().getElementAt(cbQuocTich.getSelectedIndex());        
-//            String scmt = tfCMT.getText();
-//            String ngheNghiep = tfNgheNghiep.getText();
-//            String email = tfEmail.getText();
-//            String soDienThoai = tfSoDienThoai.getText();
-//            LoaiThanhVien loaiThanhVien = new LoaiThanhVienComboboxModel().getElementAt(cbLoaiThanhVien.getSelectedIndex());
-//            String diaChi = tfDiaChi.getText();            
-//            
-//            KhachHang obj = new KhachHang(0, hoTen, gioiTinh, ngaySinh, scmt, email, diaChi, ngheNghiep, soDienThoai, quocTich, loaiThanhVien.getMatv());
-//            if(isValid(obj, "add")){
-//                if(!new ValidateDB().socmt_exist(String.valueOf(obj.getSoCMT()))){
-//                    int result = controller.addItem(obj);
-//                    if(result > 0){
-//                        this.resetForm();
-//                        JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:blue; font-weight:bold;\">Thêm khách hàng thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-//                    }else{
-//                        JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Thêm khách hàng thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-//                    }
-//                }else{
-//                    JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Khách hàng tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-//                }
-//            }
-//        }catch(NumberFormatException ex){
-//            JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-//        }
+		try{
+            String tenMay = tfName.getText();
+            String tinhTrang = (String) new TinhTrangComboboxModel().getElementAt(cbTinhTrang.getSelectedIndex());
+            Boolean trangThai = new ButtonGroupTT().getText(btTrangThai);
+            String moTa = txtGhiChu.getText();
+            int donGia = Integer.parseInt(tfDongia.getText());
+            May obj = new May(0, tenMay, tinhTrang, trangThai, moTa, donGia);
+            if(isValid(obj, "add")){
+                if(!new ValidateDbMay().tenmay_exist(obj.getTenMay())){
+                    int result = controller.addItem(obj);
+                    if(result > 0){
+                        this.resetForm();
+                        JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:blue; font-weight:bold;\">Thêm máy thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Thêm máy thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên máy tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }catch(NumberFormatException ex){
+            JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
 	}
 
 	protected void btnSuaActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+		int row = tbMain.getSelectedRow();
+        if(row >= 0){
+            try{
+                int idm = Integer.parseInt(tfId.getText());
+            	String tenMay = tfName.getText();
+            	String tinhTrang = (String) new TinhTrangComboboxModel().getElementAt(cbTinhTrang.getSelectedIndex());
+                Boolean trangThai = new ButtonGroupTT().getText(btTrangThai);
+                System.out.print(trangThai+"");
+                String moTa = txtGhiChu.getText();
+                int donGia = Integer.parseInt(tfDongia.getText());
+                May obj = new May(idm, tenMay, tinhTrang, trangThai, moTa, donGia);
+                
+                if(isValid(obj, "edit")){
+                    if(!new ValidateDbMay().tenmay_existver(obj.getTenMay(),idm)){
+                        int result = controller.editItem(obj,row);
+                        if(result > 0){
+                            this.resetForm();
+                            JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:blue; font-weight:bold;\">Cập nhật máy thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                        }else{
+                            JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Cập nhật máy thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                        }
+                    }else{
+                        JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Tên máy tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }catch(NumberFormatException ex){
+                JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
 	}
 
 	protected void btnNhaplaiActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
 		resetForm();
-		
 	}
 
 	protected void btnXoaActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	protected void TimKiemFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	protected void CloseFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	protected void NhapLaiFActionPerformed(ActionEvent evt) {
