@@ -70,8 +70,6 @@ public class PnQTV extends JPanel {
 		initComponents();
 		controller = new ControllerQuanTriVien(tbMain);
 		controller.loadTable();
-		
-		
 	}
 
 	private void initComponents() {
