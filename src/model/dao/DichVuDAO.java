@@ -19,7 +19,7 @@ public class DichVuDAO {
     private PreparedStatement pst;
     private ResultSet rs;
     private Connection conn;
-    private String table = "may";
+    private String table = "dichvu";
     public DichVuDAO(){
     	lcdb = new LibraryConnectDb();
     }

@@ -14,6 +14,9 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import controller.ControllerDichVu;
+import utils.render.DonViComboboxModel;
+
 @SuppressWarnings("all")
 public class PnDichVu extends JPanel {
 
@@ -49,7 +52,17 @@ public class PnDichVu extends JPanel {
 	private JScrollPane jScrollPane1;
 	private JTable tbMain;
 	
+	private ControllerDichVu controller;
+    
 	public PnDichVu() {
+		initComponents();
+		controller = new ControllerDichVu(tbMain);
+        controller.loadTable();
+        this.cbTinhTrang.setModel(new TinhTrangComboboxModel());
+	}
+
+	private void initComponents() {
+		// TODO Auto-generated method stub
 		dv = new JSplitPane();
         dvleft = new JPanel();
         jLabel1 = new JLabel();
@@ -319,11 +332,28 @@ public class PnDichVu extends JPanel {
 
 	protected void tbMainKeyReleased(KeyEvent evt) {
 		// TODO Auto-generated method stub
-		
+		this.setForm();
 	}
 
 	protected void tbMainMousePressed(MouseEvent evt) {
 		// TODO Auto-generated method stub
-		
+		this.setForm();
+	}
+	
+	private void setForm() {
+		// TODO Auto-generated method stub
+		int row = tbMain.getSelectedRow();
+        int id = Integer.parseInt(tbMain.getValueAt(row, 0).toString());
+        String tenDichVu = tbMain.getValueAt(row, 1).toString();        
+        int donGia = Integer.parseInt(tbMain.getValueAt(row, 2).toString());
+        String donVi = tbMain.getValueAt(row, 3).toString();
+        int soLuong = Integer.parseInt(tbMain.getValueAt(row, 4).toString());
+        
+        
+        tfId.setText(String.valueOf(id));
+        tfName.setText(tenDichVu);
+        spDongia.setValue(donGia);
+        cbDonvi.setModel(new DonViComboboxModel((String)tbMain.getValueAt(row, 3)));
+        spSoluong.setValue(soLuong);
 	}
 }
