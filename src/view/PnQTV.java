@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -20,6 +21,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import controller.ControllerQuanTriVien;
+import model.bean.QuanTriVien;
 
 @SuppressWarnings("all")
 public class PnQTV extends JPanel {
@@ -314,6 +316,10 @@ public class PnQTV extends JPanel {
         add(qtv, java.awt.BorderLayout.CENTER);
 		
 	}
+    protected void btThemActionPerformed(ActionEvent evt) {
+		
+		
+	}
 
 	protected void btSuaActionPerformed(ActionEvent evt) {
 		
@@ -321,7 +327,7 @@ public class PnQTV extends JPanel {
 	}
 
 	protected void btNhaplaiActionPerformed(ActionEvent evt) {
-		
+		ResetForm();
 		
 	}
 
@@ -339,6 +345,13 @@ public class PnQTV extends JPanel {
 	protected void tbMainKeyReleased(KeyEvent evt) {
 		this.setForm();
 		
+	}
+	private void ResetForm(){
+		tfId.setText("");
+		tfUser.setText("");
+		tfPass.setText("");
+		jCheckBox1.setSelected(true);
+		jCheckBox2.setSelected(false);
 	}
 	private void setForm() {
 		// TODO Auto-generated method stub
@@ -361,9 +374,23 @@ public class PnQTV extends JPanel {
 	}
 
 
-	protected void btThemActionPerformed(ActionEvent evt) {
-		
-	}
+	
+	 private boolean isValid(QuanTriVien obj, String function) {
+	        boolean result = true;
+	        switch(function){
+	            case "add":
+	                break;
+	            case "edit":
+	                break;
+	            case "del":
+	                if(obj.getIdqtv()<0){
+	                    JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                    result = false;
+	                }
+	                break;
+	        }
+	        return result;
+	    }
 	
 
 }
