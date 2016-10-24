@@ -58,7 +58,6 @@ public class PnDichVu extends JPanel {
 		initComponents();
 		controller = new ControllerDichVu(tbMain);
         controller.loadTable();
-        this.cbTinhTrang.setModel(new TinhTrangComboboxModel());
 	}
 
 	private void initComponents() {

@@ -16,6 +16,10 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import controller.ControllerMay;
+import utils.ButtonGroupTT;
+import utils.render.TinhTrangComboboxModel;
+
 @SuppressWarnings("all")
 public class PnMay extends JPanel {
 
@@ -77,8 +81,16 @@ public class PnMay extends JPanel {
 	private JTable tbMain;
 	
 	private ButtonGroup btTrangThai;
+	private ControllerMay controller;
 	
 	public PnMay() {
+		initComponents();
+		controller = new ControllerMay(tbMain);
+		controller.loadTable();
+	}
+
+	private void initComponents() {
+		// TODO Auto-generated method stub
 		btTrangThai = new ButtonGroup();
         jSplitPane1 = new JSplitPane();
         mayleft = new JPanel();
@@ -519,12 +531,33 @@ public class PnMay extends JPanel {
 
 	protected void tbMainKeyReleased(KeyEvent evt) {
 		// TODO Auto-generated method stub
-		
-	}
+		this.setForm();
+	}	
 
 	protected void tbMainMousePressed(MouseEvent evt) {
 		// TODO Auto-generated method stub
+		this.setForm();
 		
 	}
-
+	private void setForm() {
+		// TODO Auto-generated method stub
+		int row = tbMain.getSelectedRow();
+		int id = Integer.parseInt(tbMain.getValueAt(row, 0).toString());
+		String tenMay = tbMain.getValueAt(row, 1).toString();
+		cbTinhTrang.setModel(new TinhTrangComboboxModel((String) tbMain.getValueAt(row, 2)));
+		Boolean trangThai = (Boolean) tbMain.getValueAt(row, 3);
+		String moTa = tbMain.getValueAt(row, 4).toString();
+		int donGia = Integer.parseInt(tbMain.getValueAt(row, 5).toString());
+		
+		tfId.setText(id+"");
+		tfName.setText(tenMay);
+		if(trangThai){
+			jCheckBox1.setSelected(true);
+		}else{
+			jCheckBox2.setSelected(true);
+		}
+		
+		txtGhiChu.setText(moTa);
+		tfDongia.setText(donGia+"");
+	}
 }
