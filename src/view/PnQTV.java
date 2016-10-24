@@ -36,9 +36,12 @@ public class PnQTV extends JPanel {
 	private JLabel jLabel1;
 	private JLabel jLabel2;
 	private JLabel jLabel4;
+	private JLabel jLabel6;
+	
 	private JTextField tfId;
 	private JTextField tfUser;
 	private JTextField tfPass;
+	private JTextField tfName;
 	
 	private JPanel qtvsearch;
 	private JLabel jLabel3;
@@ -69,39 +72,39 @@ public class PnQTV extends JPanel {
 		initComponents();
 		controller = new ControllerQuanTriVien(tbMain);
 		controller.loadTable();
-		
-		
 	}
 
 	private void initComponents() {
 		// TODO Auto-generated method stub
-		btnAdmin = new ButtonGroup();
-        qtv = new JSplitPane();
-        qtvleft = new JPanel();
-        jLabel1 = new JLabel();
-        jLabel2 = new JLabel();
-        jLabel4 = new JLabel();
-        tfId = new JTextField();
-        tfUser = new JTextField();
-        tfPass = new JTextField();
-        qtvsearch = new JPanel();
-        jLabel3 = new JLabel();
-        tfUserF = new JTextField();
-        qtvsearchbtn = new JPanel();
-        btTimKiemF = new JButton();
-        btNhapLaiF = new JButton();
-        qtvcheckbox = new JPanel();
-        btThem = new JButton();
-        btSua = new JButton();
-        btNhaplai = new JButton();
-        btXoa = new JButton();
-        jLabel5 = new JLabel();
-        jCheckBox1 = new JCheckBox();
-        jCheckBox2 = new JCheckBox();
-        qtvright = new JPanel();
-        jScrollPane1 = new JScrollPane();
-        tbMain = new JTable();
-        
+		btnAdmin = new javax.swing.ButtonGroup();
+        qtv = new javax.swing.JSplitPane();
+        qtvleft = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        tfId = new javax.swing.JTextField();
+        tfUser = new javax.swing.JTextField();
+        tfPass = new javax.swing.JTextField();
+        qtvsearch = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        tfUserF = new javax.swing.JTextField();
+        qtvsearchbtn = new javax.swing.JPanel();
+        btTimKiemF = new javax.swing.JButton();
+        btNhapLaiF = new javax.swing.JButton();
+        qtvcheckbox = new javax.swing.JPanel();
+        btThem = new javax.swing.JButton();
+        btSua = new javax.swing.JButton();
+        btNhaplai = new javax.swing.JButton();
+        btXoa = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jCheckBox2 = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
+        tfName = new javax.swing.JTextField();
+        qtvright = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbMain = new javax.swing.JTable();
+
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setLayout(new java.awt.BorderLayout());
 
@@ -132,7 +135,7 @@ public class PnQTV extends JPanel {
         qtvsearch.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Tìm kiếm", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 255))); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Ten Dang Nhap:");
+        jLabel3.setText("Tên Đăng Nhập:");
 
         tfUserF.setPreferredSize(new java.awt.Dimension(59, 24));
 
@@ -221,35 +224,47 @@ public class PnQTV extends JPanel {
         btnAdmin.add(jCheckBox2);
         jCheckBox2.setText("Có");
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel6.setText("Họ và tên:");
+
+        tfName.setPreferredSize(new java.awt.Dimension(59, 24));
+
         javax.swing.GroupLayout qtvleftLayout = new javax.swing.GroupLayout(qtvleft);
         qtvleft.setLayout(qtvleftLayout);
         qtvleftLayout.setHorizontalGroup(
             qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(qtvsearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(qtvcheckbox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(qtvleftLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addGroup(qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addGap(29, 29, 29)
-                .addGroup(qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qtvleftLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(jCheckBox2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jCheckBox1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(qtvleftLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(76, 76, 76)
+                        .addComponent(tfName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
                     .addGroup(qtvleftLayout.createSequentialGroup()
                         .addGroup(qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addGap(29, 29, 29)
+                        .addGroup(qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qtvleftLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(jCheckBox2)
+                                .addGap(18, 18, 18)
+                                .addComponent(jCheckBox1)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(qtvleftLayout.createSequentialGroup()
-                                .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())))
-            .addComponent(qtvcheckbox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfPass, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(qtvleftLayout.createSequentialGroup()
+                                        .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addContainerGap())))))
         );
         qtvleftLayout.setVerticalGroup(
             qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,13 +282,20 @@ public class PnQTV extends JPanel {
                     .addComponent(tfPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(17, 17, 17)
+                .addGroup(qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(qtvleftLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qtvleftLayout.createSequentialGroup()
+                        .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(17, 17, 17)))
                 .addGroup(qtvleftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
                     .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox1))
+                    .addComponent(jCheckBox1)
+                    .addComponent(jLabel5))
                 .addGap(17, 17, 17)
                 .addComponent(qtvcheckbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
                 .addComponent(qtvsearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
