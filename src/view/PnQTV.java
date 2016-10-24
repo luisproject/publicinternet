@@ -353,10 +353,10 @@ public class PnQTV extends JPanel {
 		tfUser.setText(tenDangNhap);
 		tfPass.setText(matKhau);
 		if (isAdmin) {
-			jCheckBox1.setSelected(true);
+			jCheckBox2.setSelected(true);
 			
 		}else {
-			jCheckBox2.setSelected(true);
+			jCheckBox1.setSelected(true);
 		}	
 	}
 
