@@ -19,6 +19,8 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import controller.ControllerQuanTriVien;
+
 @SuppressWarnings("all")
 public class PnQTV extends JPanel {
 
@@ -59,8 +61,18 @@ public class PnQTV extends JPanel {
 	private JTable tbMain;
 	
 	private ButtonGroup btnAdmin;
+	private ControllerQuanTriVien controller;
 	
 	public PnQTV() {
+		initComponents();
+		controller = new ControllerQuanTriVien(tbMain);
+		controller.loadTable();
+		
+		
+	}
+
+	private void initComponents() {
+		// TODO Auto-generated method stub
 		btnAdmin = new ButtonGroup();
         qtv = new JSplitPane();
         qtvleft = new JPanel();
@@ -300,6 +312,7 @@ public class PnQTV extends JPanel {
         qtv.setRightComponent(qtvright);
 
         add(qtv, java.awt.BorderLayout.CENTER);
+		
 	}
 
 	protected void btSuaActionPerformed(ActionEvent evt) {
@@ -318,17 +331,39 @@ public class PnQTV extends JPanel {
 	}
 
 	protected void tbMainMousePressed(MouseEvent evt) {
-		
+		this.setForm();
 		
 	}
 
+	
 	protected void tbMainKeyReleased(KeyEvent evt) {
-		
+		this.setForm();
 		
 	}
+	private void setForm() {
+		// TODO Auto-generated method stub
+		int row = tbMain.getSelectedRow();
+		int id = Integer.parseInt(tbMain.getValueAt(row, 0).toString());
+		String tenDangNhap = tbMain.getValueAt(row, 1).toString();
+		String matKhau = tbMain.getValueAt(row, 2).toString();
+		String hoTen = tbMain.getValueAt(row, 3).toString();
+		Boolean isAdmin = (Boolean) tbMain.getValueAt(row, 4);
+		
+		tfId.setText(id+"");
+		tfUser.setText(tenDangNhap);
+		tfPass.setText(matKhau);
+		if (isAdmin) {
+			jCheckBox1.setSelected(true);
+			
+		}else {
+			jCheckBox2.setSelected(true);
+		}	
+	}
+
 
 	protected void btThemActionPerformed(ActionEvent evt) {
 		
 	}
+	
 
 }
