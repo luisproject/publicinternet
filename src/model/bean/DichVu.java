@@ -12,7 +12,6 @@ public class DichVu {
 	public DichVu() {
 		super();
 	}
-	
 	public DichVu(int id, String tenDichVu, int donGia, String donVi, int soLuong) {
 		super();
 		this.id = id;

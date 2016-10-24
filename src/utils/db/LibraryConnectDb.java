@@ -35,8 +35,4 @@ public class LibraryConnectDb {
         
         return conn;
     }
-    public static void main(String[]args){
-    	Connection conn = new LibraryConnectDb().getConnectMySQL();
-    	System.out.println("Connect DB Successfully!");
-    }
 }
