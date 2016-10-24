@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -17,6 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import controller.ControllerMay;
+import model.bean.May;
 import utils.ButtonGroupTT;
 import utils.render.TinhTrangComboboxModel;
 
@@ -496,7 +498,38 @@ public class PnMay extends JPanel {
 
 	protected void btnThemActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+//		try{
+//            String hoTen = tfKhachHang.getText();
+//            String gioiTinh = new ButtonGroupGT().getText(btnGioiTinh);
+//            
+//            Date utilDate = new JChooserDateToDate().getTime(tfNgaySinh.getDate());
+//            java.sql.Timestamp ngaySinh = new java.sql.Timestamp(utilDate.getTime());
+//            
+//            String quocTich = (String) new QuocTichComboboxModel().getElementAt(cbQuocTich.getSelectedIndex());        
+//            String scmt = tfCMT.getText();
+//            String ngheNghiep = tfNgheNghiep.getText();
+//            String email = tfEmail.getText();
+//            String soDienThoai = tfSoDienThoai.getText();
+//            LoaiThanhVien loaiThanhVien = new LoaiThanhVienComboboxModel().getElementAt(cbLoaiThanhVien.getSelectedIndex());
+//            String diaChi = tfDiaChi.getText();            
+//            
+//            KhachHang obj = new KhachHang(0, hoTen, gioiTinh, ngaySinh, scmt, email, diaChi, ngheNghiep, soDienThoai, quocTich, loaiThanhVien.getMatv());
+//            if(isValid(obj, "add")){
+//                if(!new ValidateDB().socmt_exist(String.valueOf(obj.getSoCMT()))){
+//                    int result = controller.addItem(obj);
+//                    if(result > 0){
+//                        this.resetForm();
+//                        JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:blue; font-weight:bold;\">Thêm khách hàng thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+//                    }else{
+//                        JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Thêm khách hàng thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+//                    }
+//                }else{
+//                    JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Khách hàng tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+//                }
+//            }
+//        }catch(NumberFormatException ex){
+//            JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+//        }
 	}
 
 	protected void btnSuaActionPerformed(ActionEvent evt) {
@@ -506,6 +539,7 @@ public class PnMay extends JPanel {
 
 	protected void btnNhaplaiActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		resetForm();
 		
 	}
 
@@ -526,7 +560,6 @@ public class PnMay extends JPanel {
 
 	protected void NhapLaiFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	protected void tbMainKeyReleased(KeyEvent evt) {
@@ -560,4 +593,30 @@ public class PnMay extends JPanel {
 		txtGhiChu.setText(moTa);
 		tfDongia.setText(donGia+"");
 	}
+	private void resetForm(){
+		tfId.setText("");
+		tfName.setText("");
+		jCheckBox1.setSelected(true);
+		jCheckBox1.setSelected(false);
+		txtGhiChu.setText("");
+		tfDongia.setText("");
+		cbTinhTrang.setModel(new TinhTrangComboboxModel());
+	}
+	
+	private boolean isValid(May obj, String function) {
+        boolean result = true;
+        switch(function){
+            case "add":
+                break;
+            case "edit":
+                break;
+            case "del":
+                if(obj.getIdm()<0){
+                    JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    result = false;
+                }
+                break;
+        }
+        return result;
+    }
 }
