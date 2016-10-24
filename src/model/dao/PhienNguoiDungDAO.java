@@ -10,7 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.bean.PhienNguoiDung;
-import utils.LibraryConnectDb;
+import utils.db.LibraryConnectDb;
 
 @SuppressWarnings("all")
 public class PhienNguoiDungDAO {

@@ -31,8 +31,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 
-import utils.TabbedPane;
-import utils.ToolBar;
+import utils.gui.TabbedPane;
+import utils.gui.ToolBar;
 
 @SuppressWarnings("all")
 public class FrMain extends JFrame implements MouseListener,ActionListener{

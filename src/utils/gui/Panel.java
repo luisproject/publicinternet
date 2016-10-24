@@ -1,4 +1,4 @@
-package utils;
+package utils.gui;
 
 import java.awt.Color;
 import java.awt.GradientPaint;

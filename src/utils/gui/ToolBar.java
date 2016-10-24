@@ -1,18 +1,14 @@
-package utils;
+package utils.gui;
+
 import java.awt.Color;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import javax.swing.JMenuBar;
+import javax.swing.JToolBar;
 
 @SuppressWarnings("all")
-public class MenuBar extends JMenuBar{
-	
-	public MenuBar() {
-		// TODO Auto-generated constructor stub
-		super();
-	}
+public class ToolBar extends JToolBar{
 	@Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
