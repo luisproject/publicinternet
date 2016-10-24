@@ -22,6 +22,8 @@ import javax.swing.JTextField;
 
 import controller.ControllerQuanTriVien;
 import model.bean.QuanTriVien;
+import utils.ButtonGroupAdmin;
+import utils.ValidateDbQTV;
 
 @SuppressWarnings("all")
 public class PnQTV extends JPanel {
@@ -339,12 +341,70 @@ public class PnQTV extends JPanel {
 		
 	}
     protected void btThemActionPerformed(ActionEvent evt) {
+    	try{
+         
+            String tenDangNhap = tfUser.getText();
+            String matKhau = tfPass.getText();
+            String hoTen = tfName.getText();
+            Boolean isAdmin = new ButtonGroupAdmin().getText(btnAdmin);
+            
+           
+            QuanTriVien obj  = new QuanTriVien(0, tenDangNhap, matKhau, hoTen, isAdmin);
+            
+            if(isValid(obj, "add")){
+                if(!new ValidateDbQTV().tenDangNhap_exist(tenDangNhap)){
+                    int result = controller.addItem(obj);
+                    if(result > 0){
+                        this.ResetForm();
+                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Thêm quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Thêm quản trị viên  thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }catch(NumberFormatException ex){
+            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
 		
 		
 	}
 
 	protected void btSuaActionPerformed(ActionEvent evt) {
-		
+		 int row = tbMain.getSelectedRow();
+	        if(row >= 0){
+	            try{
+	              int idqtv = Integer.parseInt(tfId.getText());
+	              String tenDangNhap = tfUser.getText();
+	              String matKhau = tfPass.getText();
+	              String hoTen = tfName.getText();
+	              Boolean isAdmin = new ButtonGroupAdmin().getText(btnAdmin);
+	            	
+	            	
+	            	QuanTriVien obj  = new QuanTriVien(idqtv, tenDangNhap, matKhau, hoTen, isAdmin);
+	                
+	               
+	                
+	                if(isValid(obj, "edit")){
+	                    if(!new ValidateDbQTV().tenDangNhap_existver(obj.getTenDangNhap(),idqtv)){
+	                        int result = controller.editItem(obj,row);
+	                        if(result > 0){
+	                            this.ResetForm();
+	                            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Cập nhật quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                        }else{
+	                            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Cập nhật quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                        }
+	                    }else{
+	                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                    }
+	                }
+	            }catch(NumberFormatException ex){
+	                JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	            }
+	        }else{
+	            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	        }
 		
 	}
 
@@ -372,6 +432,7 @@ public class PnQTV extends JPanel {
 		tfId.setText("");
 		tfUser.setText("");
 		tfPass.setText("");
+		tfName.setText("");
 		jCheckBox1.setSelected(true);
 		jCheckBox2.setSelected(false);
 	}
@@ -382,11 +443,13 @@ public class PnQTV extends JPanel {
 		String tenDangNhap = tbMain.getValueAt(row, 1).toString();
 		String matKhau = tbMain.getValueAt(row, 2).toString();
 		String hoTen = tbMain.getValueAt(row, 3).toString();
+	
 		Boolean isAdmin = (Boolean) tbMain.getValueAt(row, 4);
 		
 		tfId.setText(id+"");
 		tfUser.setText(tenDangNhap);
 		tfPass.setText(matKhau);
+		tfName.setText(hoTen);
 		if (isAdmin) {
 			jCheckBox2.setSelected(true);
 			

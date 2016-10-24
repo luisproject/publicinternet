@@ -100,7 +100,7 @@ public class QuanTriVienDAO {
     public int editItem(QuanTriVien c) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
-        String sql = "UPDATE "+table+" SET tendangnhap = ?,matkhau = ?,hoten = ? WHERE idqt = ? LIMIT 1";
+        String sql = "UPDATE "+table+" SET tendangnhap = ?,matkhau = ?,hoten = ?,isadmin = ? WHERE idqt = ? LIMIT 1";
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1,c.getTenDangNhap());
