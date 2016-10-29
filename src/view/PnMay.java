@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.nio.charset.MalformedInputException;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -17,6 +18,9 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
 import controller.ControllerMay;
 import model.bean.May;
@@ -68,7 +72,7 @@ public class PnMay extends JPanel {
 	private JTextField tfNameF;
 	private JLabel jLabel10;
 	private JLabel jLabel12;
-	private JComboBox<String> cbTrangThaiF;
+	private JComboBox<String> cbTinhTrangF;
 	private JLabel jLabel13;
 	private JTextField tfDongiaF;
 	private JCheckBox jCheckBox3;
@@ -76,9 +80,9 @@ public class PnMay extends JPanel {
 	private JButton jButton1;
 	
 	private JPanel jPanel5;
-	private JButton TimKiemF;
-	private JButton NhapLaiF;
-	private JButton CloseF;
+	private JButton btnbtnbtnbtnTimKiemF;
+	private JButton btnbtnbtnNhapLaiF;
+	private JButton btnbtnCloseF;
 	
 	private JPanel jPanel2;
 	private JScrollPane jScrollPane1;
@@ -92,6 +96,7 @@ public class PnMay extends JPanel {
 		controller = new ControllerMay(tbMain);
 		controller.loadTable();
 		cbTinhTrang.setModel(new TinhTrangComboboxModel());
+		cbTinhTrangF.setModel(new TinhTrangComboboxModel());
 	}
 
 	private void initComponents() {
@@ -128,16 +133,16 @@ public class PnMay extends JPanel {
         tfNameF = new JTextField();
         jLabel10 = new JLabel();
         jLabel12 = new JLabel();
-        cbTrangThaiF = new JComboBox<>();
+        cbTinhTrangF = new JComboBox<>();
         jLabel13 = new JLabel();
         tfDongiaF = new JTextField();
         jCheckBox3 = new JCheckBox();
         jCheckBox4 = new JCheckBox();
         jButton1 = new JButton();
         jPanel5 = new JPanel();
-        TimKiemF = new JButton();
-        NhapLaiF = new JButton();
-        CloseF = new JButton();
+        btnbtnbtnbtnTimKiemF = new JButton();
+        btnbtnbtnNhapLaiF = new JButton();
+        btnbtnCloseF = new JButton();
         jPanel2 = new JPanel();
         jScrollPane1 = new JScrollPane();
         tbMain = new JTable();
@@ -339,8 +344,8 @@ public class PnMay extends JPanel {
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Trạng thái:");
 
-        cbTrangThaiF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", " " }));
-        cbTrangThaiF.setPreferredSize(new java.awt.Dimension(56, 24));
+        cbTinhTrangF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", " " }));
+        cbTinhTrangF.setPreferredSize(new java.awt.Dimension(56, 24));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel13.setText("Đơn giá:");
@@ -378,7 +383,7 @@ public class PnMay extends JPanel {
                                 .addComponent(jLabel9)
                                 .addGap(132, 132, 132))
                             .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addComponent(cbTrangThaiF, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbTinhTrangF, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(23, 23, 23)))
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel4Layout.createSequentialGroup()
@@ -406,7 +411,7 @@ public class PnMay extends JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(cbTrangThaiF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbTinhTrangF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13)
                     .addComponent(tfDongiaF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
@@ -424,35 +429,35 @@ public class PnMay extends JPanel {
         jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(242, 242, 242)));
         jPanel5.setLayout(new java.awt.GridLayout(3, 1, 15, 15));
 
-        TimKiemF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        TimKiemF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iSearch.png"))); // NOI18N
-        TimKiemF.setText("Tìm kiếm ");
-        TimKiemF.addActionListener(new java.awt.event.ActionListener() {
+        btnbtnbtnbtnTimKiemF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnbtnbtnbtnTimKiemF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iSearch.png"))); // NOI18N
+        btnbtnbtnbtnTimKiemF.setText("Tìm kiếm ");
+        btnbtnbtnbtnTimKiemF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TimKiemFActionPerformed(evt);
+                btnTimKiemFActionPerformed(evt);
             }
         });
-        jPanel5.add(TimKiemF);
+        jPanel5.add(btnbtnbtnbtnTimKiemF);
 
-        NhapLaiF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        NhapLaiF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iReset.png"))); // NOI18N
-        NhapLaiF.setText("Nhập lại");
-        NhapLaiF.addActionListener(new java.awt.event.ActionListener() {
+        btnbtnbtnNhapLaiF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnbtnbtnNhapLaiF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iReset.png"))); // NOI18N
+        btnbtnbtnNhapLaiF.setText("Nhập lại");
+        btnbtnbtnNhapLaiF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                NhapLaiFActionPerformed(evt);
+                btnNhapLaiFActionPerformed(evt);
             }
         });
-        jPanel5.add(NhapLaiF);
+        jPanel5.add(btnbtnbtnNhapLaiF);
 
-        CloseF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        CloseF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iClose.png"))); // NOI18N
-        CloseF.setText("Đóng");
-        CloseF.addActionListener(new java.awt.event.ActionListener() {
+        btnbtnCloseF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnbtnCloseF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iClose.png"))); // NOI18N
+        btnbtnCloseF.setText("Đóng");
+        btnbtnCloseF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CloseFActionPerformed(evt);
+                btnCloseFActionPerformed(evt);
             }
         });
-        jPanel5.add(CloseF);
+        jPanel5.add(btnbtnCloseF);
 
         jPanel3.add(jPanel5, java.awt.BorderLayout.EAST);
 
@@ -553,10 +558,10 @@ public class PnMay extends JPanel {
                     }
                 }
             }catch(NumberFormatException ex){
-                JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
         }
 	}
 
@@ -581,16 +586,50 @@ public class PnMay extends JPanel {
         }
 	}
 
-	protected void TimKiemFActionPerformed(ActionEvent evt) {
+	protected void btnTimKiemFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		TableRowSorter sorter = new TableRowSorter(tbMain.getModel());
+    	tbMain.setRowSorter(sorter);
+    	
+    	ArrayList<RowFilter<AbstractTableModel,Object>> alFilter = new ArrayList<>();
+    	
+        String id = tfIdF.getText();
+        RowFilter<AbstractTableModel,Object> filterID = RowFilter.regexFilter(id, 0);
+        alFilter.add(filterID);
+        
+        String tenMay = tfNameF.getText();
+        RowFilter<AbstractTableModel,Object> filterName = RowFilter.regexFilter(tenMay, 1);
+        alFilter.add(filterName);
+        
+        String donGia = tfDongiaF.getText();
+        RowFilter<AbstractTableModel,Object> filterDonGia = RowFilter.regexFilter(donGia, 5);
+        alFilter.add(filterDonGia);
+        
+        String tinhTrang = (String) new TinhTrangComboboxModel().getElementAt(cbTinhTrangF.getSelectedIndex());
+        if(!tinhTrang.isEmpty()){
+            RowFilter<AbstractTableModel,Object> filterTT = new RowFilter<AbstractTableModel, Object>() {
+                @Override
+                public boolean include(RowFilter.Entry<? extends AbstractTableModel, ? extends Object> entry) {
+                    return tinhTrang.equals(String.valueOf(entry.getValue(2)));
+                }
+            };
+            alFilter.add(filterTT);
+        }
+        
+        RowFilter<AbstractTableModel,Object> filterAnd = RowFilter.andFilter(alFilter);
+        sorter.setRowFilter(filterAnd);
+        
+        
 	}
 
-	protected void CloseFActionPerformed(ActionEvent evt) {
+	protected void btnCloseFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		jPanel3.setVisible(false);
 	}
 
-	protected void NhapLaiFActionPerformed(ActionEvent evt) {
+	protected void btnNhapLaiFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		controller.loadTable();
 	}
 
 	protected void tbMainKeyReleased(KeyEvent evt) {
