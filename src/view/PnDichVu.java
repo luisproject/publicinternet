@@ -3,19 +3,30 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
 import controller.ControllerDichVu;
+import model.bean.DichVu;
+import model.bean.May;
+import utils.ButtonGroupTT;
+import utils.ValidateDbDV;
+import utils.ValidateDbMay;
 import utils.render.DonViComboboxModel;
+import utils.render.TinhTrangComboboxModel;
 
 @SuppressWarnings("all")
 public class PnDichVu extends JPanel {
@@ -34,8 +45,8 @@ public class PnDichVu extends JPanel {
 	private JLabel jLabel3;
 	private JTextField tfNameF;
 	private JPanel jPanel1;
-	private JButton jButton1;
-	private JButton jButton2;
+	private JButton btnTimKiemF;
+	private JButton btNhapLaiF;
 	private JLabel jLabel4;
 	private JPanel jPanel2;
 	private JButton btnThem;
@@ -58,6 +69,7 @@ public class PnDichVu extends JPanel {
 		initComponents();
 		controller = new ControllerDichVu(tbMain);
         controller.loadTable();
+        cbDonvi.setModel(new DonViComboboxModel());
 	}
 
 	private void initComponents() {
@@ -72,8 +84,8 @@ public class PnDichVu extends JPanel {
         jLabel3 = new JLabel();
         tfNameF = new JTextField();
         jPanel1 = new JPanel();
-        jButton1 = new JButton();
-        jButton2 = new JButton();
+        btnTimKiemF = new JButton();
+        btNhapLaiF = new JButton();
         jLabel4 = new JLabel();
         jPanel2 = new JPanel();
         btnThem = new JButton();
@@ -120,15 +132,25 @@ public class PnDichVu extends JPanel {
 
         jPanel1.setBackground(new java.awt.Color(242, 242, 242));
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iSearch.png"))); // NOI18N
-        jButton1.setText("Tìm kiếm");
-        jPanel1.add(jButton1);
+        btnTimKiemF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnTimKiemF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iSearch.png"))); // NOI18N
+        btnTimKiemF.setText("Tìm kiếm");
+        btnTimKiemF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemFActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnTimKiemF);
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iReset.png"))); // NOI18N
-        jButton2.setText("Nhập lại");
-        jPanel1.add(jButton2);
+        btNhapLaiF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btNhapLaiF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iReset.png"))); // NOI18N
+        btNhapLaiF.setText("Nhập lại");
+        btNhapLaiF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNhapLaiFActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btNhapLaiF);
 
         javax.swing.GroupLayout dvsearchLayout = new javax.swing.GroupLayout(dvsearch);
         dvsearch.setLayout(dvsearchLayout);
@@ -311,22 +333,81 @@ public class PnDichVu extends JPanel {
 
 	protected void btnThemActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+		try{
+            String tenDichVu = tfName.getText();
+            int donGia = Integer.parseInt(spDongia.getValue().toString());
+            String donVi = (String)new DonViComboboxModel().getElementAt(cbDonvi.getSelectedIndex());
+            int soLuong = Integer.parseInt(spSoluong.getValue().toString());
+            DichVu obj = new DichVu(0, tenDichVu, donGia, donVi, soLuong); 
+            if(isValid(obj, "add")){
+                if(!new ValidateDbDV().tendv_exist(obj.getTenDichVu())){
+                    int result = controller.addItem(obj);
+                    if(result > 0){
+                        this.resetForm();
+                        JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:blue; font-weight:bold;\">Thêm dịch vụ thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }else{
+                        JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Thêm dịch vụ thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }
+                }else{
+                    JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Dịch vụ đã tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }catch(NumberFormatException ex){
+            JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
 	}
 
 	protected void btnSuaActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+		int row = tbMain.getSelectedRow();
+        if(row >= 0){
+            try{
+                int iddv = Integer.parseInt(tfId.getText());
+                String tenDichVu = tfName.getText();
+                int donGia = Integer.parseInt(spDongia.getValue().toString());
+                String donVi = (String)new DonViComboboxModel().getElementAt(cbDonvi.getSelectedIndex());
+                int soLuong = Integer.parseInt(spSoluong.getValue().toString());
+                DichVu obj = new DichVu(iddv, tenDichVu, donGia, donVi, soLuong); 
+                if(isValid(obj, "edit")){
+                    if(!new ValidateDbDV().tendv_existver(obj.getTenDichVu(),iddv)){
+                        int result = controller.editItem(obj,row);
+                        if(result > 0){
+                            this.resetForm();
+                            JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:blue; font-weight:bold;\">Cập nhật dịch vụ thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                        }else{
+                            JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Cập nhật dịch vụ thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                        }
+                    }else{
+                        JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Dịch vụ tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+            }catch(NumberFormatException ex){
+                JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
 	}
 
 	protected void btnNhaplaiActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+		this.resetForm();
 	}
 
 	protected void btnXoaActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+		int row = tbMain.getSelectedRow();
+        if(row >= 0){
+            // When i delete new from table, way to good to delete get id from textfield
+            int id = Integer.parseInt(tfId.getText());
+            if(controller.delItem(id,row)>0){
+                JOptionPane.showMessageDialog(new PnDichVu(), "<html><p style=\"color:blue; font-weight:bold;\">Xóa dịch vụ thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Xóa dịch vụ thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
 	}
 
 	protected void tbMainKeyReleased(KeyEvent evt) {
@@ -337,6 +418,26 @@ public class PnDichVu extends JPanel {
 	protected void tbMainMousePressed(MouseEvent evt) {
 		// TODO Auto-generated method stub
 		this.setForm();
+	}
+	
+	protected void btNhapLaiFActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		controller.loadTable();
+	}
+	
+	protected void btnTimKiemFActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		TableRowSorter sorter = new TableRowSorter(tbMain.getModel());
+    	tbMain.setRowSorter(sorter);
+    	
+    	ArrayList<RowFilter<AbstractTableModel,Object>> alFilter = new ArrayList<>();
+    	
+        String tenDangNhap = tfNameF.getText();
+        RowFilter<AbstractTableModel,Object> filterDV = RowFilter.regexFilter(tenDangNhap, 1);
+        alFilter.add(filterDV);
+        
+        RowFilter<AbstractTableModel,Object> filterAnd = RowFilter.andFilter(alFilter);
+        sorter.setRowFilter(filterAnd);
 	}
 	
 	private void setForm() {
@@ -355,4 +456,30 @@ public class PnDichVu extends JPanel {
         cbDonvi.setModel(new DonViComboboxModel((String)tbMain.getValueAt(row, 3)));
         spSoluong.setValue(soLuong);
 	}
+	
+	private void resetForm() {
+		// TODO Auto-generated method stub
+		tfId.setText("");
+		tfName.setText("");
+		spDongia.setValue(0);
+		cbDonvi.setModel(new DonViComboboxModel());
+		spSoluong.setValue(0);
+	}
+	
+	private boolean isValid(DichVu obj, String function) {
+        boolean result = true;
+        switch(function){
+            case "add":
+                break;
+            case "edit":
+                break;
+            case "del":
+                if(obj.getId()<0){
+                    JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    result = false;
+                }
+                break;
+        }
+        return result;
+    }
 }

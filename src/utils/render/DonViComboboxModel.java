@@ -21,6 +21,7 @@ public class DonViComboboxModel implements ComboBoxModel{
     public DonViComboboxModel(String temp){
         alItems.add("Chai");
         alItems.add("Ly");
+        alItems.add("Lon");
         switch(temp){
             case "Chai":
                 object = alItems.get(0);

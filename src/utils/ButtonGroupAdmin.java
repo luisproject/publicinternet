@@ -8,24 +8,24 @@ import javax.swing.ButtonGroup;
  * @author vuongluis
  */
 public class ButtonGroupAdmin {
-    public Boolean getText(ButtonGroup btAdmin){
-        Boolean outString = false;
+    public Boolean isSelect(ButtonGroup btAdmin){
+        String outString = "";
+        Boolean result = false;
         Enumeration<AbstractButton> el = btAdmin.getElements();
         while(el.hasMoreElements()){
-            AbstractButton btGT = el.nextElement();
-            if(btGT.isSelected()){
-                outString = btGT.isSelected();
+            AbstractButton btadmin = el.nextElement();
+            if(btadmin.isSelected()){
+                outString = btadmin.getText();
             }
         }
-        return outString;
-    }
-    public void setText(ButtonGroup btAdmin,Boolean isAdmin){
-        Enumeration<AbstractButton> el = btAdmin.getElements();
-        while (el.hasMoreElements()) {
-            AbstractButton btGT = el.nextElement();
-            if(btGT.isSelected()==isAdmin){
-                btGT.setSelected(isAdmin);
-            }
+        switch(outString){
+	        case "Có":
+	        	result = true;
+	        	break;
+	        case "Không":
+	        	result = false;
+	        	break;
         }
+        return result;
     }
 }

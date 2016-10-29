@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.bean.QuanTriVien;
+import utils.LibraryString;
 import utils.db.LibraryConnectDb;
 
 @SuppressWarnings("all")
@@ -78,7 +79,7 @@ public class QuanTriVienDAO {
         try {
             pst = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1,item.getTenDangNhap());
-            pst.setString(2, item.getMatKhau());
+            pst.setString(2, new LibraryString().md5(item.getMatKhau()));
             pst.setString(3, item.getHoTen());
             pst.setBoolean(4, item.isAdmin());
             pst.executeUpdate();
@@ -104,7 +105,7 @@ public class QuanTriVienDAO {
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1,c.getTenDangNhap());
-            pst.setString(2, c.getMatKhau());
+            pst.setString(2, new LibraryString().md5(c.getMatKhau()));
             pst.setString(3, c.getHoTen());
             pst.setBoolean(4, c.isAdmin());
             pst.setInt(5, c.getIdqtv());

@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -19,6 +20,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.RowFilter;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
 import controller.ControllerQuanTriVien;
 import model.bean.QuanTriVien;
@@ -115,7 +119,7 @@ public class PnQTV extends JPanel {
         qtv.setOneTouchExpandable(true);
 
         qtvleft.setBackground(new java.awt.Color(242, 242, 242));
-        qtvleft.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Thông tin quản trị viên", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 255))); // NOI18N
+        qtvleft.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Thông tin quản trị viên", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(33,65,90))); // NOI18N
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel1.setText("STT:");
@@ -146,11 +150,21 @@ public class PnQTV extends JPanel {
         btTimKiemF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btTimKiemF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iSearch.png"))); // NOI18N
         btTimKiemF.setText("Tìm kiếm");
+        btTimKiemF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTimKiemFActionPerformed(evt);
+            }
+        });
         qtvsearchbtn.add(btTimKiemF);
 
         btNhapLaiF.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         btNhapLaiF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/iReset.png"))); // NOI18N
         btNhapLaiF.setText("Nhập lại");
+        btNhapLaiF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNhapLaiFActionPerformed(evt);
+            }
+        });
         qtvsearchbtn.add(btNhapLaiF);
 
         javax.swing.GroupLayout qtvsearchLayout = new javax.swing.GroupLayout(qtvsearch);
@@ -216,6 +230,7 @@ public class PnQTV extends JPanel {
             }
         });
         qtvcheckbox.add(btXoa);
+        
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Admin:(*)");
@@ -304,7 +319,7 @@ public class PnQTV extends JPanel {
         qtv.setLeftComponent(qtvleft);
 
         qtvright.setBackground(new java.awt.Color(242, 242, 242));
-        qtvright.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Danh sách quản trị viên", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 255))); // NOI18N
+        qtvright.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Danh sách quản trị viên", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(33,65,90))); // NOI18N
         qtvright.setLayout(new java.awt.BorderLayout());
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -340,17 +355,14 @@ public class PnQTV extends JPanel {
         add(qtv, java.awt.BorderLayout.CENTER);
 		
 	}
-    protected void btThemActionPerformed(ActionEvent evt) {
+
+	protected void btThemActionPerformed(ActionEvent evt) {
     	try{
-         
             String tenDangNhap = tfUser.getText();
             String matKhau = tfPass.getText();
             String hoTen = tfName.getText();
-            Boolean isAdmin = new ButtonGroupAdmin().getText(btnAdmin);
-            
-           
+            Boolean isAdmin = new ButtonGroupAdmin().isSelect(btnAdmin);
             QuanTriVien obj  = new QuanTriVien(0, tenDangNhap, matKhau, hoTen, isAdmin);
-            
             if(isValid(obj, "add")){
                 if(!new ValidateDbQTV().tenDangNhap_exist(tenDangNhap)){
                     int result = controller.addItem(obj);
@@ -366,11 +378,8 @@ public class PnQTV extends JPanel {
             }
         }catch(NumberFormatException ex){
             JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-        }
-		
-		
+        }	
 	}
-
 	protected void btSuaActionPerformed(ActionEvent evt) {
 		 int row = tbMain.getSelectedRow();
 	        if(row >= 0){
@@ -379,80 +388,96 @@ public class PnQTV extends JPanel {
 	              String tenDangNhap = tfUser.getText();
 	              String matKhau = tfPass.getText();
 	              String hoTen = tfName.getText();
-	              Boolean isAdmin = new ButtonGroupAdmin().getText(btnAdmin);
-	            	
-	            	
-	            	QuanTriVien obj  = new QuanTriVien(idqtv, tenDangNhap, matKhau, hoTen, isAdmin);
-	                
-	               
-	                
-	                if(isValid(obj, "edit")){
-	                    if(!new ValidateDbQTV().tenDangNhap_existver(obj.getTenDangNhap(),idqtv)){
-	                        int result = controller.editItem(obj,row);
-	                        if(result > 0){
-	                            this.ResetForm();
-	                            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Cập nhật quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-	                        }else{
-	                            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Cập nhật quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-	                        }
-	                    }else{
-	                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-	                    }
-	                }
+	              Boolean isAdmin = new ButtonGroupAdmin().isSelect(btnAdmin);
+	              QuanTriVien obj  = new QuanTriVien(idqtv, tenDangNhap, matKhau, hoTen, isAdmin);
+					if(isValid(obj, "edit")){
+					    if(!new ValidateDbQTV().tenDangNhap_existver(obj.getTenDangNhap(),idqtv)){
+					        int result = controller.editItem(obj,row);
+					        if(result > 0){
+					            this.ResetForm();
+					            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Cập nhật quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					        }else{
+					            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Cập nhật quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					        }
+					    }else{
+					        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					    }
+					}
 	            }catch(NumberFormatException ex){
 	                JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 	            }
 	        }else{
 	            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-	        }
-		
+	        }		
 	}
 
 	protected void btNhaplaiActionPerformed(ActionEvent evt) {
 		ResetForm();
-		
 	}
 
 	protected void btXoaActionPerformed(ActionEvent evt) {
-		
-		
+		int row = tbMain.getSelectedRow();
+        if(row >= 0){
+            // When i delete new from table, way to good to delete get id from textfield
+            int id = Integer.parseInt(tfId.getText());
+            if(controller.delItem(id,row)>0){
+                JOptionPane.showMessageDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Xóa quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Xóa quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
+	}
+	
+    protected void btTimKiemFActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+    	TableRowSorter sorter = new TableRowSorter(tbMain.getModel());
+    	tbMain.setRowSorter(sorter);
+    	
+    	ArrayList<RowFilter<AbstractTableModel,Object>> alFilter = new ArrayList<>();
+    	
+        String tenDangNhap = tfUserF.getText();
+        RowFilter<AbstractTableModel,Object> filterUser = RowFilter.regexFilter(tenDangNhap, 1);
+        alFilter.add(filterUser);
+        
+        RowFilter<AbstractTableModel,Object> filterAnd = RowFilter.andFilter(alFilter);
+        sorter.setRowFilter(filterAnd);
 	}
 
+	protected void btNhapLaiFActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		controller.loadTable();
+	}
+	
 	protected void tbMainMousePressed(MouseEvent evt) {
 		this.setForm();
-		
 	}
 
 	
 	protected void tbMainKeyReleased(KeyEvent evt) {
 		this.setForm();
-		
 	}
 	private void ResetForm(){
 		tfId.setText("");
 		tfUser.setText("");
 		tfPass.setText("");
 		tfName.setText("");
-		jCheckBox1.setSelected(true);
-		jCheckBox2.setSelected(false);
 	}
 	private void setForm() {
 		// TODO Auto-generated method stub
 		int row = tbMain.getSelectedRow();
 		int id = Integer.parseInt(tbMain.getValueAt(row, 0).toString());
 		String tenDangNhap = tbMain.getValueAt(row, 1).toString();
-		String matKhau = tbMain.getValueAt(row, 2).toString();
-		String hoTen = tbMain.getValueAt(row, 3).toString();
-	
-		Boolean isAdmin = (Boolean) tbMain.getValueAt(row, 4);
+		String hoTen = tbMain.getValueAt(row, 2).toString();
+	    Boolean isAdmin = (Boolean) tbMain.getValueAt(row, 3);
 		
 		tfId.setText(id+"");
 		tfUser.setText(tenDangNhap);
-		tfPass.setText(matKhau);
+		
 		tfName.setText(hoTen);
 		if (isAdmin) {
 			jCheckBox2.setSelected(true);
-			
 		}else {
 			jCheckBox1.setSelected(true);
 		}	
@@ -477,5 +502,4 @@ public class PnQTV extends JPanel {
 	        return result;
 	    }
 	
-
 }

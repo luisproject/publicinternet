@@ -185,7 +185,7 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
 		// TODO Auto-generated method stub
 		tabHome = new JTabbedPane();
         tabHome.setFont(new Font("Tahoma", Font.BOLD, 12));
-        tabHome.setBorder(BorderFactory.createEmptyBorder());
+        tabHome.setBorder(BorderFactory.createEtchedBorder());
         Center.setLayout(new BorderLayout());
         Center.add(tabHome,BorderLayout.CENTER);
         initTabJpanelBar(tabHome,1);
@@ -194,15 +194,15 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
 	private void initTabJpanelBar(JTabbedPane tab, int select) {
 		// TODO Auto-generated method stub
 		if(select==1){
-            tab.add("<html><p style=\"color:#88551a\">Sử dụng dịch vụ</p></html>",new PnHome());
+            tab.add("<html><p style=\"color:#003e5c\">Sử dụng dịch vụ</p></html>",new PnHome());
         }else if(select==2){
-            tab.add("<html><p style=\"color:#88551a\">Quản lý phiên người dùng&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnUser());
+            tab.add("<html><p style=\"color:#003e5c\">Quản lý phiên người dùng&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnUser());
         }else if(select==3){
-            tab.add("<html><p style=\"color:#88551a\">Quản lý máy&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnMay());
+            tab.add("<html><p style=\"color:#003e5c\">Quản lý máy&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnMay());
         }else if(select==4){
-            tab.add("<html><p style=\"color:#88551a\">Quản lý dịch vụ&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnDichVu());
+            tab.add("<html><p style=\"color:#003e5c\">Quản lý dịch vụ&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnDichVu());
         }else if(select==5){
-            tab.add("<html><p style=\"color:#88551a\">Quản lý quản trị viên&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnQTV());
+            tab.add("<html><p style=\"color:#003e5c\">Quản lý quản trị viên&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnQTV());
         }
 	}
 

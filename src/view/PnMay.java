@@ -504,7 +504,7 @@ public class PnMay extends JPanel {
 		try{
             String tenMay = tfName.getText();
             String tinhTrang = (String) new TinhTrangComboboxModel().getElementAt(cbTinhTrang.getSelectedIndex());
-            Boolean trangThai = new ButtonGroupTT().getText(btTrangThai);
+            Boolean trangThai = new ButtonGroupTT().isSelected(btTrangThai);
             String moTa = txtGhiChu.getText();
             int donGia = Integer.parseInt(tfDongia.getText());
             May obj = new May(0, tenMay, tinhTrang, trangThai, moTa, donGia);
@@ -534,8 +534,7 @@ public class PnMay extends JPanel {
                 int idm = Integer.parseInt(tfId.getText());
             	String tenMay = tfName.getText();
             	String tinhTrang = (String) new TinhTrangComboboxModel().getElementAt(cbTinhTrang.getSelectedIndex());
-                Boolean trangThai = new ButtonGroupTT().getText(btTrangThai);
-                System.out.print(trangThai+"");
+                Boolean trangThai = new ButtonGroupTT().isSelected(btTrangThai);
                 String moTa = txtGhiChu.getText();
                 int donGia = Integer.parseInt(tfDongia.getText());
                 May obj = new May(idm, tenMay, tinhTrang, trangThai, moTa, donGia);
@@ -568,6 +567,18 @@ public class PnMay extends JPanel {
 
 	protected void btnXoaActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		int row = tbMain.getSelectedRow();
+        if(row >= 0){
+            // When i delete new from table, way to good to delete get id from textfield
+            int id = Integer.parseInt(tfId.getText());
+            if(controller.delItem(id,row)>0){
+                JOptionPane.showMessageDialog(new PnMay(), "<html><p style=\"color:blue; font-weight:bold;\">Xóa máy thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Xóa máy thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+        }
 	}
 
 	protected void TimKiemFActionPerformed(ActionEvent evt) {
@@ -632,7 +643,7 @@ public class PnMay extends JPanel {
                 break;
             case "del":
                 if(obj.getIdm()<0){
-                    JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                     result = false;
                 }
                 break;

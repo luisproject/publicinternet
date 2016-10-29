@@ -20,7 +20,6 @@ public class ControllerQuanTriVien extends AbstractTableModel{
     private String[] cols = {
         "<html><center><p style='color:#00434a;font-weight:bold;'>STT</p></center></html>",
         "<html><center><p style='color:#00434a;font-weight:bold;'>Tên Đăng Nhập</p></center></html>",
-        "<html><center><p style='color:#00434a;font-weight:bold;'>Mật Khẩu</p></center></html>",
         "<html><center><p style='color:#00434a;font-weight:bold;'>Họ và Tên</p></center></html>",
         "<html><center><p style='color:#00434a;font-weight:bold;'>isAdmin</p></center></html>"
             
@@ -68,12 +67,9 @@ public class ControllerQuanTriVien extends AbstractTableModel{
                 object = Item.getTenDangNhap();
                 break;
             case 2:
-                object = Item.getMatKhau();
-                break;
-            case 3:
                 object = Item.getHoTen();
                 break;
-            case 4:
+            case 3:
             	object = Item.isAdmin();
             	break;
         }
@@ -85,7 +81,7 @@ public class ControllerQuanTriVien extends AbstractTableModel{
 		// TODO Auto-generated method stub
 		if(columnIndex == 0){
             return Integer.class;
-        }else if(columnIndex == 4){
+        }else if(columnIndex == 3){
             return Boolean.class;
         }
 		return super.getColumnClass(columnIndex);
@@ -105,7 +101,6 @@ public class ControllerQuanTriVien extends AbstractTableModel{
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(2).setPreferredWidth(100);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        table.getColumnModel().getColumn(4).setPreferredWidth(100);
     }
 	
 	public int addItem(QuanTriVien obj) {
