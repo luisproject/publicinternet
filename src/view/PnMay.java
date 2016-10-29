@@ -1,5 +1,6 @@
 package view;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -77,7 +78,7 @@ public class PnMay extends JPanel {
 	private JTextField tfDongiaF;
 	private JCheckBox jCheckBox3;
 	private JCheckBox jCheckBox4;
-	private JButton jButton1;
+	private JButton btTT;
 	
 	private JPanel jPanel5;
 	private JButton btnbtnbtnbtnTimKiemF;
@@ -89,6 +90,8 @@ public class PnMay extends JPanel {
 	private JTable tbMain;
 	
 	private ButtonGroup btTrangThai;
+	private ButtonGroup btTrangThaiF;
+	
 	private ControllerMay controller;
 	
 	public PnMay() {
@@ -102,6 +105,7 @@ public class PnMay extends JPanel {
 	private void initComponents() {
 		// TODO Auto-generated method stub
 		btTrangThai = new ButtonGroup();
+		btTrangThaiF = new ButtonGroup();
         jSplitPane1 = new JSplitPane();
         mayleft = new JPanel();
         jLabel1 = new JLabel();
@@ -138,7 +142,7 @@ public class PnMay extends JPanel {
         tfDongiaF = new JTextField();
         jCheckBox3 = new JCheckBox();
         jCheckBox4 = new JCheckBox();
-        jButton1 = new JButton();
+        btTT = new JButton();
         jPanel5 = new JPanel();
         btnbtnbtnbtnTimKiemF = new JButton();
         btnbtnbtnNhapLaiF = new JButton();
@@ -158,7 +162,7 @@ public class PnMay extends JPanel {
         jSplitPane1.setOneTouchExpandable(true);
 
         mayleft.setBackground(new java.awt.Color(242, 242, 242));
-        mayleft.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Thông tin chi tiết máy", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 255))); // NOI18N
+        mayleft.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Thông tin chi tiết máy", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(33,65,90))); // NOI18N
         mayleft.setMinimumSize(new java.awt.Dimension(325, 478));
         mayleft.setPreferredSize(new java.awt.Dimension(500, 538));
 
@@ -316,7 +320,7 @@ public class PnMay extends JPanel {
         jSplitPane1.setLeftComponent(mayleft);
 
         mayright.setBackground(new java.awt.Color(242, 242, 242));
-        mayright.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Danh sách máy", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 102, 255))); // NOI18N
+        mayright.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Danh sách máy", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(33,65,90))); // NOI18N
         mayright.setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(242, 242, 242));
@@ -339,7 +343,7 @@ public class PnMay extends JPanel {
         tfNameF.setPreferredSize(new java.awt.Dimension(59, 24));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel10.setText("Tình Trạng:");
+        jLabel10.setText("Tình trạng:");
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Trạng thái:");
@@ -352,12 +356,20 @@ public class PnMay extends JPanel {
 
         tfDongiaF.setPreferredSize(new java.awt.Dimension(59, 24));
 
+        btTrangThaiF.add(jCheckBox3);
         jCheckBox3.setText("ON");
 
+        btTrangThaiF.add(jCheckBox4);
         jCheckBox4.setText("OFF");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setText("OK");
+        btTT.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btTT.setForeground(new java.awt.Color(51, 255, 0));
+        btTT.setText("V");
+        btTT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTTActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -396,7 +408,7 @@ public class PnMay extends JPanel {
                         .addGap(29, 29, 29)
                         .addComponent(jCheckBox4)
                         .addGap(389, 389, 389)
-                        .addComponent(jButton1)))
+                        .addComponent(btTT)))
                 .addGap(9, 9, 9))
         );
         jPanel4Layout.setVerticalGroup(
@@ -419,8 +431,8 @@ public class PnMay extends JPanel {
                     .addComponent(jLabel12)
                     .addComponent(jCheckBox3)
                     .addComponent(jCheckBox4)
-                    .addComponent(jButton1))
-                .addContainerGap(17, Short.MAX_VALUE))
+                    .addComponent(btTT))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -616,10 +628,23 @@ public class PnMay extends JPanel {
             alFilter.add(filterTT);
         }
         
+        if(!"X".equals(btTT.getText())){
+            Boolean active = new ButtonGroupTT().isSelected(btTrangThaiF);
+            RowFilter<AbstractTableModel,Object> filterTT = new RowFilter<AbstractTableModel, Object>() {
+            @Override
+            public boolean include(RowFilter.Entry<? extends AbstractTableModel, ? extends Object> entry) {
+                    /** Đi sâu vào RowFilter **/
+                    if(active==(boolean)entry.getValue(3)){
+                        return true;
+                    }
+                    return false; 
+                }
+            };
+            alFilter.add(filterTT);
+        }
+        
         RowFilter<AbstractTableModel,Object> filterAnd = RowFilter.andFilter(alFilter);
-        sorter.setRowFilter(filterAnd);
-        
-        
+        sorter.setRowFilter(filterAnd);  
 	}
 
 	protected void btnCloseFActionPerformed(ActionEvent evt) {
@@ -642,6 +667,22 @@ public class PnMay extends JPanel {
 		this.setForm();
 		
 	}
+	
+	protected void btTTActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		if("V".equals(btTT.getText())){
+            btTT.setText("X");
+            btTT.setForeground(Color.RED);
+            jCheckBox3.setEnabled(false);
+            jCheckBox4.setEnabled(false);
+        }else{
+            btTT.setText("V");
+            btTT.setForeground(Color.GREEN);
+            jCheckBox3.setEnabled(true);
+            jCheckBox4.setEnabled(true);
+        }
+	}
+	
 	private void setForm() {
 		// TODO Auto-generated method stub
 		int row = tbMain.getSelectedRow();
