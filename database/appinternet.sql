@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2016 at 10:00 AM
+-- Generation Time: Oct 29, 2016 at 06:25 AM
 -- Server version: 10.1.16-MariaDB
 -- PHP Version: 5.6.24
 
@@ -39,15 +39,31 @@ CREATE TABLE `dichvu` (
 --
 
 INSERT INTO `dichvu` (`iddv`, `tendichvu`, `dongia`, `donvi`, `soluong`) VALUES
-(1, 'Sting', 9000, 'Chai', 24),
-(2, 'Coca Cola', 7000, 'Chai', 44),
-(3, 'Bohuc', 13000, 'Lon', 44),
-(4, 'Yaourt Trái Cây', 15000, 'Ly', 21),
-(5, 'Sinh Tố', 11000, 'Ly', 16),
-(6, 'Cacao', 11000, 'Ly', 10),
-(7, 'Bạc xỉu', 14000, 'Ly', 30),
-(8, 'Cappuchino', 11000, 'Ly', 20),
-(9, 'Frappuccino', 18000, 'Ly', 15);
+(1, 'Sting dâu', 12000, 'Chai', 0),
+(2, 'Revide ', 12000, 'Chai', 0),
+(3, 'Bò húc', 13000, 'Ly', 0),
+(4, 'Yaourt Trái Cây', 15000, 'Ly', 0),
+(5, 'Sinh Tố', 11000, 'Ly', 0),
+(6, 'Cacao nóng', 11000, 'Ly', 0),
+(7, 'Bạc xỉu', 14000, 'Ly', 0),
+(8, 'Cappuchino', 11000, 'Ly', 0),
+(9, 'Frappuccino', 18000, 'Ly', 0),
+(10, 'Cafe đen', 9000, 'Ly', 0),
+(11, 'Cafe sữa', 10000, 'Ly', 0),
+(12, 'Cafe đen SG', 12000, 'Ly', 0),
+(13, 'Bạc xỉu đá', 14000, 'Ly', 0),
+(14, 'Cafe sữa dừa', 17000, 'Ly', 0),
+(15, 'Cafe đá xay', 20000, 'Ly', 0),
+(16, 'Cafe đá viên', 14000, 'Ly', 0),
+(17, 'Cafe trứng', 18000, 'Ly', 0),
+(18, 'Cafe sữa chua', 20000, 'Ly', 0),
+(19, 'Yaourt đá', 15000, 'Ly', 0),
+(20, 'Yaourt xoài', 17000, 'Ly', 0),
+(21, 'Yaourt dâu', 17000, 'Ly', 0),
+(22, 'Blue berry', 15000, 'Ly', 0),
+(23, 'Straw berry', 15000, 'Ly', 0),
+(24, 'Lemon', 15000, 'Ly', 0),
+(25, 'Orange', 15000, 'Ly', 0);
 
 -- --------------------------------------------------------
 
@@ -81,17 +97,21 @@ CREATE TABLE `may` (
 --
 
 INSERT INTO `may` (`idm`, `tenmay`, `tinhtrang`, `trangthai`, `mota`, `dongia`) VALUES
-(1, 'Máy 01', 'Bình Thường', 1, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(2, 'Máy 02', 'Bình Thường', 0, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
+(1, 'Máy 01', 'Bình Thường', 1, 'Asus H81 M-D | Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 –Chuyên games. Intel® Core™i3-4150 |  i3-4160 Processor (3M Cache, 3.60 GHz) (Chip có khả năng cân được các Game Hot 2015 ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Asus | Gigabyte GT 730 | GT 740 | R7 250X | 1GB or 2Gb/128Bit/DDR5. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. SamSung | LG | Asus | Dell | AOC…20”,22”,24”,27” in. Colorvis C88 | E-Blue | Fuhlen | CM Stom | Tte Sport | chống nước, chuyên game. ', 4000),
+(2, 'Máy 02', 'Bảo Trì', 0, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
 (3, 'Máy 03', 'Bình Thường', 1, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(4, 'Máy 04', 'Bình Thường', 0, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(5, 'Máy 05', 'Bảo trì', 1, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(6, 'Máy 06', 'Bình Thường', 0, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(7, 'Máy 07', 'Bình Thường', 1, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(8, 'Máy 08', 'Bình Thường', 0, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(9, 'Máy 09', 'Bình Thường', 1, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(10, 'Máy 10', 'Bảo trì', 0, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000),
-(11, 'Máy 11', 'Bình Thường', 1, 'Máy mới nhập hiệu Dell HD 1920*1080', 4000);
+(4, 'Máy 04', 'Bình Thường', 0, 'Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 – Chuyên games. Intel® Pentium® Processor G3250 (3M Cache, 3.20 GHz)  (Chip có khả năng cân được các Game hiện tại ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Gigabyte N730 2GD5 " 2Gb/128Bit/DDR5 " Fan tản nhiệt lớn bao mát. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. Màn hình tối thiểu 22in " khuyên dùng 24in tăng đọ trải nghiệm game thủ. Các dòng từ trung cấp tới cao cấp bao gồm các Combo: Motospeed K40-K70 Led màu or CM Storm Devastator Led or các dòng Full cơ giá rẻ', 4000),
+(5, 'Máy 05', 'Bảo Trì', 1, 'Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 – Chuyên games. Intel® Pentium® Processor G3250 (3M Cache, 3.20 GHz)  (Chip có khả năng cân được các Game hiện tại ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Gigabyte N730 2GD5 " 2Gb/128Bit/DDR5 " Fan tản nhiệt lớn bao mát. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. Màn hình tối thiểu 22in " khuyên dùng 24in tăng đọ trải nghiệm game thủ. Các dòng từ trung cấp tới cao cấp bao gồm các Combo: Motospeed K40-K70 Led màu or CM Storm Devastator Led or các dòng Full cơ giá rẻ', 4000),
+(6, 'Máy 06', 'Bình Thường', 0, 'Asus H81 M-D | Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 –Chuyên games. Intel® Core™i3-4150 |  i3-4160 Processor (3M Cache, 3.60 GHz) (Chip có khả năng cân được các Game Hot 2015 ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Asus | Gigabyte GT 730 | GT 740 | R7 250X | 1GB or 2Gb/128Bit/DDR5. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. SamSung | LG | Asus | Dell | AOC…20”,22”,24”,27” in. Colorvis C88 | E-Blue | Fuhlen | CM Stom | Tte Sport | chống nước, chuyên game. ', 4000),
+(7, 'Máy 07', 'Bình Thường', 1, 'Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 – Chuyên games. Intel® Pentium® Processor G3250 (3M Cache, 3.20 GHz)  (Chip có khả năng cân được các Game hiện tại ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Gigabyte N730 2GD5 " 2Gb/128Bit/DDR5 " Fan tản nhiệt lớn bao mát. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. Màn hình tối thiểu 22in " khuyên dùng 24in tăng đọ trải nghiệm game thủ. Các dòng từ trung cấp tới cao cấp bao gồm các Combo: Motospeed K40-K70 Led màu or CM Storm Devastator Led or các dòng Full cơ giá rẻ', 4000),
+(8, 'Máy 08', 'Bảo Trì', 0, 'Asus H81 M-D | Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 –Chuyên games. Intel® Core™i3-4150 |  i3-4160 Processor (3M Cache, 3.60 GHz) (Chip có khả năng cân được các Game Hot 2015 ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Asus | Gigabyte GT 730 | GT 740 | R7 250X | 1GB or 2Gb/128Bit/DDR5. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. SamSung | LG | Asus | Dell | AOC…20”,22”,24”,27” in. Colorvis C88 | E-Blue | Fuhlen | CM Stom | Tte Sport | chống nước, chuyên game. ', 4000),
+(9, 'Máy 09', 'Bình Thường', 1, 'Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 – Chuyên games. Intel® Pentium® Processor G3250 (3M Cache, 3.20 GHz)  (Chip có khả năng cân được các Game hiện tại ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Gigabyte N730 2GD5 " 2Gb/128Bit/DDR5 " Fan tản nhiệt lớn bao mát. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. Màn hình tối thiểu 22in " khuyên dùng 24in tăng đọ trải nghiệm game thủ. Các dòng từ trung cấp tới cao cấp bao gồm các Combo: Motospeed K40-K70 Led màu or CM Storm Devastator Led or các dòng Full cơ giá rẻ', 4000),
+(10, 'Máy 10', 'Bảo Trì', 1, 'Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 – Chuyên games. Intel® Pentium® Processor G3250 (3M Cache, 3.20 GHz)  (Chip có khả năng cân được các Game hiện tại ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Gigabyte N730 2GD5 " 2Gb/128Bit/DDR5 " Fan tản nhiệt lớn bao mát. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. Màn hình tối thiểu 22in " khuyên dùng 24in tăng đọ trải nghiệm game thủ. Các dòng từ trung cấp tới cao cấp bao gồm các Combo: Motospeed K40-K70 Led màu or CM Storm Devastator Led or các dòng Full cơ giá rẻ', 4000),
+(11, 'Máy 11', 'Bảo Trì', 1, 'Asus H81 M-D | Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 –Chuyên games. Intel® Core™i3-4150 |  i3-4160 Processor (3M Cache, 3.60 GHz) (Chip có khả năng cân được các Game Hot 2015 ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Asus | Gigabyte GT 730 | GT 740 | R7 250X | 1GB or 2Gb/128Bit/DDR5. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. SamSung | LG | Asus | Dell | AOC…20”,22”,24”,27” in. Colorvis C88 | E-Blue | Fuhlen | CM Stom | Tte Sport | chống nước, chuyên game. ', 4000),
+(12, 'Máy 12', 'Bình Thường', 1, 'Asus H81 M-D | Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 –Chuyên games. Intel® Core™i3-4150 |  i3-4160 Processor (3M Cache, 3.60 GHz) (Chip có khả năng cân được các Game Hot 2015 ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Asus | Gigabyte GT 730 | GT 740 | R7 250X | 1GB or 2Gb/128Bit/DDR5. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. SamSung | LG | Asus | Dell | AOC…20”,22”,24”,27” in. Colorvis C88 | E-Blue | Fuhlen | CM Stom | Tte Sport | chống nước, chuyên game. ', 4000),
+(13, 'Máy 13', 'Bảo Trì', 0, 'Asus H81 M-D | Gigabyte H81-DS2 Full tụ rắn Sk 1150 Dòng Main thế hệ 4 chạy mát 24/24 –Chuyên games. Intel® Core™i3-4150 |  i3-4160 Processor (3M Cache, 3.60 GHz) (Chip có khả năng cân được các Game Hot 2015 ). 4GB Gkill Bus 1600 tản nhiệt |  Kingmax 4Gb Bus 1333 | Kingston 4Gb Bus 1333. Asus | Gigabyte GT 730 | GT 740 | R7 250X | 1GB or 2Gb/128Bit/DDR5. Jetek | Acbel Saga FSP | Cooler Mater 400W | 500W Fan 12cm. SamSung | LG | Asus | Dell | AOC…20”,22”,24”,27” in. Colorvis C88 | E-Blue | Fuhlen | CM Stom | Tte Sport | chống nước, chuyên game. ', 4000),
+(14, 'Máy 15', 'Bảo Trì', 1, 'Main: các dòng mã GIGA - MSI - ASUS sử dụng chipset H81 B85 đều được khuyên dùng trong năm 2015\nChip: Intel® Pentium® Processor G3420 BOX hoặc G3220 BOX nếu tài chính cho phép có thể lên i3 - i5 - i7\nRam: G.SKILL, Kington - 2GB hoặc 4GB DDR3 1600 | F3-1600C11S-4GIS\nPSU: Cooler Master hoặc Antec hoặc Acbel ( máy có bền hay ko là do sử dụng những PSU có tên tuổi và thương hiệu nổi tiếng )\nVGA: ZOTAC hoặc MSI hoặc GIGA GeForce GTX650, 650Ti; GT730, 740, 750 1GB 128GD5\nMàn hình: - AOC 22-23''''  I2x69V LED IPS\n                   - LED LG 22M45D-B \n                   - Asus 228D\n                   - LED DELL 21.5’  E2215H\n                   - LED ACER 21.5’ wide   K222HQL\nChuột: Fuhlen102 or G60\nPhím: Amaru TT espost, Fuhlen 411 - 420 - G450\nTai nghe: Ovann X1, tai trâu', 4000),
+(15, 'Máy 16', 'Bình Thường', 0, 'Main: các dòng mã GIGA - MSI - ASUS sử dụng chipset H81 B85 đều được khuyên dùng trong năm 2015\nChip: Intel® Pentium® Processor G3420 BOX hoặc G3220 BOX nếu tài chính cho phép có thể lên i3 - i5 - i7\nRam: G.SKILL, Kington - 2GB hoặc 4GB DDR3 1600 | F3-1600C11S-4GIS\nPSU: Cooler Master hoặc Antec hoặc Acbel ( máy có bền hay ko là do sử dụng những PSU có tên tuổi và thương hiệu nổi tiếng )\nVGA: ZOTAC hoặc MSI hoặc GIGA GeForce GTX650, 650Ti; GT730, 740, 750 1GB 128GD5\nMàn hình: - AOC 22-23''''  I2x69V LED IPS\n                   - LED LG 22M45D-B \n                   - Asus 228D\n                   - LED DELL 21.5’  E2215H\n                   - LED ACER 21.5’ wide   K222HQL\nChuột: Fuhlen102 or G60\nPhím: Amaru TT espost, Fuhlen 411 - 420 - G450\nTai nghe: Ovann X1, tai trâu', 4000);
 
 -- --------------------------------------------------------
 
@@ -126,9 +146,16 @@ CREATE TABLE `quantrivien` (
 --
 
 INSERT INTO `quantrivien` (`idqt`, `tendangnhap`, `matkhau`, `hoten`, `isadmin`) VALUES
-(1, 'admin', '123456', 'Nguyễn Văn Vương', 1),
-(2, 'admin1', '123456', 'Nguyễn Văn Lin', 0),
-(3, 'admin2', 'abc@123', 'Lê Xuân Diệu', 1);
+(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'Nguyễn Văn Vương', 1),
+(2, 'admin1', 'd41d8cd98f00b204e9800998ecf8427e', 'Lê Thị Tuyết Nhung', 1),
+(3, 'admin2', 'd41d8cd98f00b204e9800998ecf8427e', 'Lê Xuân Diệu', 0),
+(4, 'admin3', 'd41d8cd98f00b204e9800998ecf8427e', 'Nguyễn Phi Trường', 0),
+(5, 'admin4', 'd41d8cd98f00b204e9800998ecf8427e', 'Trương Quân Bảo', 1),
+(6, 'admin5', 'd41d8cd98f00b204e9800998ecf8427e', 'Hà Mậu Hải', 1),
+(8, 'admin7', 'd41d8cd98f00b204e9800998ecf8427e', 'Lý Tiểu Long', 0),
+(13, 'admin8', 'd41d8cd98f00b204e9800998ecf8427e', 'Lý Tiểu Long', 0),
+(14, 'admin9', 'd41d8cd98f00b204e9800998ecf8427e', 'Lý Tiểu Long', 1),
+(15, 'admin10', 'd41d8cd98f00b204e9800998ecf8427e', 'Lý Tiểu Long', 1);
 
 --
 -- Indexes for dumped tables
@@ -160,17 +187,17 @@ ALTER TABLE `quantrivien`
 -- AUTO_INCREMENT for table `dichvu`
 --
 ALTER TABLE `dichvu`
-  MODIFY `iddv` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `iddv` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `may`
 --
 ALTER TABLE `may`
-  MODIFY `idm` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idm` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `quantrivien`
 --
 ALTER TABLE `quantrivien`
-  MODIFY `idqt` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idqt` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
