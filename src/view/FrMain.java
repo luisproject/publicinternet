@@ -396,7 +396,7 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
 		// jmSystem => View All Room, Logout and Exit
         JMenuItem jmSys1 = new JMenuItem();
         jmSys1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmSys1.setText("Danh sách các phòng");
+        jmSys1.setText("Danh sách các phiên người dùng");
         jmSys1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, InputEvent.CTRL_MASK));
         jmSys1.setIcon(new ImageIcon(getClass().getResource("/images/room.png"))); 
         jmSystem.add(jmSys1);
@@ -426,7 +426,7 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
         
         JMenuItem jmAct2 = new JMenuItem();
         jmAct2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmAct2.setText("Đặt phòng");
+        jmAct2.setText("Thanh toán");
         jmAct2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_5, InputEvent.CTRL_MASK));
         jmAct2.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
         jmActivity.add(jmAct2);
@@ -441,14 +441,14 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
         // jmWarehouse => Checking + Booking
         JMenuItem jmWare1 = new JMenuItem();
         jmWare1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmWare1.setText("Đăng ký");
+        jmWare1.setText("Máy");
         jmWare1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_7, InputEvent.CTRL_MASK));
         jmWare1.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
         jmWarehouse.add(jmWare1);
         
         JMenuItem jmWare2 = new JMenuItem();
         jmWare2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmWare2.setText("Đăng ký");
+        jmWare2.setText("Dịch Vụ");
         jmWare2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_8, InputEvent.CTRL_MASK));
         jmWare2.setIcon(new ImageIcon(getClass().getResource("/images/checkout.png"))); 
         jmWarehouse.add(jmWare2);
@@ -456,21 +456,21 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
         // jmPrecious => Information Customer,Set Room Price, Room Information
         JMenuItem jmPre1 = new JMenuItem();
         jmPre1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPre1.setText("Thông tin khách hàng");
+        jmPre1.setText("Tiện ích A");
         jmPre1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_9, InputEvent.CTRL_MASK));
         jmPre1.setIcon(new ImageIcon(getClass().getResource("/images/customer.png"))); 
         jmPrecious.add(jmPre1);
         
         JMenuItem jmPre2 = new JMenuItem();
         jmPre2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPre2.setText("Thiết lập giá phòng");
+        jmPre2.setText("Tiện ích B");
         jmPre2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, InputEvent.CTRL_MASK));
         jmPre2.setIcon(new ImageIcon(getClass().getResource("/images/price.png"))); 
         jmPrecious.add(jmPre2);
         
         JMenuItem jmPre3 = new JMenuItem();
         jmPre3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPre3.setText("Thông tin phòng");
+        jmPre3.setText("Tiện ích C");
         jmPre3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
         jmPre3.setIcon(new ImageIcon(getClass().getResource("/images/roomdetail.png"))); 
         jmPrecious.add(jmPre3);
@@ -493,21 +493,21 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
         //jManager => Check in/Book ing/ Check out
         JMenuItem jmMa1 = new JMenuItem();
         jmMa1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmMa1.setText("Đăng ký tài khoản");
+        jmMa1.setText("Thống Kê Ngày");
         jmMa1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
         jmMa1.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
         jmManager.add(jmMa1);
         
         JMenuItem jmMa2 = new JMenuItem();
         jmMa2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmMa2.setText("Đặt phòng");
+        jmMa2.setText("Thống Kê Tháng");
         jmMa2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
         jmMa2.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
         jmManager.add(jmMa2);
         
         JMenuItem jmMa3 = new JMenuItem();
         jmMa3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmMa3.setText("Kiểm tra phòng");
+        jmMa3.setText("Thống Kê Năm");
         jmMa3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
         jmMa3.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
         jmManager.add(jmMa3);
