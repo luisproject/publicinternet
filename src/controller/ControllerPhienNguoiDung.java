@@ -15,11 +15,13 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
     private PhienNguoiDungBO model;
     private String[] cols = {
         "<html><center><p style='color:#00434a;font-weight:bold;'>STT</p></center></html>",
-        "<html><center><p style='color:#00434a;font-weight:bold;'>Thứ tự máy</p></center></html>",
-        "<html><center><p style='color:#00434a;font-weight:bold;'>Thời gian bắt đầu</p></center></html>",
-        "<html><center><p style='color:#00434a;font-weight:bold;'>Tổng thời gian</p></center></html>",
-        "<html><center><p style='color:#00434a;font-weight:bold;'>Thời gian chơi</p></center></html>"
-            
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Tên Máy</p></center></html>",
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Tình Trạng</p></center></html>",
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Trạng Thái</p></center></html>",
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Thời Gian Bắt Đầu</p></center></html>",
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Thời Gian Kết Thúc</p></center></html>",
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Thời Gian Chơi</p></center></html>",
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Thành Tiền</p></center></html>"
     };
     private ArrayList<PhienNguoiDung> alItem = new ArrayList<PhienNguoiDung>();
     
@@ -52,17 +54,26 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
                 object = Item.getId();
                 break;
             case 1:
-                object = Item.getIdmay();
+                object = Item.getTenMay();
                 break;
             case 2:
-                object = Item.getThoiGianBatDau();
+                object = Item.getTinhTrang();
                 break;
             case 3:
-                object = Item.getTongThoiGian();
+                object = Item.getTrangThai();
                 break;
             case 4:
-                object = Item.getThoiGianKetThuc();
+                object = Item.getThoiGianBatDau();
                 break;
+            case 5:
+            	object = Item.getThoiGianKetThuc();
+            	break;
+            case 6:
+            	object = Item.getThoiGianChoi();
+            	break;
+            case 7:
+            	object = Integer.parseInt(Item.getThanhTien());
+            	break;
         }
         return object;
     }
@@ -72,13 +83,19 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
         if(columnIndex == 0){
             return Integer.class;
         }else if(columnIndex == 1){
-            return Integer.class;
+            return String.class;
         }else if(columnIndex == 2){
-            return Timestamp.class;
+            return String.class;
         }else if(columnIndex == 3){
-            return Timestamp.class;
+            return Boolean.class;
         }else if(columnIndex == 4){
             return Timestamp.class;
+        }else if(columnIndex == 5){
+            return Timestamp.class;
+        }else if(columnIndex == 6){
+            return Timestamp.class;
+        }else if(columnIndex == 7){
+            return Integer.class;
         }
         return super.getColumnClass(columnIndex); 
     }
@@ -98,11 +115,14 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
         table.setRowHeight(26);
         table.setFont(new Font("Tahoma",Font.PLAIN, 12));
         
-        table.getColumnModel().getColumn(0).setPreferredWidth(40);
-        table.getColumnModel().getColumn(1).setPreferredWidth(160);
-        table.getColumnModel().getColumn(2).setPreferredWidth(40);
-        table.getColumnModel().getColumn(3).setPreferredWidth(80);
-        table.getColumnModel().getColumn(4).setPreferredWidth(60);
+        table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        table.getColumnModel().getColumn(2).setPreferredWidth(100);
+        table.getColumnModel().getColumn(3).setPreferredWidth(100);
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        table.getColumnModel().getColumn(5).setPreferredWidth(100);
+        table.getColumnModel().getColumn(6).setPreferredWidth(100);
+        table.getColumnModel().getColumn(7).setPreferredWidth(100);
     }
 
     public int addItem(PhienNguoiDung obj) {

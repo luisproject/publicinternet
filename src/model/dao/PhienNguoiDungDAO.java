@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import model.bean.May;
 import model.bean.PhienNguoiDung;
 import utils.db.LibraryConnectDb;
 
@@ -34,7 +35,9 @@ public class PhienNguoiDungDAO {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                alItem.add(new PhienNguoiDung(rs.getInt("id"),rs.getInt("idm"),rs.getTimestamp("thoigianbatdau"),rs.getTimestamp("tongthoigian"),rs.getTimestamp("thoigianchoi")));
+            	May may = new MayDAO().getItem(rs.getInt("idm"));
+            	String thanhTien = 3000+"";
+                alItem.add(new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getTimestamp("thoiGianChoi"),thanhTien));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PhienNguoiDungDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,7 +63,9 @@ public class PhienNguoiDungDAO {
             pst.setInt(1, id);
             rs = pst.executeQuery();
             if (rs.next()) {
-                c = new PhienNguoiDung(rs.getInt("id"),rs.getInt("idm"),rs.getTimestamp("thoigianbatdau"),rs.getTimestamp("tongthoigian"),rs.getTimestamp("thoigianchoi"));
+            	May may = new MayDAO().getItem(rs.getInt("idm"));
+            	String thanhTien = 3000+"";
+                c = new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getTimestamp("thoiGianChoi"),thanhTien);
             }
         } catch (SQLException e) {
         } finally {
@@ -77,13 +82,13 @@ public class PhienNguoiDungDAO {
         int result = 0;
         conn = lcdb.getConnectMySQL();
 
-        String sql = "INSERT INTO "+table+"(idm,thoigianbatdau,tongthoigian,thoigianchoi) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO "+table+"(idm,thoigianbatdau,thoigianketthuc,thoigianchoi) VALUES (?,?,?,?)";
         try {
             pst = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setInt(1,item.getIdmay());
             pst.setTimestamp(2, item.getThoiGianBatDau());
-            pst.setTimestamp(3, item.getTongThoiGian());
-            pst.setTimestamp(4, item.getThoiGianKetThuc());
+            pst.setTimestamp(3, item.getThoiGianKetThuc());
+            pst.setTimestamp(4, item.getThoiGianChoi());
             pst.executeUpdate();
             rs = pst.getGeneratedKeys();
             if(rs.next()){
@@ -103,13 +108,13 @@ public class PhienNguoiDungDAO {
     public int editItem(PhienNguoiDung item) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
-        String sql = "UPDATE "+table+" SET idm = ?,thoigianbatdau = ?,tongthoigian = ?,thoigianchoi = ? WHERE id = ? LIMIT 1";
+        String sql = "UPDATE "+table+" SET idm = ?,thoigianbatdau = ?,thoigianketthuc = ?,thoigianchoi = ? WHERE id = ? LIMIT 1";
         try {
             pst = conn.prepareStatement(sql);
             pst.setInt(1,item.getIdmay());
             pst.setTimestamp(2, item.getThoiGianBatDau());
-            pst.setTimestamp(3, item.getTongThoiGian());
-            pst.setTimestamp(4, item.getThoiGianKetThuc());
+            pst.setTimestamp(3, item.getThoiGianKetThuc());
+            pst.setTimestamp(4, item.getThoiGianChoi());
             pst.setInt(5,item.getId());
             pst.executeUpdate();
             result = item.getId();

@@ -1,16 +1,25 @@
 package view;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+
+import controller.ControllerPhienNguoiDung;
+import model.bean.May;
+import model.bean.PhienNguoiDung;
+import utils.render.TinhTrangComboboxModel;
 
 @SuppressWarnings("all")
 public class PnUser extends JPanel{
@@ -48,7 +57,7 @@ public class PnUser extends JPanel{
 	private JButton jButton5;
 	private JButton jButton6;
 	
-	private JComboBox<String> jComboBox1;
+	private JComboBox<String> cbTinhTrang;
 	
 	
 	// Right
@@ -61,7 +70,7 @@ public class PnUser extends JPanel{
 	private JLabel jLabel10;
 	private JTextField jTextField4;
 	private JLabel jLabel11;
-	private JComboBox<String> jComboBox2;
+	private JComboBox<String> cbTinhTrangF;
 	private JLabel jLabel12;
 	private JCheckBox jCheckBox3;
 	private JCheckBox jCheckBox4;
@@ -75,13 +84,20 @@ public class PnUser extends JPanel{
 	
 	private JPanel jPanel3;
 	private JScrollPane jScrollPane1;
-	private JTable jTable1;
+	private JTable tbMain;
 	
 	private ButtonGroup btTrangThai;
 	private ButtonGroup btTrangThaiF;
 	
+	private ControllerPhienNguoiDung controller;
+	
 	public PnUser(){
 		initComponents();
+		
+		controller = new ControllerPhienNguoiDung(tbMain);
+		// controller.loadTable();
+		cbTinhTrang.setModel(new TinhTrangComboboxModel());
+		cbTinhTrangF.setModel(new TinhTrangComboboxModel());
 	}
 
 	private void initComponents() {
@@ -109,7 +125,7 @@ public class PnUser extends JPanel{
         jPanel7 = new JPanel();
         jButton5 = new JButton();
         jButton6 = new JButton();
-        jComboBox1 = new JComboBox<>();
+        cbTinhTrang = new JComboBox<>();
         jPanel2 = new JPanel();
         jPanel4 = new JPanel();
         jPanel5 = new JPanel();
@@ -118,7 +134,7 @@ public class PnUser extends JPanel{
         jLabel10 = new JLabel();
         jTextField4 = new JTextField();
         jLabel11 = new JLabel();
-        jComboBox2 = new JComboBox<>();
+        cbTinhTrangF = new JComboBox<>();
         jLabel12 = new JLabel();
         jCheckBox3 = new JCheckBox();
         jCheckBox4 = new JCheckBox();
@@ -129,7 +145,7 @@ public class PnUser extends JPanel{
         btClose = new JButton();
         jPanel3 = new JPanel();
         jScrollPane1 = new JScrollPane();
-        jTable1 = new JTable();
+        tbMain = new JTable();
 
         setBackground(new java.awt.Color(242, 242, 242));
         setLayout(new java.awt.BorderLayout());
@@ -146,7 +162,7 @@ public class PnUser extends JPanel{
         jLabel2.setText("Tên máy:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Tổng thời gian:");
+        jLabel3.setText("Thời gian kết thúc:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Thời gian bắt đầu:");
@@ -198,8 +214,8 @@ public class PnUser extends JPanel{
         jButton6.setText("Thanh toán");
         jPanel7.add(jButton6);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setPreferredSize(new java.awt.Dimension(56, 24));
+        cbTinhTrang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTinhTrang.setPreferredSize(new java.awt.Dimension(56, 24));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -226,7 +242,7 @@ public class PnUser extends JPanel{
                                 .addGap(18, 18, 18)
                                 .addComponent(jCheckBox2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(31, 31, 31))
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(cbTinhTrang, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -256,7 +272,7 @@ public class PnUser extends JPanel{
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTinhTrang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -306,8 +322,8 @@ public class PnUser extends JPanel{
         jLabel11.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel11.setText("Tình trạng:");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox2.setPreferredSize(new java.awt.Dimension(56, 24));
+        cbTinhTrangF.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbTinhTrangF.setPreferredSize(new java.awt.Dimension(56, 24));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel12.setText("Trạng thái:");
@@ -349,7 +365,7 @@ public class PnUser extends JPanel{
                                 .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(cbTinhTrangF, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -364,7 +380,7 @@ public class PnUser extends JPanel{
                 .addGap(23, 23, 23)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbTinhTrangF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -404,8 +420,8 @@ public class PnUser extends JPanel{
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jTable1.setAutoCreateRowSorter(true);
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbMain.setAutoCreateRowSorter(true);
+        tbMain.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -416,7 +432,17 @@ public class PnUser extends JPanel{
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tbMain.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbMainMousePressed(evt);
+            }
+        });
+        tbMain.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tbMainKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tbMain);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -426,5 +452,36 @@ public class PnUser extends JPanel{
 
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
 	}
-	
+
+	protected void tbMainKeyReleased(KeyEvent evt) {
+		// TODO Auto-generated method stub
+		this.setForm();
+	}
+
+	protected void tbMainMousePressed(MouseEvent evt) {
+		// TODO Auto-generated method stub
+		this.setForm();
+	}
+
+	private void setForm() {
+		// TODO Auto-generated method stub
+//		int row = tbMain.getSelectedRow();
+//		int id = Integer.parseInt(tbMain.getValueAt(row, 0).toString());
+	}
+	private boolean isValid(PhienNguoiDung obj, String function) {
+        boolean result = true;
+        switch(function){
+            case "add":
+                break;
+            case "edit":
+                break;
+            case "del":
+                if(obj.getId()<0){
+                    JOptionPane.showConfirmDialog(new PnUser(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    result = false;
+                }
+                break;
+        }
+        return result;
+    }
 }
