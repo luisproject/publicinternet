@@ -5,15 +5,23 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
+
+import model.bean.May;
+import model.bo.MayBO;
+import model.dao.MayDAO;
 
 @SuppressWarnings("all")
 public class PnHome extends JPanel {
@@ -23,6 +31,7 @@ public class PnHome extends JPanel {
 	 */
 	// Control + 7 => Structure Code Following Application
 	private JSplitPane jSplitPane1;
+	private JScrollPane jScrollPane1;
 	
 	private JPanel Left;
 	
@@ -43,20 +52,44 @@ public class PnHome extends JPanel {
 	private JTextField jTextField3;
 	private JTextField jTextField4;
 	
+	private ArrayList<Integer> list = new ArrayList<Integer>();
+	private ArrayList<May> listMay = new ArrayList<May>();
+	
 	public PnHome() {
 		initComponents();
-		Left.setLayout(new FlowLayout(FlowLayout.LEFT));
-        viewRoom(Left);
+		listMay = new MayBO().getList();
+		setRowList(new MayBO().getList().size());
+		viewRoom(list);		
 	}
 
-	private void viewRoom(JPanel temp) {
-		// TODO Auto-generated method stub
-		for(int i = 0; i < 30; i++){
+	private void setRowList(int size){
+		int dir = size/13;
+		int mod = size%13;
+		for(int i = 0; i < dir; i++){
+			list.add(13);
+		}
+		if(mod != 0){
+			list.add(mod);
+		}
+	}
+	private void viewRoom(ArrayList<Integer> listRow) {
+		int j = 0;
+		for(int index = 0; index < listRow.size(); index++){
+			JPanel leftRow = new JPanel();
+			leftRow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+		    Left.add(leftRow);
+		    viewComputer(leftRow,listMay,listRow,index,j);
+		    j += listRow.get(index);
+		}
+    }
+
+	private void viewComputer(JPanel leftRow,ArrayList<May> temp,ArrayList<Integer> listTemp,int n,int m){
+		for(int i = m; i < listTemp.get(n)+m; i++){
             JButton btnRoom = new JButton();
             btnRoom.setFont(new Font("Tahoma",1,13));
             btnRoom.setForeground(new Color(51, 153, 0));
             btnRoom.setIcon(new ImageIcon(getClass().getResource("/images/desktop.png")));
-            btnRoom.setText("Máy "+i);
+            btnRoom.setText(temp.get(i).getTenMay());
             btnRoom.setBorder(BorderFactory.createEmptyBorder());
             btnRoom.setFocusable(false);
             btnRoom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -65,64 +98,57 @@ public class PnHome extends JPanel {
             btnRoom.setOpaque(false);
             btnRoom.setContentAreaFilled(false);
             btnRoom.setBorderPainted(false); 
-            temp.add(btnRoom);
+            leftRow.add(btnRoom);
             btnRoom.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                	btnRoom.setIcon(new ImageIcon(getClass().getResource("/images/desktopuser.png")));
+                    btnRoom.setIcon(new ImageIcon(getClass().getResource("/images/desktopuser.png")));
                 }
             });
         }
 	}
-
+	
 	private void initComponents() {
 		// TODO Auto-generated method stub
-		jSplitPane1 = new javax.swing.JSplitPane();
-        Left = new javax.swing.JPanel();
-        Right = new javax.swing.JPanel();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jSpinner1 = new javax.swing.JSpinner();
-        jSpinner2 = new javax.swing.JSpinner();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+		jSplitPane1 = new JSplitPane();
+        jScrollPane1 = new JScrollPane();
+        Left = new JPanel();
+        Right = new JPanel();
+        jPanel1 = new JPanel();
+        jLabel1 = new JLabel();
+        jLabel2 = new JLabel();
+        jTextField1 = new JTextField();
+        jLabel3 = new JLabel();
+        jLabel4 = new JLabel();
+        jLabel5 = new JLabel();
+        jLabel6 = new JLabel();
+        jLabel7 = new JLabel();
+        jTextField2 = new JTextField();
+        jSpinner1 = new JSpinner();
+        jSpinner2 = new JSpinner();
+        jTextField3 = new JTextField();
+        jTextField4 = new JTextField();
 
         setBackground(new java.awt.Color(242, 242, 242));
-        setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setName("Home"); // NOI18N
         setLayout(new java.awt.BorderLayout());
 
-        jSplitPane1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jSplitPane1.setBorder(null);
         jSplitPane1.setOneTouchExpandable(true);
+
+        jScrollPane1.setAutoscrolls(true);
 
         Left.setBackground(new java.awt.Color(242, 242, 242));
         Left.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Left.setLayout(new java.awt.GridLayout(14, 1));
 
-        javax.swing.GroupLayout LeftLayout = new javax.swing.GroupLayout(Left);
-        Left.setLayout(LeftLayout);
-        LeftLayout.setHorizontalGroup(
-            LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
-        );
-        LeftLayout.setVerticalGroup(
-            LeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 386, Short.MAX_VALUE)
-        );
+        jScrollPane1.setViewportView(Left);
 
-        jSplitPane1.setLeftComponent(Left);
+        jSplitPane1.setLeftComponent(jScrollPane1);
 
         Right.setBackground(new java.awt.Color(242, 242, 242));
         Right.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 51, 153));
@@ -151,7 +177,7 @@ public class PnHome extends JPanel {
 
         jTextField2.setPreferredSize(new java.awt.Dimension(59, 24));
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
+        jSpinner1.setModel(new SpinnerDateModel());
         jSpinner1.setPreferredSize(new java.awt.Dimension(29, 24));
 
         jSpinner2.setPreferredSize(new java.awt.Dimension(29, 24));
@@ -160,7 +186,7 @@ public class PnHome extends JPanel {
 
         jTextField4.setPreferredSize(new java.awt.Dimension(59, 24));
 
-        javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
+        javax.swing.GroupLayout RightLayout = new GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -176,7 +202,7 @@ public class PnHome extends JPanel {
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(10, 10, 10)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
                     .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -213,7 +239,7 @@ public class PnHome extends JPanel {
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jSplitPane1.setRightComponent(Right);
