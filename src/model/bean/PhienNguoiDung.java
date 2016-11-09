@@ -12,13 +12,13 @@ public class PhienNguoiDung {
     private Boolean trangThai;
     private Timestamp thoiGianBatDau;
     private Timestamp thoiGianKetThuc;
-    private Timestamp thoiGianChoi;
+    private String thoiGianChoi;
     private String thanhTien;
 	public PhienNguoiDung() {
 		super();
 	}
 	public PhienNguoiDung(int id, int idmay, String tenMay, String tinhTrang, Boolean trangThai,
-			Timestamp thoiGianBatDau, Timestamp thoiGianKetThuc, Timestamp thoiGianChoi, String thanhTien) {
+			Timestamp thoiGianBatDau, Timestamp thoiGianKetThuc, String thoiGianChoi, String thanhTien) {
 		super();
 		this.id = id;
 		this.idmay = idmay;
@@ -67,10 +67,10 @@ public class PhienNguoiDung {
 	public void setThoiGianBatDau(Timestamp thoiGianBatDau) {
 		this.thoiGianBatDau = thoiGianBatDau;
 	}
-	public Timestamp getThoiGianChoi() {
+	public String getThoiGianChoi() {
 		return thoiGianChoi;
 	}
-	public void setThoiGianChoi(Timestamp thoiGianChoi) {
+	public void setThoiGianChoi(String thoiGianChoi) {
 		this.thoiGianChoi = thoiGianChoi;
 	}
 	public String getThanhTien() {

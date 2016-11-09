@@ -37,7 +37,7 @@ public class PhienNguoiDungDAO {
             while (rs.next()) {
             	May may = new MayDAO().getItem(rs.getInt("idm"));
             	String thanhTien = 3000+"";
-                alItem.add(new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getTimestamp("thoiGianChoi"),thanhTien));
+                alItem.add(new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getString("thoiGianChoi"),thanhTien));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PhienNguoiDungDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -65,7 +65,7 @@ public class PhienNguoiDungDAO {
             if (rs.next()) {
             	May may = new MayDAO().getItem(rs.getInt("idm"));
             	String thanhTien = 3000+"";
-                c = new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getTimestamp("thoiGianChoi"),thanhTien);
+                c = new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getString("thoiGianChoi"),thanhTien);
             }
         } catch (SQLException e) {
         } finally {
@@ -88,7 +88,7 @@ public class PhienNguoiDungDAO {
             pst.setInt(1,item.getIdmay());
             pst.setTimestamp(2, item.getThoiGianBatDau());
             pst.setTimestamp(3, item.getThoiGianKetThuc());
-            pst.setTimestamp(4, item.getThoiGianChoi());
+            pst.setString(4, item.getThoiGianChoi());
             pst.executeUpdate();
             rs = pst.getGeneratedKeys();
             if(rs.next()){
@@ -114,7 +114,7 @@ public class PhienNguoiDungDAO {
             pst.setInt(1,item.getIdmay());
             pst.setTimestamp(2, item.getThoiGianBatDau());
             pst.setTimestamp(3, item.getThoiGianKetThuc());
-            pst.setTimestamp(4, item.getThoiGianChoi());
+            pst.setString(4, item.getThoiGianChoi());
             pst.setInt(5,item.getId());
             pst.executeUpdate();
             result = item.getId();

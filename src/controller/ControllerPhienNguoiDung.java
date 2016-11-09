@@ -72,7 +72,7 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
             	object = String.valueOf(new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date(Item.getThoiGianKetThuc().getTime())));
             	break;
             case 6:
-            	object = String.valueOf(new SimpleDateFormat("HH:mm:ss").format(new Date(Item.getThoiGianChoi().getTime())));
+            	object = Item.getThoiGianChoi();
             	break;
             case 7:
             	object = Integer.parseInt(Item.getThanhTien());
