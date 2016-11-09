@@ -3,3 +3,9 @@
 /utils/
 /view/
 /images/
+/demo.class
+/EmailObserver.class
+/FileObserver.class
+/MyValue.class
+/Observer.class
+/PrinterObserver.class

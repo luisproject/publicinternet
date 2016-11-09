@@ -3,7 +3,10 @@ package controller;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import model.bean.PhienNguoiDung;
@@ -63,13 +66,13 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
                 object = Item.getTrangThai();
                 break;
             case 4:
-                object = Item.getThoiGianBatDau();
+            	object = String.valueOf(new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date(Item.getThoiGianBatDau().getTime())));
                 break;
             case 5:
-            	object = Item.getThoiGianKetThuc();
+            	object = String.valueOf(new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date(Item.getThoiGianKetThuc().getTime())));
             	break;
             case 6:
-            	object = Item.getThoiGianChoi();
+            	object = String.valueOf(new SimpleDateFormat("HH:mm:ss").format(new Date(Item.getThoiGianChoi().getTime())));
             	break;
             case 7:
             	object = Integer.parseInt(Item.getThanhTien());
@@ -89,11 +92,11 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
         }else if(columnIndex == 3){
             return Boolean.class;
         }else if(columnIndex == 4){
-            return Timestamp.class;
+            return String.class;
         }else if(columnIndex == 5){
-            return Timestamp.class;
+            return String.class;
         }else if(columnIndex == 6){
-            return Timestamp.class;
+            return String.class;
         }else if(columnIndex == 7){
             return Integer.class;
         }
@@ -115,14 +118,14 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
         table.setRowHeight(26);
         table.setFont(new Font("Tahoma",Font.PLAIN, 12));
         
-        table.getColumnModel().getColumn(0).setPreferredWidth(100);
-        table.getColumnModel().getColumn(1).setPreferredWidth(100);
-        table.getColumnModel().getColumn(2).setPreferredWidth(100);
-        table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        table.getColumnModel().getColumn(4).setPreferredWidth(100);
-        table.getColumnModel().getColumn(5).setPreferredWidth(100);
-        table.getColumnModel().getColumn(6).setPreferredWidth(100);
-        table.getColumnModel().getColumn(7).setPreferredWidth(100);
+        table.getColumnModel().getColumn(0).setPreferredWidth(40);
+        table.getColumnModel().getColumn(1).setPreferredWidth(50);
+        table.getColumnModel().getColumn(2).setPreferredWidth(70);
+        table.getColumnModel().getColumn(3).setPreferredWidth(70);
+        table.getColumnModel().getColumn(4).setPreferredWidth(140);
+        table.getColumnModel().getColumn(5).setPreferredWidth(140);
+        table.getColumnModel().getColumn(6).setPreferredWidth(140);
+        table.getColumnModel().getColumn(7).setPreferredWidth(80);
     }
 
     public int addItem(PhienNguoiDung obj) {

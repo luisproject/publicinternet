@@ -3,6 +3,10 @@ package utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,5 +34,49 @@ public class LibraryString {
     public static boolean isPassword(String password){
         String regex = "^[a-zA-Z]([a-zA-Z0-9!@#$%^&]{5,29})";
         return password.matches(regex);
+    }
+    
+    public static Date convertToTime(long time){
+    	int hours = 0,minutes = 0, seconds = 0;
+    	Date thoiGianChoi = null;
+    	hours = (int) (time/3600);
+    	if(time%3600 != 0){
+    		minutes = (int) (time%3600)/60;
+    		if((int)(time%3600)%60 != 0){
+    			seconds = (int)(time%3600)%60;
+    		}
+    	}    	
+    	Format formatter = new SimpleDateFormat("HH:mm:ss");
+	    try {
+			thoiGianChoi = (Date) formatter.parseObject(String.format("%2d:%2d:%2d", hours,minutes,seconds));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    return thoiGianChoi;
+    }
+    
+    public static int operMoney(Date time,int donGia){
+    	int money = time.getHours()*donGia + time.getMinutes()*donGia/60 + time.getSeconds()*donGia/3600; 
+    	return money;
+    }
+    
+    public static String changeCurrencyVND(String temp){
+        String outString = "";
+        int j = 0;
+        int dot = temp.length()/3;
+        if(temp.length()%3==0){
+            dot = dot-1;
+        }
+        for(int i = temp.length()-1;i >= 0; i--){
+            outString += temp.charAt(i);
+            j++;
+            if(j==3 && dot!=0){
+               outString += ".";
+               j = 0;
+               dot--;
+            }
+        }
+        return new StringBuilder(outString).reverse().toString();
     }
 }

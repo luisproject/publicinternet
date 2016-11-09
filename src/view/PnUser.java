@@ -2,6 +2,11 @@ package view;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.sql.Timestamp;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -19,6 +24,10 @@ import javax.swing.JTextField;
 import controller.ControllerPhienNguoiDung;
 import model.bean.May;
 import model.bean.PhienNguoiDung;
+import model.bo.MayBO;
+import model.bo.PhienNguoiDungBO;
+import model.dao.PhienNguoiDungDAO;
+import utils.LibraryString;
 import utils.render.TinhTrangComboboxModel;
 
 @SuppressWarnings("all")
@@ -36,11 +45,11 @@ public class PnUser extends JPanel{
 	private JLabel jLabel4;
 	private JLabel jLabel5;
 	
-	private JTextField jTextField1;
-	private JTextField jTextField2;
+	private JTextField tfId;
+	private JTextField tfTenMay;
 	
-	private JSpinner jSpinner1;
-	private JSpinner jSpinner2;
+	private JSpinner spKetThuc;
+	private JSpinner spChoi;
 	
 	private JLabel jLabel6;
 	private JLabel jLabel7;
@@ -48,10 +57,10 @@ public class PnUser extends JPanel{
 	private JCheckBox jCheckBox1;
 	private JCheckBox jCheckBox2;
 	
-	private JSpinner jSpinner3;
+	private JSpinner spBatDau;
 	
 	private JLabel jLabel8;
-	private JTextField jTextField5;
+	private JTextField tfThanhTien;
 	
 	private JPanel jPanel7;
 	private JButton jButton5;
@@ -66,7 +75,7 @@ public class PnUser extends JPanel{
 	private JPanel jPanel4;
 	private JPanel jPanel5;
 	private JLabel jLabel9;
-	private JTextField jTextField3;
+	private JTextField tfIdF;
 	private JLabel jLabel10;
 	private JTextField jTextField4;
 	private JLabel jLabel11;
@@ -95,7 +104,7 @@ public class PnUser extends JPanel{
 		initComponents();
 		
 		controller = new ControllerPhienNguoiDung(tbMain);
-		// controller.loadTable();
+		 controller.loadTable();
 		cbTinhTrang.setModel(new TinhTrangComboboxModel());
 		cbTinhTrangF.setModel(new TinhTrangComboboxModel());
 	}
@@ -111,17 +120,17 @@ public class PnUser extends JPanel{
         jLabel3 = new JLabel();
         jLabel4 = new JLabel();
         jLabel5 = new JLabel();
-        jTextField1 = new JTextField();
-        jTextField2 = new JTextField();
-        jSpinner1 = new JSpinner();
-        jSpinner2 = new JSpinner();
+        tfId = new JTextField();
+        tfTenMay = new JTextField();
+        spKetThuc = new JSpinner();
+        spChoi = new JSpinner();
         jLabel6 = new JLabel();
         jLabel7 = new JLabel();
         jCheckBox1 = new JCheckBox();
         jCheckBox2 = new JCheckBox();
-        jSpinner3 = new JSpinner();
+        spBatDau = new JSpinner();
         jLabel8 = new JLabel();
-        jTextField5 = new JTextField();
+        tfThanhTien = new JTextField();
         jPanel7 = new JPanel();
         jButton5 = new JButton();
         jButton6 = new JButton();
@@ -130,7 +139,7 @@ public class PnUser extends JPanel{
         jPanel4 = new JPanel();
         jPanel5 = new JPanel();
         jLabel9 = new JLabel();
-        jTextField3 = new JTextField();
+        tfIdF = new JTextField();
         jLabel10 = new JLabel();
         jTextField4 = new JTextField();
         jLabel11 = new JLabel();
@@ -170,18 +179,18 @@ public class PnUser extends JPanel{
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Thời gian chơi:");
 
-        jTextField1.setEditable(false);
-        jTextField1.setPreferredSize(new java.awt.Dimension(6, 24));
+        tfId.setEditable(false);
+        tfId.setPreferredSize(new java.awt.Dimension(6, 24));
 
-        jTextField2.setPreferredSize(new java.awt.Dimension(6, 24));
+        tfTenMay.setPreferredSize(new java.awt.Dimension(6, 24));
 
-        jSpinner1.setModel(new javax.swing.SpinnerDateModel());
-        jSpinner1.setEditor(new javax.swing.JSpinner.DateEditor(jSpinner1, "HH:mm:ss"));
-        jSpinner1.setPreferredSize(new java.awt.Dimension(29, 24));
+        spKetThuc.setModel(new javax.swing.SpinnerDateModel());
+        spKetThuc.setEditor(new javax.swing.JSpinner.DateEditor(spKetThuc, "dd/MM/yyyy - HH:mm:ss"));
+        spKetThuc.setPreferredSize(new java.awt.Dimension(29, 24));
 
-        jSpinner2.setModel(new javax.swing.SpinnerDateModel());
-        jSpinner2.setEditor(new javax.swing.JSpinner.DateEditor(jSpinner2, "HH:mm:ss"));
-        jSpinner2.setPreferredSize(new java.awt.Dimension(29, 24));
+        spChoi.setModel(new javax.swing.SpinnerDateModel());
+        spChoi.setEditor(new javax.swing.JSpinner.DateEditor(spChoi, "HH:mm:ss"));
+        spChoi.setPreferredSize(new java.awt.Dimension(29, 24));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Tình trạng:");
@@ -195,14 +204,14 @@ public class PnUser extends JPanel{
         btTrangThai.add(jCheckBox2);
         jCheckBox2.setText("OFF");
 
-        jSpinner3.setModel(new javax.swing.SpinnerDateModel());
-        jSpinner3.setEditor(new javax.swing.JSpinner.DateEditor(jSpinner3, "HH:mm:ss"));
-        jSpinner3.setPreferredSize(new java.awt.Dimension(29, 24));
+        spBatDau.setModel(new javax.swing.SpinnerDateModel());
+        spBatDau.setEditor(new javax.swing.JSpinner.DateEditor(spBatDau, "dd/MM/yyyy - HH:mm:ss"));
+        spBatDau.setPreferredSize(new java.awt.Dimension(29, 24));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel8.setText("Thành tiền:");
 
-        jTextField5.setPreferredSize(new java.awt.Dimension(6, 24));
+        tfThanhTien.setPreferredSize(new java.awt.Dimension(6, 24));
 
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jButton5.setForeground(new java.awt.Color(0, 51, 204));
@@ -233,9 +242,9 @@ public class PnUser extends JPanel{
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfTenMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(34, 34, 34)
                                 .addComponent(jCheckBox1)
@@ -251,10 +260,10 @@ public class PnUser extends JPanel{
                             .addComponent(jLabel4))
                         .addGap(5, 5, 5)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSpinner3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(spBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfThanhTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spKetThuc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(spChoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(24, 24, 24))
             .addComponent(jPanel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -264,11 +273,11 @@ public class PnUser extends JPanel{
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfTenMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -281,19 +290,19 @@ public class PnUser extends JPanel{
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jSpinner3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spChoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfThanhTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -312,7 +321,7 @@ public class PnUser extends JPanel{
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel9.setText("STT:");
 
-        jTextField3.setPreferredSize(new java.awt.Dimension(6, 24));
+        tfIdF.setPreferredSize(new java.awt.Dimension(6, 24));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Tên máy:");
@@ -360,7 +369,7 @@ public class PnUser extends JPanel{
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(tfIdF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(30, 30, 30)
                                 .addComponent(jLabel10)
                                 .addGap(18, 18, 18)
@@ -374,7 +383,7 @@ public class PnUser extends JPanel{
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfIdF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
@@ -465,9 +474,45 @@ public class PnUser extends JPanel{
 
 	private void setForm() {
 		// TODO Auto-generated method stub
-//		int row = tbMain.getSelectedRow();
-//		int id = Integer.parseInt(tbMain.getValueAt(row, 0).toString());
+		int row = tbMain.getSelectedRow();
+		int id = Integer.parseInt(tbMain.getValueAt(row, 0).toString());
+		String tenMay = tbMain.getValueAt(row, 1).toString();
+		cbTinhTrang.setModel(new TinhTrangComboboxModel((String) tbMain.getValueAt(row, 2)));
+		Boolean trangThai = (Boolean) tbMain.getValueAt(row, 3);
+		Date thoiGianBatDau = null;
+		Date thoiGianKetThuc = null;
+		Date thoiGianChoi = null;
+		Format formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+	    try {
+			thoiGianBatDau = (Date) formatter.parseObject(tbMain.getValueAt(row, 4).toString());
+			spBatDau.setValue(thoiGianBatDau);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    try {
+			thoiGianKetThuc = (Date) formatter.parseObject(tbMain.getValueAt(row, 5).toString());
+			spKetThuc.setValue(thoiGianKetThuc);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    thoiGianChoi = LibraryString.convertToTime(Math.abs(thoiGianKetThuc.getTime() - thoiGianBatDau.getTime())/1000);
+	    spChoi.setValue(thoiGianChoi);
+	    String thanhTien = tbMain.getValueAt(row, 7).toString();
+	    
+	    tfId.setText(id+"");
+	    tfTenMay.setText(tenMay);
+	    if(trangThai){
+			jCheckBox1.setSelected(true);
+		}else{
+			jCheckBox2.setSelected(true);
+		}
+	    String money = LibraryString.operMoney(LibraryString.convertToTime(Math.abs(thoiGianKetThuc.getTime() - thoiGianBatDau.getTime())/1000), new MayBO().getItem(new PhienNguoiDungDAO().getItem(id).getIdmay()).getDonGia())+"";
+	    tfThanhTien.setText(LibraryString.changeCurrencyVND(money)+" VND");
+	    new PhienNguoiDungBO().editItem(new PhienNguoiDung(id, new MayBO().getItem(new PhienNguoiDungDAO().getItem(id).getIdmay()).getIdm(), tenMay, tbMain.getValueAt(row, 2).toString(), trangThai, new Timestamp(thoiGianBatDau.getTime()), new Timestamp(thoiGianKetThuc.getTime()), new Timestamp(thoiGianChoi.getTime()), money));	    
 	}
+
 	private boolean isValid(PhienNguoiDung obj, String function) {
         boolean result = true;
         switch(function){
