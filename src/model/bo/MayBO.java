@@ -24,4 +24,8 @@ public class MayBO {
     public int editItem(May obj) {
         return new MayDAO().editItem(obj);
     }
+    
+    public May getItemName(String tenMay) {
+		return new MayDAO().getItemName(tenMay);
+	}
 }

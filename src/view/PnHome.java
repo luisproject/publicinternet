@@ -5,14 +5,20 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JPopupMenu.Separator;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
@@ -20,8 +26,11 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 
 import model.bean.May;
+import model.bean.PhienNguoiDung;
 import model.bo.MayBO;
+import model.bo.PhienNguoiDungBO;
 import model.dao.MayDAO;
+import utils.LibraryString;
 
 @SuppressWarnings("all")
 public class PnHome extends JPanel {
@@ -40,20 +49,36 @@ public class PnHome extends JPanel {
 	private JLabel jLabel1;
 	
 	private JLabel jLabel2;
-	private JTextField jTextField1;
+	private JTextField tfTenMay;
 	private JLabel jLabel3;
 	private JLabel jLabel4;
 	private JLabel jLabel5;
 	private JLabel jLabel6;
 	private JLabel jLabel7;
 	private JTextField jTextField2;
-	private JSpinner jSpinner1;
+	private JSpinner tfThoiGianBatDau;
 	private JSpinner jSpinner2;
-	private JTextField jTextField3;
-	private JTextField jTextField4;
+	private JTextField tfPhiDichVu;
+	private JTextField tfTongTien;
+	
+	
+	private JPanel Controll;
+	private JButton btnOn;
+	private JButton btnOff;
+	
+	private JPanel Result;
+	
+	private JPopupMenu PopupUserSession;
+	private JMenuItem miniOpen;
+	private JMenuItem miniClose;
+	private Separator linea;
+	
 	
 	private ArrayList<Integer> list = new ArrayList<Integer>();
 	private ArrayList<May> listMay = new ArrayList<May>();
+	
+	private MayBO objectCom = new MayBO();
+	private PhienNguoiDungBO objectUser = new PhienNguoiDungBO();
 	
 	public PnHome() {
 		initComponents();
@@ -98,18 +123,48 @@ public class PnHome extends JPanel {
             btnRoom.setOpaque(false);
             btnRoom.setContentAreaFilled(false);
             btnRoom.setBorderPainted(false); 
+            btnRoom.setComponentPopupMenu(PopupUserSession);
+            if(temp.get(i).getTrangThai()==true){
+            	btnRoom.setIcon(new ImageIcon(getClass().getResource("/images/desktopuser.png")));
+            }else{
+            	btnRoom.setIcon(new ImageIcon(getClass().getResource("/images/desktop.png")));
+            }
             leftRow.add(btnRoom);
+            int id = temp.get(i).getIdm();
             btnRoom.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    btnRoom.setIcon(new ImageIcon(getClass().getResource("/images/desktopuser.png")));
+                    getInfromationCom(id);
                 }
             });
         }
 	}
-	
+
 	private void initComponents() {
 		// TODO Auto-generated method stub
+		miniOpen = new JMenuItem();
+		miniClose = new JMenuItem();    
+		linea = new Separator();
+		PopupUserSession = new JPopupMenu();
+		
+		miniOpen.setText("Open");
+		miniOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miniOpenActionPerformed(evt);
+            }
+        });
+        PopupUserSession.add(miniOpen);
+        
+        PopupUserSession.add(linea);
+        
+        miniClose.setText("Close");
+        miniClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miniCloseActionPerformed(evt);
+            }
+        });
+        PopupUserSession.add(miniClose);
+		
 		jSplitPane1 = new JSplitPane();
         jScrollPane1 = new JScrollPane();
         Left = new JPanel();
@@ -117,18 +172,24 @@ public class PnHome extends JPanel {
         jPanel1 = new JPanel();
         jLabel1 = new JLabel();
         jLabel2 = new JLabel();
-        jTextField1 = new JTextField();
+        tfTenMay = new JTextField();
         jLabel3 = new JLabel();
         jLabel4 = new JLabel();
         jLabel5 = new JLabel();
         jLabel6 = new JLabel();
         jLabel7 = new JLabel();
         jTextField2 = new JTextField();
-        jSpinner1 = new JSpinner();
+        tfThoiGianBatDau = new JSpinner();
         jSpinner2 = new JSpinner();
-        jTextField3 = new JTextField();
-        jTextField4 = new JTextField();
-
+        tfPhiDichVu = new JTextField();
+        tfTongTien = new JTextField();
+        
+        Controll = new JPanel();
+        btnOn = new JButton();
+        btnOff = new JButton();
+        
+        Result = new JPanel();
+        
         setBackground(new java.awt.Color(242, 242, 242));
         setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         setName("Home"); // NOI18N
@@ -158,16 +219,13 @@ public class PnHome extends JPanel {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Tên máy:");
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(59, 24));
+        tfTenMay.setPreferredSize(new java.awt.Dimension(59, 24));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Tên người dùng:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel4.setText("Thời gian bắt đầu:");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setText("Thời gian sử dụng:");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Phí dịch vụ:");
@@ -177,15 +235,39 @@ public class PnHome extends JPanel {
 
         jTextField2.setPreferredSize(new java.awt.Dimension(59, 24));
 
-        jSpinner1.setModel(new SpinnerDateModel());
-        jSpinner1.setPreferredSize(new java.awt.Dimension(29, 24));
+        tfThoiGianBatDau.setModel(new SpinnerDateModel());
+        tfThoiGianBatDau.setModel(new javax.swing.SpinnerDateModel());
+        tfThoiGianBatDau.setEditor(new javax.swing.JSpinner.DateEditor(tfThoiGianBatDau, "dd/MM/yyyy - HH:mm:ss"));
+        tfThoiGianBatDau.setPreferredSize(new java.awt.Dimension(29, 24));
 
         jSpinner2.setPreferredSize(new java.awt.Dimension(29, 24));
 
-        jTextField3.setPreferredSize(new java.awt.Dimension(59, 24));
+        tfPhiDichVu.setPreferredSize(new java.awt.Dimension(59, 24));
 
-        jTextField4.setPreferredSize(new java.awt.Dimension(59, 24));
+        tfTongTien.setPreferredSize(new java.awt.Dimension(59, 24));
 
+        btnOn.setFont(new java.awt.Font("Tahoma", 1, 11)); 
+        btnOn.setForeground(new java.awt.Color(51, 51, 255));
+        btnOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/on.png"))); 
+        btnOn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOnActionPerformed(evt);
+            }
+        });
+        Controll.add(btnOn);
+        
+        btnOff.setFont(new java.awt.Font("Tahoma", 1, 11)); 
+        btnOff.setForeground(new java.awt.Color(51, 51, 255));
+        btnOff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/off.png"))); 
+        btnOff.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOffActionPerformed(evt);
+            }
+        });
+        Controll.add(btnOff);
+        
+        Result.setLayout(new java.awt.BorderLayout());
+        
         javax.swing.GroupLayout RightLayout = new GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
@@ -196,19 +278,16 @@ public class PnHome extends JPanel {
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 714, Short.MAX_VALUE)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfThoiGianBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfPhiDichVu, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(tfTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfTenMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(17, 17, 17))
+            .addComponent(Controll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,28 +297,21 @@ public class PnHome extends JPanel {
                 .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfTenMay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(17, 17, 17)
-                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jSpinner2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfThoiGianBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfPhiDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(tfTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(Controll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jSplitPane1.setRightComponent(Right);
@@ -247,4 +319,40 @@ public class PnHome extends JPanel {
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
 	}
 
+	protected void btnOffActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+	}
+
+	protected void btnOnActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+		May item = objectCom.getItemName(tfTenMay.getText());
+		if(tfTenMay.getText().equals("")){
+			JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn máy!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+		}else{
+			if(item.getTrangThai()){
+				JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Đang có người sử dụng!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+			}else{
+				JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chắc sử dụng máy này không ?</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+				item.setTrangThai(true);
+				Date now = new Date();
+				PhienNguoiDung x = new PhienNguoiDung(item.getIdm(),item.getTinhTrang(),new Timestamp(now.getTime()),new Timestamp(now.getTime()),"22:33","1000");
+				objectUser.addItem(x);
+			}
+		}
+	}
+
+	protected void miniCloseActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+	}
+
+	protected void miniOpenActionPerformed(ActionEvent evt) {
+		// TODO Auto-generated method stub
+	}
+	
+	protected void getInfromationCom(int id) {
+		// TODO Auto-generated method stub
+		May item = objectCom.getItem(id);
+		tfTenMay.setText(item.getTenMay());
+		tfPhiDichVu.setText(LibraryString.changeCurrencyVND(String.valueOf(item.getDonGia()))+" VND");
+	}
 }

@@ -143,4 +143,25 @@ public class MayDAO {
         }
         return result;
     }
+	public May getItemName(String tenMay) {
+		conn = lcdb.getConnectMySQL();
+        May c = null;
+        String sql = "SELECT * FROM "+table+" WHERE tenmay = ? LIMIT 1";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, tenMay);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                c = new May(rs.getInt("idm"), rs.getString("tenmay"), rs.getString("tinhtrang"), rs.getBoolean("trangthai"), rs.getString("mota"), rs.getInt("dongia"));
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return c;
+	}
 }

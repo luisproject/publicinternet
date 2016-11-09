@@ -36,8 +36,7 @@ public class PhienNguoiDungDAO {
             rs = st.executeQuery(sql);
             while (rs.next()) {
             	May may = new MayDAO().getItem(rs.getInt("idm"));
-            	String thanhTien = 3000+"";
-                alItem.add(new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getString("thoiGianChoi"),thanhTien));
+                alItem.add(new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getString("thoiGianChoi"),may.getDonGia()+""));
             }
         } catch (SQLException ex) {
             Logger.getLogger(PhienNguoiDungDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,13 +81,15 @@ public class PhienNguoiDungDAO {
         int result = 0;
         conn = lcdb.getConnectMySQL();
 
-        String sql = "INSERT INTO "+table+"(idm,thoigianbatdau,thoigianketthuc,thoigianchoi) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO "+table+"(idm,trangthai,thoigianbatdau,thoigianketthuc,thoigianchoi,thanhtien) VALUES (?,?,?,?,?,?)";
         try {
             pst = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setInt(1,item.getIdmay());
-            pst.setTimestamp(2, item.getThoiGianBatDau());
-            pst.setTimestamp(3, item.getThoiGianKetThuc());
-            pst.setString(4, item.getThoiGianChoi());
+            pst.setBoolean(2, item.getTrangThai());
+            pst.setTimestamp(3, item.getThoiGianBatDau());
+            pst.setTimestamp(4, item.getThoiGianKetThuc());
+            pst.setString(5, item.getThoiGianChoi());
+            pst.setString(6, item.getThanhTien());
             pst.executeUpdate();
             rs = pst.getGeneratedKeys();
             if(rs.next()){
