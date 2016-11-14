@@ -23,6 +23,7 @@ import javax.swing.JPopupMenu.Separator;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 
@@ -31,6 +32,7 @@ import model.bean.PhienNguoiDung;
 import model.bo.MayBO;
 import model.bo.PhienNguoiDungBO;
 import model.dao.MayDAO;
+import model.dao.PhienNguoiDungDAO;
 import utils.LibraryString;
 import utils.MyTimesTamp;
 
@@ -60,14 +62,19 @@ public class PnHome extends JPanel {
 	private JLabel jLabel8;
 	private JLabel jLabel9;
 	private JLabel jLabel10;
+	private JLabel jLabel13;
 	private JLabel trangThailbl;
 	private JLabel tinhTranglbl;
 	private JTextField jTextField2;
 	private JSpinner tfThoiGianBatDau;
 	private JSpinner tfThoiGianKetThuc;
+	private JSpinner tfThoiGianChoi;
 	private JSpinner jSpinner2;
 	private JTextField tfPhiDichVu;
 	private JTextField tfTongTien;
+	private JPanel Service;
+	private JScrollPane jScrollPane2;
+	private JTable tbService;
 	
 	
 	private JPanel Controll;
@@ -191,14 +198,21 @@ public class PnHome extends JPanel {
         jLabel8 = new JLabel();
         jLabel9 = new JLabel();
         jLabel10 = new JLabel();
+        jLabel13 = new JLabel();
+        Service = new JPanel();
+        tbService = new JTable();
         trangThailbl = new JLabel();
         tinhTranglbl = new JLabel();
         jTextField2 = new JTextField();
         tfThoiGianBatDau = new JSpinner();
         tfThoiGianKetThuc = new JSpinner();
+        tfThoiGianChoi = new JSpinner();
         jSpinner2 = new JSpinner();
         tfPhiDichVu = new JTextField();
         tfTongTien = new JTextField();
+        
+        
+        jScrollPane2 = new JScrollPane();
         
         Controll = new JPanel();
         btnOn = new JButton();
@@ -259,6 +273,9 @@ public class PnHome extends JPanel {
         jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel10.setText("Thời gian kết thúc:");
         
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel13.setText("Thời gian chơi:");
+        
         trangThailbl.setFont(new java.awt.Font("Tahoma", 0, 12));
         trangThailbl.setForeground(Color.RED);
         
@@ -266,6 +283,9 @@ public class PnHome extends JPanel {
         tinhTranglbl.setForeground(Color.RED);
         
         jTextField2.setPreferredSize(new java.awt.Dimension(59, 24));
+        
+        Service.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Danh sách dịch vụ dùng", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(153, 153, 0))); // NOI18N
+        Service.setLayout(new java.awt.BorderLayout());
 
         tfThoiGianBatDau.setModel(new SpinnerDateModel());
         tfThoiGianBatDau.setModel(new javax.swing.SpinnerDateModel());
@@ -278,6 +298,12 @@ public class PnHome extends JPanel {
         tfThoiGianKetThuc.setEditor(new javax.swing.JSpinner.DateEditor(tfThoiGianKetThuc, "dd/MM/yyyy - HH:mm:ss"));
         tfThoiGianKetThuc.setEnabled(false);
         tfThoiGianKetThuc.setPreferredSize(new java.awt.Dimension(29, 24));
+        
+        tfThoiGianChoi.setModel(new javax.swing.SpinnerDateModel());
+        tfThoiGianChoi.setDoubleBuffered(true);
+        tfThoiGianChoi.setEditor(new javax.swing.JSpinner.DateEditor(tfThoiGianChoi, "HH:mm:ss"));
+        tfThoiGianChoi.setEnabled(false);
+        tfThoiGianChoi.setPreferredSize(new java.awt.Dimension(29, 24));
         
         jSpinner2.setPreferredSize(new java.awt.Dimension(29, 24));
 
@@ -309,6 +335,20 @@ public class PnHome extends JPanel {
         
         Result.setLayout(new java.awt.BorderLayout());
         
+        tbService.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tbService);
+        Service.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        
         javax.swing.GroupLayout RightLayout = new GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
@@ -319,6 +359,11 @@ public class PnHome extends JPanel {
             .addGroup(RightLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfThoiGianChoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(19, 19, 19))
                     .addGroup(RightLayout.createSequentialGroup()
                         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -332,15 +377,21 @@ public class PnHome extends JPanel {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
                         .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfThoiGianBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfPhiDichVu, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
-                            .addComponent(tfTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tfTenMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(trangThailbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(tinhTranglbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfThoiGianBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tfTenMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(tfPhiDichVu, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                                    .addComponent(tfTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, 274, Short.MAX_VALUE)
+                                    .addComponent(trangThailbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tinhTranglbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(17, 17, 17))))
+            .addComponent(Service, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,6 +411,10 @@ public class PnHome extends JPanel {
                     .addComponent(jLabel10)
                     .addComponent(tfThoiGianKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(tfThoiGianChoi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(tfPhiDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -375,7 +430,9 @@ public class PnHome extends JPanel {
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(tfTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addGap(17, 17, 17)
+                .addComponent(Service, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Controll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -406,7 +463,7 @@ public class PnHome extends JPanel {
 					item.setTrangThai(true);
 					phienNguoiDungBO.addItem(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),MyTimesTamp.getTimestampToDB(),MyTimesTamp.getTimestampToDB(),"00:00","1000"));
 					mayBO.editItem(new May(item.getIdm(),item.getTenMay(),item.getTinhTrang(),item.getTrangThai(),item.getMoTa(),item.getDonGia()));
-					new PnHome().revalidate();
+					Left.revalidate();
 				}
 			}
 		}
@@ -415,14 +472,40 @@ public class PnHome extends JPanel {
 	protected void getInfromationCom(int id) {
 		// TODO Auto-generated method stub
 		May item = mayBO.getItem(id);
+		PhienNguoiDung phienNguoiDung = phienNguoiDungBO.getItemCom(id);
 		tfTenMay.setText(item.getTenMay());
 		tfPhiDichVu.setText(LibraryString.changeCurrencyVND(String.valueOf(item.getDonGia()))+" VND");
 		if(item.getTrangThai()){
 			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">ĐANG ONLINE</p></html>");
+			tfThoiGianBatDau.setValue(new Date(phienNguoiDung.getThoiGianBatDau().getTime()));
+			tfThoiGianKetThuc.setValue(new Date());
+			// Caculating money
+			
+			String money = LibraryString.operMoney(LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000), item.getDonGia())+"";
+			if(Integer.parseInt(money) > 1000){
+				
+				tfPhiDichVu.setText(LibraryString.changeCurrencyVND(money)+" VND");
+				// Update table PhienNguoiDung
+				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),"00:00",money));
+				
+				// View time to play
+				Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
+				tfThoiGianChoi.setValue(thoiGianChoi);
+			}else{
+				
+				tfPhiDichVu.setText("1.000 VND");
+				// Update table PhienNguoiDung
+				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),"00:00","1000"));
+				
+				// View time to play
+				Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
+				tfThoiGianChoi.setValue(thoiGianChoi);
+			}
+			
 		}else{
 			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">KHÔNG ONLINE</p></html>");
-			tfThoiGianBatDau.setValue("0000-00-00 00:00:00");
-			tfThoiGianKetThuc.setValue("0000-00-00 00:00:00");
+			tfThoiGianBatDau.setValue(new Date());
+			tfThoiGianKetThuc.setValue(new Date());
 		}
 		tinhTranglbl.setText("<html><p style=\"color:#00595c; font-weight:bold; font-size: 11px;\">"+item.getTinhTrang()+"</p></html>");
 	}

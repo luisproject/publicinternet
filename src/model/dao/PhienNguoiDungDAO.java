@@ -81,6 +81,30 @@ public class PhienNguoiDungDAO {
         return c;
     }
      
+    public PhienNguoiDung getItemCom(int idm) {
+    	conn = lcdb.getConnectMySQL();
+        PhienNguoiDung c = null;
+        String sql = "SELECT * FROM "+table+" WHERE idm = ? LIMIT 1";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, idm);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+            	May may = new MayDAO().getItem(rs.getInt("idm"));
+            	String thanhTien = 3000+"";
+                c = new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getString("thoiGianChoi"),thanhTien);
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return c;
+ 	}
+     
     public int addItem(PhienNguoiDung item) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
@@ -112,14 +136,15 @@ public class PhienNguoiDungDAO {
     public int editItem(PhienNguoiDung item) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
-        String sql = "UPDATE "+table+" SET idm = ?,thoigianbatdau = ?,thoigianketthuc = ?,thoigianchoi = ? WHERE id = ? LIMIT 1";
+        String sql = "UPDATE "+table+" SET trangthai = ?,thoigianbatdau = ?,thoigianketthuc = ?,thoigianchoi = ?,thanhtien = ? WHERE idm = ? LIMIT 1";
         try {
             pst = conn.prepareStatement(sql);
-            pst.setInt(1,item.getIdmay());
+            pst.setBoolean(1, item.getTrangThai());
             pst.setTimestamp(2, item.getThoiGianBatDau());
             pst.setTimestamp(3, item.getThoiGianKetThuc());
             pst.setString(4, item.getThoiGianChoi());
-            pst.setInt(5,item.getId());
+            pst.setString(5,item.getThanhTien());
+            pst.setInt(6,item.getIdmay());
             pst.executeUpdate();
             result = item.getId();
         } catch (SQLException e) {
@@ -132,6 +157,31 @@ public class PhienNguoiDungDAO {
         }
         return result;
     }
+    
+    public int editItemTime(PhienNguoiDung item) {
+    	int result = 0;  	
+        conn = lcdb.getConnectMySQL();
+        String sql = "UPDATE "+table+" SET trangthai = ?,thoigianbatdau = ?,thoigianketthuc = ?,thoigianchoi = ?,thanhtien = ? WHERE idm = ? LIMIT 1";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setBoolean(1, item.getTrangThai());
+            pst.setTimestamp(2, item.getThoiGianBatDau());
+            pst.setTimestamp(3, item.getThoiGianKetThuc());
+            pst.setString(4, item.getThoiGianChoi());
+            pst.setString(5,item.getThanhTien());
+            pst.setInt(6,item.getIdmay());
+            pst.executeUpdate();
+            result = item.getId();
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return result;
+	}
     
     public int delItem(int cid) {
         int result = 0;
@@ -152,9 +202,6 @@ public class PhienNguoiDungDAO {
             }
         }
         return result;
-    }
-    
-    public static void main(String[]args){
     }
 }
 
