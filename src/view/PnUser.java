@@ -504,13 +504,20 @@ public class PnUser extends JPanel{
 	    tfId.setText(id+"");
 	    tfTenMay.setText(tenMay);
 	    if(trangThai){
-			jCheckBox1.setSelected(true);
 		}else{
 			jCheckBox2.setSelected(true);
 		}
+	    
 	    String money = LibraryString.operMoney(LibraryString.convertToTime(Math.abs(thoiGianKetThuc.getTime() - thoiGianBatDau.getTime())/1000), new MayBO().getItem(new PhienNguoiDungDAO().getItem(id).getIdmay()).getDonGia())+"";
-	    tfThanhTien.setText(LibraryString.changeCurrencyVND(money)+" VND");
-	    new PhienNguoiDungBO().editItem(new PhienNguoiDung(id, new MayBO().getItem(new PhienNguoiDungDAO().getItem(id).getIdmay()).getIdm(), tenMay, tbMain.getValueAt(row, 2).toString(), trangThai, new Timestamp(thoiGianBatDau.getTime()), new Timestamp(thoiGianKetThuc.getTime()), new Timestamp(thoiGianChoi.getTime()).toString(), money));	    
+	    
+	    if(LibraryString.changeCurrencyVND(money).length() < 4){
+	    	tfThanhTien.setText("1.000 VND");
+		    // new PhienNguoiDungBO().editItem(new PhienNguoiDung(id, new MayBO().getItem(new PhienNguoiDungDAO().getItem(id).getIdmay()).getIdm(), tenMay, tbMain.getValueAt(row, 2).toString(), trangThai, new Timestamp(thoiGianBatDau.getTime()), new Timestamp(thoiGianKetThuc.getTime()), new Timestamp(thoiGianChoi.getTime()).toString(), money));
+	    }else{
+	    	tfThanhTien.setText(LibraryString.changeCurrencyVND(money)+" VND");
+		    // new PhienNguoiDungBO().editItem(new PhienNguoiDung(id, new MayBO().getItem(new PhienNguoiDungDAO().getItem(id).getIdmay()).getIdm(), tenMay, tbMain.getValueAt(row, 2).toString(), trangThai, new Timestamp(thoiGianBatDau.getTime()), new Timestamp(thoiGianKetThuc.getTime()), new Timestamp(thoiGianChoi.getTime()).toString(), money));
+	    }
+	   
 	}
 
 	private boolean isValid(PhienNguoiDung obj, String function) {

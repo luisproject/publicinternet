@@ -3,6 +3,7 @@ package controller;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import model.bean.PhienNguoiDung;
 import model.bo.PhienNguoiDungBO;
+import utils.LibraryString;
 
 @SuppressWarnings("all")
 public class ControllerPhienNguoiDung extends AbstractTableModel{
@@ -72,7 +74,7 @@ public class ControllerPhienNguoiDung extends AbstractTableModel{
             	object = String.valueOf(new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss").format(new Date(Item.getThoiGianKetThuc().getTime())));
             	break;
             case 6:
-            	object = Item.getThoiGianChoi();
+                object = Item.getThoiGianChoi();
             	break;
             case 7:
             	object = Integer.parseInt(Item.getThanhTien());

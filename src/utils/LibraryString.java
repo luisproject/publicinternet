@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.annotation.PreDestroy;
+
 @SuppressWarnings("all")
 public class LibraryString {
 	public static String md5(String input) {
@@ -78,5 +80,25 @@ public class LibraryString {
             }
         }
         return new StringBuilder(outString).reverse().toString();
+    }
+    
+    public static String formatTime(Date temp){
+    	String result = "";
+    	if(temp.getHours() < 10){
+    		result += "0"+temp.getHours();
+    	}else{
+    		result += temp.getHours();
+    	}
+    	if(temp.getMinutes() < 10){
+    		result += ":0"+temp.getMinutes();
+    	}else{
+    		result += ":"+temp.getMinutes();
+    	}
+    	if(temp.getSeconds() < 10){
+    		result += ":0"+temp.getSeconds();
+    	}else{
+    		result += ":"+temp.getSeconds();
+    	}
+    	return result;    	
     }
 }

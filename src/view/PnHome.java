@@ -463,7 +463,6 @@ public class PnHome extends JPanel {
 					item.setTrangThai(true);
 					phienNguoiDungBO.addItem(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),MyTimesTamp.getTimestampToDB(),MyTimesTamp.getTimestampToDB(),"00:00","1000"));
 					mayBO.editItem(new May(item.getIdm(),item.getTenMay(),item.getTinhTrang(),item.getTrangThai(),item.getMoTa(),item.getDonGia()));
-					Left.revalidate();
 				}
 			}
 		}
@@ -485,27 +484,32 @@ public class PnHome extends JPanel {
 			if(Integer.parseInt(money) > 1000){
 				
 				tfPhiDichVu.setText(LibraryString.changeCurrencyVND(money)+" VND");
-				// Update table PhienNguoiDung
-				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),"00:00",money));
 				
 				// View time to play
 				Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
 				tfThoiGianChoi.setValue(thoiGianChoi);
+				
+				// Update table PhienNguoiDung
+				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),LibraryString.formatTime(thoiGianChoi),money));
 			}else{
 				
 				tfPhiDichVu.setText("1.000 VND");
-				// Update table PhienNguoiDung
-				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),"00:00","1000"));
 				
 				// View time to play
 				Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
 				tfThoiGianChoi.setValue(thoiGianChoi);
+				
+				// Update table PhienNguoiDung
+				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),LibraryString.formatTime(thoiGianChoi),"1000"));
 			}
 			
 		}else{
 			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">KHÔNG ONLINE</p></html>");
 			tfThoiGianBatDau.setValue(new Date());
 			tfThoiGianKetThuc.setValue(new Date());
+			Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - new Date().getTime())/1000);
+			tfThoiGianChoi.setValue(thoiGianChoi);
+			tfTongTien.setText("");			
 		}
 		tinhTranglbl.setText("<html><p style=\"color:#00595c; font-weight:bold; font-size: 11px;\">"+item.getTinhTrang()+"</p></html>");
 	}
