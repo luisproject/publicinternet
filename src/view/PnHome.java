@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -31,6 +32,7 @@ import model.bo.MayBO;
 import model.bo.PhienNguoiDungBO;
 import model.dao.MayDAO;
 import utils.LibraryString;
+import utils.MyTimesTamp;
 
 @SuppressWarnings("all")
 public class PnHome extends JPanel {
@@ -55,8 +57,14 @@ public class PnHome extends JPanel {
 	private JLabel jLabel5;
 	private JLabel jLabel6;
 	private JLabel jLabel7;
+	private JLabel jLabel8;
+	private JLabel jLabel9;
+	private JLabel jLabel10;
+	private JLabel trangThailbl;
+	private JLabel tinhTranglbl;
 	private JTextField jTextField2;
 	private JSpinner tfThoiGianBatDau;
+	private JSpinner tfThoiGianKetThuc;
 	private JSpinner jSpinner2;
 	private JTextField tfPhiDichVu;
 	private JTextField tfTongTien;
@@ -77,8 +85,10 @@ public class PnHome extends JPanel {
 	private ArrayList<Integer> list = new ArrayList<Integer>();
 	private ArrayList<May> listMay = new ArrayList<May>();
 	
-	private MayBO objectCom = new MayBO();
-	private PhienNguoiDungBO objectUser = new PhienNguoiDungBO();
+	private MayBO mayBO = new MayBO();
+	private PhienNguoiDungBO phienNguoiDungBO = new PhienNguoiDungBO();
+	
+	private JButton btnRoom;
 	
 	public PnHome() {
 		initComponents();
@@ -110,7 +120,7 @@ public class PnHome extends JPanel {
 
 	private void viewComputer(JPanel leftRow,ArrayList<May> temp,ArrayList<Integer> listTemp,int n,int m){
 		for(int i = m; i < listTemp.get(n)+m; i++){
-            JButton btnRoom = new JButton();
+            btnRoom = new JButton();
             btnRoom.setFont(new Font("Tahoma",1,13));
             btnRoom.setForeground(new Color(51, 153, 0));
             btnRoom.setIcon(new ImageIcon(getClass().getResource("/images/desktop.png")));
@@ -178,8 +188,14 @@ public class PnHome extends JPanel {
         jLabel5 = new JLabel();
         jLabel6 = new JLabel();
         jLabel7 = new JLabel();
+        jLabel8 = new JLabel();
+        jLabel9 = new JLabel();
+        jLabel10 = new JLabel();
+        trangThailbl = new JLabel();
+        tinhTranglbl = new JLabel();
         jTextField2 = new JTextField();
         tfThoiGianBatDau = new JSpinner();
+        tfThoiGianKetThuc = new JSpinner();
         jSpinner2 = new JSpinner();
         tfPhiDichVu = new JTextField();
         tfTongTien = new JTextField();
@@ -220,6 +236,7 @@ public class PnHome extends JPanel {
         jLabel2.setText("Tên máy:");
 
         tfTenMay.setPreferredSize(new java.awt.Dimension(59, 24));
+        tfTenMay.setEditable(false);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Tên người dùng:");
@@ -233,18 +250,42 @@ public class PnHome extends JPanel {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("Tổng tiền:");
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel8.setText("Trạng thái:");
+        
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel9.setText("Tình trạng:");
+        
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel10.setText("Thời gian kết thúc:");
+        
+        trangThailbl.setFont(new java.awt.Font("Tahoma", 0, 12));
+        trangThailbl.setForeground(Color.RED);
+        
+        tinhTranglbl.setFont(new java.awt.Font("Tahoma", 0, 12));
+        tinhTranglbl.setForeground(Color.RED);
+        
         jTextField2.setPreferredSize(new java.awt.Dimension(59, 24));
 
         tfThoiGianBatDau.setModel(new SpinnerDateModel());
         tfThoiGianBatDau.setModel(new javax.swing.SpinnerDateModel());
         tfThoiGianBatDau.setEditor(new javax.swing.JSpinner.DateEditor(tfThoiGianBatDau, "dd/MM/yyyy - HH:mm:ss"));
         tfThoiGianBatDau.setPreferredSize(new java.awt.Dimension(29, 24));
+        tfThoiGianBatDau.setEnabled(false);
 
+        tfThoiGianKetThuc.setModel(new javax.swing.SpinnerDateModel());
+        tfThoiGianKetThuc.setDoubleBuffered(true);
+        tfThoiGianKetThuc.setEditor(new javax.swing.JSpinner.DateEditor(tfThoiGianKetThuc, "dd/MM/yyyy - HH:mm:ss"));
+        tfThoiGianKetThuc.setEnabled(false);
+        tfThoiGianKetThuc.setPreferredSize(new java.awt.Dimension(29, 24));
+        
         jSpinner2.setPreferredSize(new java.awt.Dimension(29, 24));
 
         tfPhiDichVu.setPreferredSize(new java.awt.Dimension(59, 24));
+        tfPhiDichVu.setEditable(false);
 
         tfTongTien.setPreferredSize(new java.awt.Dimension(59, 24));
+        tfTongTien.setEditable(false);
 
         btnOn.setFont(new java.awt.Font("Tahoma", 1, 11)); 
         btnOn.setForeground(new java.awt.Color(51, 51, 255));
@@ -273,21 +314,33 @@ public class PnHome extends JPanel {
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Controll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(Result, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(RightLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfThoiGianBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfPhiDichVu, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
-                    .addComponent(tfTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfTenMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(17, 17, 17))
-            .addComponent(Controll, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tfThoiGianKetThuc, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(19, 19, 19))
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfThoiGianBatDau, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfPhiDichVu, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
+                            .addComponent(tfTongTien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tfTenMay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(trangThailbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tinhTranglbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(17, 17, 17))))
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,14 +356,28 @@ public class PnHome extends JPanel {
                     .addComponent(jLabel4)
                     .addComponent(tfThoiGianBatDau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(tfThoiGianKetThuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(tfPhiDichVu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(17, 17, 17)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(trangThailbl))
+                .addGap(17, 17, 17)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(tinhTranglbl))
+                .addGap(17, 17, 17)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(tfTongTien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(Result, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Controll, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -325,34 +392,44 @@ public class PnHome extends JPanel {
 
 	protected void btnOnActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		May item = objectCom.getItemName(tfTenMay.getText());
+		May item = mayBO.getItemName(tfTenMay.getText());
 		if(tfTenMay.getText().equals("")){
 			JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn máy!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 		}else{
-			if(item.getTrangThai()){
-				JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Đang có người sử dụng!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+			if(item.getTinhTrang().equals("Bảo Trì")){
+				JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Xin lỗi hiện tại máy đang bảo trì!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 			}else{
-				JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chắc sử dụng máy này không ?</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
-				item.setTrangThai(true);
-				Date now = new Date();
-				PhienNguoiDung x = new PhienNguoiDung(item.getIdm(),item.getTinhTrang(),new Timestamp(now.getTime()),new Timestamp(now.getTime()),"22:33","1000");
-				objectUser.addItem(x);
+				if(item.getTrangThai()){
+					JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Đang có người sử dụng!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chắc sử dụng máy này không ?</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					item.setTrangThai(true);
+					phienNguoiDungBO.addItem(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),MyTimesTamp.getTimestampToDB(),MyTimesTamp.getTimestampToDB(),"00:00","1000"));
+					mayBO.editItem(new May(item.getIdm(),item.getTenMay(),item.getTinhTrang(),item.getTrangThai(),item.getMoTa(),item.getDonGia()));
+					new PnHome().revalidate();
+				}
 			}
 		}
 	}
-
+	
+	protected void getInfromationCom(int id) {
+		// TODO Auto-generated method stub
+		May item = mayBO.getItem(id);
+		tfTenMay.setText(item.getTenMay());
+		tfPhiDichVu.setText(LibraryString.changeCurrencyVND(String.valueOf(item.getDonGia()))+" VND");
+		if(item.getTrangThai()){
+			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">ĐANG ONLINE</p></html>");
+		}else{
+			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">KHÔNG ONLINE</p></html>");
+		}
+		tinhTranglbl.setText("<html><p style=\"color:#00595c; font-weight:bold; font-size: 11px;\">"+item.getTinhTrang()+"</p></html>");
+	}
+	
 	protected void miniCloseActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
 	}
 
 	protected void miniOpenActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-	}
-	
-	protected void getInfromationCom(int id) {
-		// TODO Auto-generated method stub
-		May item = objectCom.getItem(id);
-		tfTenMay.setText(item.getTenMay());
-		tfPhiDichVu.setText(LibraryString.changeCurrencyVND(String.valueOf(item.getDonGia()))+" VND");
 	}
 }

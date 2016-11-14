@@ -44,17 +44,16 @@ public class PhienNguoiDung {
 		this.thanhTien = thanhTien;
 	}
 	
-	public PhienNguoiDung(int idmay, String tinhTrang, Timestamp thoiGianBatDau, Timestamp thoiGianKetThuc,
-			String thoiGianChoi,String thanhTien) {
+	public PhienNguoiDung(int idmay, Boolean trangThai, Timestamp thoiGianBatDau, Timestamp thoiGianKetThuc,
+			String thoiGianChoi, String thanhTien) {
 		super();
 		this.idmay = idmay;
-		this.tinhTrang = tinhTrang;
+		this.trangThai = trangThai;
 		this.thoiGianBatDau = thoiGianBatDau;
 		this.thoiGianKetThuc = thoiGianKetThuc;
 		this.thoiGianChoi = thoiGianChoi;
 		this.thanhTien = thanhTien;
 	}
-	
 	public int getId() {
 		return id;
 	}

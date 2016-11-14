@@ -5,7 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -80,7 +84,6 @@ public class PhienNguoiDungDAO {
     public int addItem(PhienNguoiDung item) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
-
         String sql = "INSERT INTO "+table+"(idm,trangthai,thoigianbatdau,thoigianketthuc,thoigianchoi,thanhtien) VALUES (?,?,?,?,?,?)";
         try {
             pst = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
@@ -150,4 +153,8 @@ public class PhienNguoiDungDAO {
         }
         return result;
     }
+    
+    public static void main(String[]args){
+    }
 }
+
