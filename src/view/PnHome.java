@@ -421,6 +421,8 @@ public class PnHome extends JPanel {
 			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">ĐANG ONLINE</p></html>");
 		}else{
 			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">KHÔNG ONLINE</p></html>");
+			tfThoiGianBatDau.setValue("0000-00-00 00:00:00");
+			tfThoiGianKetThuc.setValue("0000-00-00 00:00:00");
 		}
 		tinhTranglbl.setText("<html><p style=\"color:#00595c; font-weight:bold; font-size: 11px;\">"+item.getTinhTrang()+"</p></html>");
 	}
