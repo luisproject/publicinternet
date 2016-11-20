@@ -24,7 +24,8 @@ public class ControllerMay extends AbstractTableModel{
         "<html><center><p style='color:#00434a;font-weight:bold;'>Tình Trạng</p></center></html>",
         "<html><center><p style='color:#00434a;font-weight:bold;'>Trạng Thái</p></center></html>",
         "<html><center><p style='color:#00434a;font-weight:bold;'>Mô Tả</p></center></html>",
-        "<html><center><p style='color:#00434a;font-weight:bold;'>Đơn Giá</p></center></html>"
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Đơn Giá</p></center></html>",
+        "<html><center><p style='color:#00434a;font-weight:bold;'>Địa Chỉ Mác</p></center></html>"
     };
     private ArrayList<May> alItem = new ArrayList<May>();
     
@@ -80,6 +81,8 @@ public class ControllerMay extends AbstractTableModel{
             case 5:
             	object = Item.getDonGia();
             	break;
+            case 6:
+            	object = Item.getDiaChiMac();
         }
         return object;
 	}
@@ -113,6 +116,7 @@ public class ControllerMay extends AbstractTableModel{
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
         table.getColumnModel().getColumn(4).setPreferredWidth(100);
         table.getColumnModel().getColumn(5).setPreferredWidth(100);
+        table.getColumnModel().getColumn(6).setPreferredWidth(100);
     }
 	
 	public int addItem(May obj) {

@@ -462,7 +462,7 @@ public class PnHome extends JPanel {
 					JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chắc sử dụng máy này không ?</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 					item.setTrangThai(true);
 					phienNguoiDungBO.addItem(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),MyTimesTamp.getTimestampToDB(),MyTimesTamp.getTimestampToDB(),"00:00","1000"));
-					mayBO.editItem(new May(item.getIdm(),item.getTenMay(),item.getTinhTrang(),item.getTrangThai(),item.getMoTa(),item.getDonGia()));
+					mayBO.editItem(new May(item.getIdm(),item.getTenMay(),item.getTinhTrang(),item.getTrangThai(),item.getMoTa(),item.getDonGia(),""));
 				}
 			}
 		}

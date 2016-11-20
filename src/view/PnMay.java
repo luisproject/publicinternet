@@ -524,7 +524,7 @@ public class PnMay extends JPanel {
             Boolean trangThai = new ButtonGroupTT().isSelected(btTrangThai);
             String moTa = txtGhiChu.getText();
             int donGia = Integer.parseInt(tfDongia.getText());
-            May obj = new May(0, tenMay, tinhTrang, trangThai, moTa, donGia);
+            May obj = new May(0, tenMay, tinhTrang, trangThai, moTa, donGia,"");
             if(isValid(obj, "add")){
                 if(!new ValidateDbMay().tenmay_exist(obj.getTenMay())){
                     int result = controller.addItem(obj);

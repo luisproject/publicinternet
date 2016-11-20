@@ -8,6 +8,7 @@ public class May {
 	private Boolean trangThai;
 	private String moTa;
 	private int donGia;
+	private String diaChiMac;
 	public May() {
 		super();
 	}
@@ -19,6 +20,16 @@ public class May {
 		this.trangThai = trangThai;
 		this.moTa = moTa;
 		this.donGia = donGia;
+	}
+	public May(int idm, String tenMay, String tinhTrang, Boolean trangThai, String moTa, int donGia, String diaChiMac) {
+		super();
+		this.idm = idm;
+		this.tenMay = tenMay;
+		this.tinhTrang = tinhTrang;
+		this.trangThai = trangThai;
+		this.moTa = moTa;
+		this.donGia = donGia;
+		this.diaChiMac = diaChiMac;
 	}
 	public int getIdm() {
 		return idm;
@@ -55,5 +66,11 @@ public class May {
 	}
 	public void setDonGia(int donGia) {
 		this.donGia = donGia;
+	}
+	public String getDiaChiMac() {
+		return diaChiMac;
+	}
+	public void setDiaChiMac(String diaChiMac) {
+		this.diaChiMac = diaChiMac;
 	}
 }

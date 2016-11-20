@@ -31,7 +31,7 @@ public class MayDAO {
             st = conn.createStatement();
             rs = st.executeQuery(sql);
             while (rs.next()) {
-                alItem.add(new May(rs.getInt("idm"), rs.getString("tenmay"), rs.getString("tinhtrang"), rs.getBoolean("trangthai"), rs.getString("mota"), rs.getInt("dongia")));
+                alItem.add(new May(rs.getInt("idm"), rs.getString("tenmay"), rs.getString("tinhtrang"), rs.getBoolean("trangthai"), rs.getString("mota"), rs.getInt("dongia"),rs.getString("diachimac")));
             }
         } catch (SQLException ex) {
             Logger.getLogger(MayDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -57,7 +57,7 @@ public class MayDAO {
             pst.setInt(1, cid);
             rs = pst.executeQuery();
             if (rs.next()) {
-                c = new May(rs.getInt("idm"), rs.getString("tenmay"), rs.getString("tinhtrang"), rs.getBoolean("trangthai"), rs.getString("mota"), rs.getInt("dongia"));
+                c = new May(rs.getInt("idm"), rs.getString("tenmay"), rs.getString("tinhtrang"), rs.getBoolean("trangthai"), rs.getString("mota"), rs.getInt("dongia"),rs.getString("diachimac"));
             }
         } catch (SQLException e) {
         } finally {
@@ -74,7 +74,7 @@ public class MayDAO {
         int result = 0;
         conn = lcdb.getConnectMySQL();
 
-        String sql = "INSERT INTO "+table+"(tenmay,tinhtrang,trangthai,mota,dongia) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO "+table+"(tenmay,tinhtrang,trangthai,mota,dongia,diachimac) VALUES (?,?,?,?,?,?)";
         try {
             pst = conn.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
             pst.setString(1, item.getTenMay());
@@ -82,6 +82,7 @@ public class MayDAO {
             pst.setBoolean(3, item.getTrangThai());
             pst.setString(4, item.getMoTa());
             pst.setInt(5, item.getDonGia());
+            pst.setString(6, item.getDiaChiMac());
             pst.executeUpdate();
             rs = pst.getGeneratedKeys();
             if(rs.next()){
@@ -101,7 +102,7 @@ public class MayDAO {
     public int editItem(May c) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
-        String sql = "UPDATE "+table+" SET tenmay = ?,tinhtrang = ?,trangthai = ?,mota = ?,dongia = ? WHERE idm = ? LIMIT 1";
+        String sql = "UPDATE "+table+" SET tenmay = ?,tinhtrang = ?,trangthai = ?,mota = ?,dongia = ?,diachimac = ? WHERE idm = ? LIMIT 1";
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1, c.getTenMay());
@@ -109,7 +110,8 @@ public class MayDAO {
             pst.setBoolean(3, c.getTrangThai());
             pst.setString(4, c.getMoTa());
             pst.setInt(5, c.getDonGia());
-            pst.setInt(6, c.getIdm());
+            pst.setString(6, c.getDiaChiMac());
+            pst.setInt(7, c.getIdm());
             pst.executeUpdate();
             result = c.getIdm();
         } catch (SQLException e) {
@@ -152,7 +154,7 @@ public class MayDAO {
             pst.setString(1, tenMay);
             rs = pst.executeQuery();
             if (rs.next()) {
-                c = new May(rs.getInt("idm"), rs.getString("tenmay"), rs.getString("tinhtrang"), rs.getBoolean("trangthai"), rs.getString("mota"), rs.getInt("dongia"));
+                c = new May(rs.getInt("idm"), rs.getString("tenmay"), rs.getString("tinhtrang"), rs.getBoolean("trangthai"), rs.getString("mota"), rs.getInt("dongia"),rs.getString("diachimac"));
             }
         } catch (SQLException e) {
         } finally {
