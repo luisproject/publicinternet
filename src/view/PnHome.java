@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SpinnerDateModel;
 
+import controller.ControllerDichVuDung;
 import model.bean.May;
 import model.bean.PhienNguoiDung;
 import model.bo.MayBO;
@@ -96,6 +97,7 @@ public class PnHome extends JPanel {
 	
 	private MayBO mayBO = new MayBO();
 	private PhienNguoiDungBO phienNguoiDungBO = new PhienNguoiDungBO();
+	private ControllerDichVuDung controller;
 	
 	private JButton btnRoom;
 	
@@ -479,6 +481,8 @@ public class PnHome extends JPanel {
 	protected void getInfromationCom(int id) {
 		// TODO Auto-generated method stub
 		May item = mayBO.getItem(id);
+		controller = new ControllerDichVuDung(tbService,item);
+		controller.loadTable();
 		PhienNguoiDung phienNguoiDung = phienNguoiDungBO.getItemCom(id);
 		tfTenMay.setText(item.getTenMay());
 		tfPhiDichVu.setText(LibraryString.changeCurrencyVND(String.valueOf(item.getDonGia()))+" VND");

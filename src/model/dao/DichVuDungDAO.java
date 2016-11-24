@@ -23,9 +23,9 @@ public class DichVuDungDAO {
     public DichVuDungDAO(){
     	lcdb = new LibraryConnectDb();
     }
-    public ArrayList<DichVuDung> getList(){
+    public ArrayList<DichVuDung> getList(int idm){
         ArrayList<DichVuDung> alItem = new ArrayList<>();
-        String sql = "SELECT * FROM "+table;
+        String sql = "SELECT * FROM "+table+" WHERE idm = "+idm;
         conn = lcdb.getConnectMySQL();
         try {
             st = conn.createStatement();

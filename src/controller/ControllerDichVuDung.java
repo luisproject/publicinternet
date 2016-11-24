@@ -9,12 +9,13 @@ import javax.swing.table.AbstractTableModel;
 
 import model.bean.DichVu;
 import model.bean.DichVuDung;
+import model.bean.May;
 import model.bo.DichVuBO;
 import model.bo.DichVuDungBO;
 
 @SuppressWarnings("all")
 public class ControllerDichVuDung extends AbstractTableModel{
-
+	
 	private JTable table;
     private DichVuDungBO model;
     private String[] cols = {
@@ -25,10 +26,10 @@ public class ControllerDichVuDung extends AbstractTableModel{
     };
     private ArrayList<DichVuDung> alItem = new ArrayList<DichVuDung>();
     
-    public ControllerDichVuDung(JTable table) {
+    public ControllerDichVuDung(JTable table,May item) {
     	this.table = table;
         model = new DichVuDungBO();
-        alItem = model.getList();
+        alItem = model.getList(item.getIdm());
 	}
     
 	@Override
@@ -69,7 +70,11 @@ public class ControllerDichVuDung extends AbstractTableModel{
                 object = Item.getSoLuong();
                 break;
             case 3:
-            	object = Item.getTrangThai();
+            	if(Integer.parseInt(Item.getTrangThai()) == 0){
+            		object = "Đang xử lý";
+            	}else{
+            		object = "Đã xử lý";
+            	}
             	break;
         }
         return object;
@@ -99,5 +104,4 @@ public class ControllerDichVuDung extends AbstractTableModel{
         table.getColumnModel().getColumn(2).setPreferredWidth(100);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
     }
-	
 }
