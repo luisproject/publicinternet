@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,14 +31,17 @@ import javax.swing.KeyStroke;
 import javax.swing.SpinnerDateModel;
 
 import controller.ControllerDichVuDung;
+import model.bean.DichVuDung;
 import model.bean.May;
 import model.bean.PhienNguoiDung;
+import model.bo.DichVuDungBO;
 import model.bo.MayBO;
 import model.bo.PhienNguoiDungBO;
 import model.dao.MayDAO;
 import model.dao.PhienNguoiDungDAO;
 import utils.LibraryString;
 import utils.MyTimesTamp;
+import utils.render.TinhTrangComboboxModel;
 
 @SuppressWarnings("all")
 public class PnHome extends JPanel {
@@ -97,6 +101,7 @@ public class PnHome extends JPanel {
 	
 	private MayBO mayBO = new MayBO();
 	private PhienNguoiDungBO phienNguoiDungBO = new PhienNguoiDungBO();
+	private DichVuDungBO dichVuDungBO = new DichVuDungBO();
 	private ControllerDichVuDung controller;
 	
 	private JButton btnRoom;
@@ -356,6 +361,14 @@ public class PnHome extends JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tbService.setAutoCreateRowSorter(false);
+        tbService.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbServiceMousePressed(evt);
+            }
+        });
+        
+        
         jScrollPane2.setViewportView(tbService);
         Service.add(jScrollPane2, java.awt.BorderLayout.CENTER);
         
@@ -453,8 +466,27 @@ public class PnHome extends JPanel {
         add(jSplitPane1, java.awt.BorderLayout.CENTER);
 	}
 
+	protected void tbServiceMousePressed(MouseEvent evt) {
+		// TODO Auto-generated method stub
+		int row = tbService.getSelectedRow();
+		String tenDichVu = tbService.getValueAt(row, 0).toString();
+		DichVuDung objDVD = dichVuDungBO.getItem(tenDichVu);
+		selectionBox(objDVD,row);
+	}
+
+	private void selectionBox(DichVuDung obj,int row) {
+		// TODO Auto-generated method stub
+		String[] options = new String[] {"Đồng ý","Hủy bỏ"};
+	    int response = JOptionPane.showOptionDialog(null, "Bạn muốn xử lý yêu cầu này không ?", "Thông báo",JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE,null, options, options[0]);
+	    if(response == 0){
+	    	obj.setTrangThai("Đã xử lý");
+	    	controller.editItem(obj, row);
+	    }
+	}
+
 	protected void btnOffActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		
 	}
 
 	protected void btnOnActionPerformed(ActionEvent evt) {

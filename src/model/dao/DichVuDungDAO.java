@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import model.bean.DichVu;
 import model.bean.DichVuDung;
 import utils.db.LibraryConnectDb;
 
@@ -49,11 +50,11 @@ public class DichVuDungDAO {
     public int editItem(DichVuDung c) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
-        String sql = "UPDATE "+table+" SET trangthai = ? WHERE tendichvu = ? LIMIT 1";
+        String sql = "UPDATE "+table+" SET trangthai = ? WHERE id = ? LIMIT 1";
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1, c.getTrangThai());
-            pst.setString(2, c.getTenDichVu());
+            pst.setInt(2, c.getId());
             pst.executeUpdate();
             result = c.getId();
         } catch (SQLException e) {
@@ -66,4 +67,25 @@ public class DichVuDungDAO {
         }
         return result;
     }
+	public DichVuDung getItem(String tenDichVuDung) {
+		conn = lcdb.getConnectMySQL();
+        DichVuDung c = null;
+        String sql = "SELECT * FROM "+table+" WHERE tendichvu = ? LIMIT 1";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, tenDichVuDung);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                c = new DichVuDung(rs.getInt("id"), rs.getInt("idm"), rs.getString("tendichvu"), rs.getInt("dongia"), rs.getInt("soluong"),rs.getString("trangthai"));
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return c;
+	}
 }

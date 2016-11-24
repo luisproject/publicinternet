@@ -70,11 +70,7 @@ public class ControllerDichVuDung extends AbstractTableModel{
                 object = Item.getSoLuong();
                 break;
             case 3:
-            	if(Integer.parseInt(Item.getTrangThai()) == 0){
-            		object = "Đang xử lý";
-            	}else{
-            		object = "Đã xử lý";
-            	}
+            	object = Item.getTrangThai();
             	break;
         }
         return object;
@@ -103,5 +99,16 @@ public class ControllerDichVuDung extends AbstractTableModel{
         table.getColumnModel().getColumn(1).setPreferredWidth(100);
         table.getColumnModel().getColumn(2).setPreferredWidth(100);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
+    }
+	
+	public int editItem(DichVuDung obj, int row) {
+        // update in database
+        int id = model.editItem(obj);
+        // update in model
+        obj.setId(id);
+        int rowModel=table.convertRowIndexToModel(row);
+        alItem.set(rowModel,obj);
+        this.fireTableDataChanged();
+        return id;
     }
 }

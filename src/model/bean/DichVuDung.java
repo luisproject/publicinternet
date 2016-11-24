@@ -20,6 +20,12 @@ public class DichVuDung {
 		this.soLuong = soLuong;
 		this.trangThai = trangThai;
 	}
+	
+	public DichVuDung(String tenDichVu, String trangThai) {
+		super();
+		this.tenDichVu = tenDichVu;
+		this.trangThai = trangThai;
+	}
 	public int getId() {
 		return id;
 	}

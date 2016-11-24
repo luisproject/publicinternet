@@ -12,4 +12,7 @@ public class DichVuDungBO {
     public int editItem(DichVuDung obj) {
         return new DichVuDungDAO().editItem(obj);
     }
+    public DichVuDung getItem(String tenDichVuDung){
+    	return new DichVuDungDAO().getItem(tenDichVuDung);
+    }
 }
