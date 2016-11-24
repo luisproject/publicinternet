@@ -22,7 +22,9 @@ import javax.swing.table.TableRowSorter;
 import controller.ControllerDichVu;
 import model.bean.DichVu;
 import model.bean.May;
+import model.bo.DichVuBO;
 import utils.ButtonGroupTT;
+import utils.MessageBundle;
 import utils.ValidateDbDV;
 import utils.ValidateDbMay;
 import utils.render.DonViComboboxModel;
@@ -335,9 +337,28 @@ public class PnDichVu extends JPanel {
 		// TODO Auto-generated method stub
 		try{
             String tenDichVu = tfName.getText();
-            int donGia = Integer.parseInt(spDongia.getValue().toString());
+            if(tenDichVu.isEmpty()){
+            	JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Tên dịch không được bỏ trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            	return;
+            }
+            
+            int donGia = 0;
+            try{
+            	donGia = Integer.parseInt(spDongia.getValue().toString());
+            }catch(Exception ex){
+            	JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Đơn giá dịch vụ không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            	return;
+            }
+            
             String donVi = (String)new DonViComboboxModel().getElementAt(cbDonvi.getSelectedIndex());
-            int soLuong = Integer.parseInt(spSoluong.getValue().toString());
+            
+            int soLuong = 0;
+            try{
+            	soLuong = Integer.parseInt(spSoluong.getValue().toString());
+            }catch(Exception ex){
+            	JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Số lượng dịch vụ không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            	return;
+            }
             DichVu obj = new DichVu(0, tenDichVu, donGia, donVi, soLuong); 
             if(isValid(obj, "add")){
                 if(!new ValidateDbDV().tendv_exist(obj.getTenDichVu())){
@@ -363,10 +384,36 @@ public class PnDichVu extends JPanel {
         if(row >= 0){
             try{
                 int iddv = Integer.parseInt(tfId.getText());
+                
                 String tenDichVu = tfName.getText();
-                int donGia = Integer.parseInt(spDongia.getValue().toString());
+                if(tenDichVu.isEmpty()){
+                	tenDichVu = new DichVuBO().getItem(iddv).getTenDichVu();
+                }
+                
+                int donGia = 0;
+                try{
+                	donGia = Integer.parseInt(spDongia.getValue().toString());
+                }catch(Exception ex){
+                	JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Đơn giá dịch vụ không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                	return;
+                }
+                if(donGia==0){
+                	donGia = new DichVuBO().getItem(iddv).getDonGia();
+                }
+                
                 String donVi = (String)new DonViComboboxModel().getElementAt(cbDonvi.getSelectedIndex());
-                int soLuong = Integer.parseInt(spSoluong.getValue().toString());
+                
+                int soLuong = 0;
+                try{
+                	soLuong = Integer.parseInt(spSoluong.getValue().toString());
+                }catch(Exception ex){
+                	JOptionPane.showConfirmDialog(new PnDichVu(), "<html><p style=\"color:red; font-weight:bold;\">Số lượng dịch vụ không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                	return;
+                }
+                if(soLuong==0){
+                	soLuong = new DichVuBO().getItem(iddv).getSoLuong();
+                }
+                
                 DichVu obj = new DichVu(iddv, tenDichVu, donGia, donVi, soLuong); 
                 if(isValid(obj, "edit")){
                     if(!new ValidateDbDV().tendv_existver(obj.getTenDichVu(),iddv)){
@@ -422,6 +469,7 @@ public class PnDichVu extends JPanel {
 	
 	protected void btNhapLaiFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		tfNameF.setText("");
 		controller.loadTable();
 	}
 	

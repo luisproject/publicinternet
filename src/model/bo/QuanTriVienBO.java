@@ -10,6 +10,10 @@ public class QuanTriVienBO {
         return new QuanTriVienDAO().getList();
     }
 
+	public QuanTriVien getItem(int id){
+		return new QuanTriVienDAO().getItem(id);
+	}
+	
     public int addItem(QuanTriVien obj) {
         return new QuanTriVienDAO().addItem(obj);
     }

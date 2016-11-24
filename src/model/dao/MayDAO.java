@@ -102,7 +102,7 @@ public class MayDAO {
     public int editItem(May c) {
         int result = 0;
         conn = lcdb.getConnectMySQL();
-        String sql = "UPDATE "+table+" SET tenmay = ?,tinhtrang = ?,trangthai = ?,mota = ?,dongia = ?,diachimac = ? WHERE idm = ? LIMIT 1";
+        String sql = "UPDATE "+table+" SET tenmay = ?,tinhtrang = ?,trangthai = ?,mota = ?,dongia = ? WHERE idm = ? LIMIT 1";
         try {
             pst = conn.prepareStatement(sql);
             pst.setString(1, c.getTenMay());
@@ -110,8 +110,7 @@ public class MayDAO {
             pst.setBoolean(3, c.getTrangThai());
             pst.setString(4, c.getMoTa());
             pst.setInt(5, c.getDonGia());
-            pst.setString(6, c.getDiaChiMac());
-            pst.setInt(7, c.getIdm());
+            pst.setInt(6, c.getIdm());
             pst.executeUpdate();
             result = c.getIdm();
         } catch (SQLException e) {

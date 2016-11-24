@@ -654,6 +654,9 @@ public class PnMay extends JPanel {
 
 	protected void btnNhapLaiFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		tfIdF.setText("");
+		tfDongiaF.setText("");
+		tfNameF.setText("");
 		controller.loadTable();
 	}
 

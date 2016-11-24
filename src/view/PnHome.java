@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Timestamp;
@@ -25,6 +26,7 @@ import javax.swing.JSpinner;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.SpinnerDateModel;
 
 import model.bean.May;
@@ -101,7 +103,7 @@ public class PnHome extends JPanel {
 		initComponents();
 		listMay = new MayBO().getList();
 		setRowList(new MayBO().getList().size());
-		viewRoom(list);		
+		viewRoom(list);
 	}
 
 	private void setRowList(int size){
@@ -164,7 +166,9 @@ public class PnHome extends JPanel {
 		linea = new Separator();
 		PopupUserSession = new JPopupMenu();
 		
-		miniOpen.setText("Open");
+		miniOpen.setText("Sử dụng");
+		miniOpen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/on.png")));
+		miniOpen.setAccelerator(KeyStroke.getKeyStroke('O', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
 		miniOpen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miniOpenActionPerformed(evt);
@@ -174,7 +178,9 @@ public class PnHome extends JPanel {
         
         PopupUserSession.add(linea);
         
-        miniClose.setText("Close");
+        miniClose.setText("Thanh toán");
+        miniClose.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/off.png"))); 
+        miniClose.setAccelerator(KeyStroke.getKeyStroke('E', Toolkit.getDefaultToolkit ().getMenuShortcutKeyMask()));
         miniClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 miniCloseActionPerformed(evt);
@@ -313,9 +319,10 @@ public class PnHome extends JPanel {
         tfTongTien.setPreferredSize(new java.awt.Dimension(59, 24));
         tfTongTien.setEditable(false);
 
-        btnOn.setFont(new java.awt.Font("Tahoma", 1, 11)); 
-        btnOn.setForeground(new java.awt.Color(51, 51, 255));
+        btnOn.setFont(new java.awt.Font("Tahoma", 1, 11));
         btnOn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/on.png"))); 
+        btnOn.setText("Sử dụng");
+        btnOn.setForeground(new java.awt.Color(22, 140, 140));
         btnOn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOnActionPerformed(evt);
@@ -324,8 +331,9 @@ public class PnHome extends JPanel {
         Controll.add(btnOn);
         
         btnOff.setFont(new java.awt.Font("Tahoma", 1, 11)); 
-        btnOff.setForeground(new java.awt.Color(51, 51, 255));
+        btnOff.setForeground(new java.awt.Color(246,44, 18));
         btnOff.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/off.png"))); 
+        btnOff.setText("Thanh toán");
         btnOff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOffActionPerformed(evt);
@@ -477,31 +485,53 @@ public class PnHome extends JPanel {
 		if(item.getTrangThai()){
 			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">ĐANG ONLINE</p></html>");
 			tfThoiGianBatDau.setValue(new Date(phienNguoiDung.getThoiGianBatDau().getTime()));
-			tfThoiGianKetThuc.setValue(new Date());
+			new Thread(){
+				public void run() {
+					while(true){
+						tfThoiGianKetThuc.setValue(new Date());
+						try {
+							sleep(1000);
+						} catch (InterruptedException e) {
+							System.out.print(e.getMessage());
+						}
+					}
+				};
+			}.start();
 			// Caculating money
 			
-			String money = LibraryString.operMoney(LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000), item.getDonGia())+"";
-			if(Integer.parseInt(money) > 1000){
-				
-				tfPhiDichVu.setText(LibraryString.changeCurrencyVND(money)+" VND");
-				
-				// View time to play
-				Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
-				tfThoiGianChoi.setValue(thoiGianChoi);
-				
-				// Update table PhienNguoiDung
-				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),LibraryString.formatTime(thoiGianChoi),money));
-			}else{
-				
-				tfPhiDichVu.setText("1.000 VND");
-				
-				// View time to play
-				Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
-				tfThoiGianChoi.setValue(thoiGianChoi);
-				
-				// Update table PhienNguoiDung
-				phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),LibraryString.formatTime(thoiGianChoi),"1000"));
-			}
+			new Thread(){
+				public void run() {
+					while(true){
+						String money = LibraryString.operMoney(LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000), item.getDonGia())+"";
+						if(Integer.parseInt(money) > 1000){
+							
+							tfPhiDichVu.setText(LibraryString.changeCurrencyVND(money)+" VND");
+							
+							// View time to play
+							Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
+							tfThoiGianChoi.setValue(thoiGianChoi);
+							
+							// Update table PhienNguoiDung
+							phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),LibraryString.formatTime(thoiGianChoi),money));
+						}else{
+							
+							tfPhiDichVu.setText("1.000 VND");
+							
+							// View time to play
+							Date thoiGianChoi = LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000);
+							tfThoiGianChoi.setValue(thoiGianChoi);
+							
+							// Update table PhienNguoiDung
+							phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),LibraryString.formatTime(thoiGianChoi),"1000"));
+						}
+						try {
+							sleep(1000);
+						} catch (InterruptedException e) {
+							System.out.print(e.getMessage());
+						}
+					}
+				};
+			}.start();
 			
 		}else{
 			trangThailbl.setText("<html><p style=\"color:red; font-weight:bold; font-size: 11px;\">KHÔNG ONLINE</p></html>");
@@ -520,5 +550,22 @@ public class PnHome extends JPanel {
 
 	protected void miniOpenActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		May item = mayBO.getItemName(tfTenMay.getText());
+		if(tfTenMay.getText().equals("")){
+			JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn máy!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+		}else{
+			if(item.getTinhTrang().equals("Bảo Trì")){
+				JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Xin lỗi hiện tại máy đang bảo trì!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+			}else{
+				if(item.getTrangThai()){
+					JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Đang có người sử dụng!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chắc sử dụng máy này không ?</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					item.setTrangThai(true);
+					phienNguoiDungBO.addItem(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),MyTimesTamp.getTimestampToDB(),MyTimesTamp.getTimestampToDB(),"00:00","1000"));
+					mayBO.editItem(new May(item.getIdm(),item.getTenMay(),item.getTinhTrang(),item.getTrangThai(),item.getMoTa(),item.getDonGia(),""));
+				}
+			}
+		}
 	}
 }

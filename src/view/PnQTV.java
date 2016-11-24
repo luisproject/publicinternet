@@ -26,6 +26,7 @@ import javax.swing.table.TableRowSorter;
 
 import controller.ControllerQuanTriVien;
 import model.bean.QuanTriVien;
+import model.bo.QuanTriVienBO;
 import utils.ButtonGroupAdmin;
 import utils.MessageBundle;
 import utils.ValidateDbQTV;
@@ -381,6 +382,15 @@ public class PnQTV extends JPanel {
             }
             
             String matKhau = tfPass.getText();
+            if(matKhau.isEmpty()){
+            	JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu không được bỏ trống!!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            	return;
+            }else{
+            	if(matKhau.length() < 3 ){
+            		JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu quá ngắn(>=6 ký tự)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            		return;
+            	}
+            }
             String hoTen = tfName.getText();
             Boolean isAdmin = new ButtonGroupAdmin().isSelect(btnAdmin);
             QuanTriVien obj  = new QuanTriVien(0, tenDangNhap, matKhau, hoTen, isAdmin);
@@ -407,8 +417,39 @@ public class PnQTV extends JPanel {
 	            try{
 	              int idqtv = Integer.parseInt(tfId.getText());
 	              String tenDangNhap = tfUser.getText();
+	              
+	              if(tenDangNhap.isEmpty()){
+	              	tenDangNhap = new QuanTriVienBO().getItem(idqtv).getTenDangNhap();
+	              }else{	
+	              	if(!MessageBundle.isUsername(tenDangNhap)){
+	                  	if(tenDangNhap.length() < 3 || tenDangNhap.length() > 13){
+	                  		if(tenDangNhap.length() < 3){
+	                  			JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập ngắn quá (ít nhất >= 6)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                  		}
+	                  		if(tenDangNhap.length() > 13){
+	                  			JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập dài quá (nhỏ hơn <= 50)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                  		}
+	                  		return;
+	                  	}
+	                  	JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                  	return;
+	                  }
+	              }
+	              
 	              String matKhau = tfPass.getText();
+	              if(matKhau.isEmpty()){
+	            	  matKhau = new QuanTriVienBO().getItem(idqtv).getMatKhau();
+	            	  if(matKhau.length() < 3 ){
+		            		JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu quá ngắn(>=6 ký tự)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+		            		return;
+		              }
+	              }
+	              
 	              String hoTen = tfName.getText();
+	              if(hoTen.isEmpty()){
+	            	  hoTen = new QuanTriVienBO().getItem(idqtv).getHoTen();
+	              }
+	              
 	              Boolean isAdmin = new ButtonGroupAdmin().isSelect(btnAdmin);
 	              QuanTriVien obj  = new QuanTriVien(idqtv, tenDangNhap, matKhau, hoTen, isAdmin);
 					if(isValid(obj, "edit")){
@@ -468,6 +509,7 @@ public class PnQTV extends JPanel {
 
 	protected void btNhapLaiFActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
+		tfUserF.setText("");
 		controller.loadTable();
 	}
 	

@@ -51,7 +51,7 @@ public class DichVuDAO {
      public DichVu getItem(int cid) {
         conn = lcdb.getConnectMySQL();
         DichVu c = null;
-        String sql = "SELECT * FROM "+table+" WHERE idm = ? LIMIT 1";
+        String sql = "SELECT * FROM "+table+" WHERE iddv = ? LIMIT 1";
         try {
             pst = conn.prepareStatement(sql);
             pst.setInt(1, cid);
