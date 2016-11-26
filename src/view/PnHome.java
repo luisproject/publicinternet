@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -114,10 +115,10 @@ public class PnHome extends JPanel {
 	}
 
 	private void setRowList(int size){
-		int dir = size/13;
-		int mod = size%13;
+		int dir = size/12;
+		int mod = size%12;
 		for(int i = 0; i < dir; i++){
-			list.add(13);
+			list.add(12);
 		}
 		if(mod != 0){
 			list.add(mod);
@@ -127,7 +128,7 @@ public class PnHome extends JPanel {
 		int j = 0;
 		for(int index = 0; index < listRow.size(); index++){
 			JPanel leftRow = new JPanel();
-			leftRow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
+			leftRow.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT,15,15));
 		    Left.add(leftRow);
 		    viewComputer(leftRow,listMay,listRow,index,j);
 		    j += listRow.get(index);

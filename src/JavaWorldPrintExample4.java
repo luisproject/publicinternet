@@ -94,9 +94,9 @@ public class JavaWorldPrintExample4 {
 
 	private void print(Graphics2D g2d, double pageWidth, double pageHeight) {
 	  String titleInternet = new String();
-	  titleInternet = "Inet 7.0";
+	  titleInternet = "Võ Lâm Hội Quán";
 	  AttributedString titleInternetAttr = new AttributedString(titleInternet);
-	  titleInternetAttr.addAttribute(TextAttribute.FONT, new Font("Helvetica Neue",Font.BOLD, 24));
+	  titleInternetAttr.addAttribute(TextAttribute.FONT, new Font("Ballpark Weiner",Font.BOLD, 24));
 	  LineBreakMeasurer lineBreakerAttr = new LineBreakMeasurer(titleInternetAttr.getIterator(), new FontRenderContext(null, true, true));
 	  
 	  Point2D.Double pen = new Point2D.Double(pageWidth/3 - 0.25 * POINTS_PER_INCH,0.35 * POINTS_PER_INCH);

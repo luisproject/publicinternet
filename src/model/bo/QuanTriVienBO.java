@@ -25,4 +25,8 @@ public class QuanTriVienBO {
     public int editItem(QuanTriVien obj) {
         return new QuanTriVienDAO().editItem(obj);
     }
+    
+    public boolean getItemByUser(String tenDangNhap) {
+		return new QuanTriVienDAO().getItemByUser(tenDangNhap);
+	}
 }

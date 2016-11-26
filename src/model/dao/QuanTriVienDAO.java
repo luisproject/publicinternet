@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import model.bean.Member;
 import model.bean.QuanTriVien;
 import utils.LibraryString;
 import utils.db.LibraryConnectDb;
@@ -142,4 +143,25 @@ public class QuanTriVienDAO {
         }
         return result;
     }
+	public boolean getItemByUser(String tenDangNhap) {
+		conn = lcdb.getConnectMySQL();
+        QuanTriVien c = null;
+        String sql = "SELECT * FROM "+table+" WHERE tendangnhap = ?";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, tenDangNhap);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                c = new QuanTriVien(rs.getInt("idqt"),rs.getString("tendangnhap"),rs.getString("matkhau"),rs.getString("hoten"),rs.getBoolean("isadmin"));
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return (c!=null)?true:false;
+	}
 }

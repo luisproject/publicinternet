@@ -36,12 +36,9 @@ public class FrInitial extends JFrame{
 	}
 	protected void jLabel1MousePressed(MouseEvent evt) {
 		// TODO Auto-generated method stub
-		JOptionPane message = new JOptionPane();
-		message.setLocation(getLocationOnScreen());
-		message.showConfirmDialog(getParent(), "<html><p style=\"color:red; font-weight:bold; font-size:20px\">Sử dụng dịch vụ!</p></html>");
-		JFrame FrMain = new FrMain();
-        FrMain.setVisible(true);
-        this.dispose();
+		FrLogin frLogin = new FrLogin(this);
+		frLogin.setLocale(getLocale());
+		frLogin.setVisible(true);
 	}
 	public static void main(String args[]) {
         try {
