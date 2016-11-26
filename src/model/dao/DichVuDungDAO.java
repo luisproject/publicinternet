@@ -88,4 +88,24 @@ public class DichVuDungDAO {
         }
         return c;
 	}
+	public int delItemCom(int idm) {
+		int result = 0;
+        conn = lcdb.getConnectMySQL();
+
+        String sql = "DELETE FROM "+table+" WHERE idm = ? LIMIT 1";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, idm);
+            pst.executeUpdate();
+            result = 1;
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return result;
+	}
 }

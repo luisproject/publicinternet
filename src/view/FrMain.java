@@ -70,62 +70,11 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
     private JPanel Center;
     private JPanel Top;
     private JPanel Bottom;
-    
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		
-		/* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(FrMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(FrMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(FrMain.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(FrMain.class.getName()).log(Level.SEVERE, null, ex);
-        }
-		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrMain frame = new FrMain();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+    private static String tenDangNhap;
 	/**
 	 * Create the frame.
 	 */
-	public FrMain() {
+	public FrMain(String tenDangNhap) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		
@@ -134,6 +83,7 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
 		
 		this.setTitle("PHẦN MỀM TIỆM INTERNET CÔNG CỘNG");
         this.setLocationRelativeTo(this);
+        this.tenDangNhap = tenDangNhap;
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -152,7 +102,7 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
 		contentPane.add(Bottom, BorderLayout.SOUTH);
 		
 		initMenu();
-        initMenuItem();
+//        initMenuItem();
         initToolbar();
         initCenter();
         initBottom();
@@ -175,7 +125,7 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
         
         txtAdmin = new JLabel();
         txtAdmin.setFont(new Font("Tahoma", Font.BOLD, 12)); 
-        txtAdmin.setText("Admin");
+        txtAdmin.setText(this.tenDangNhap);
         bottom.add(txtAdmin);
 
         Bottom.add(bottom, BorderLayout.CENTER);
@@ -202,7 +152,7 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
         }else if(select==4){
             tab.add("<html><p style=\"color:#003e5c\">Quản lý dịch vụ&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnDichVu());
         }else if(select==5){
-            tab.add("<html><p style=\"color:#003e5c\">Quản lý quản trị viên&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnQTV());
+            tab.add("<html><p style=\"color:#003e5c\">Quản lý quản trị viên&nbsp;&nbsp;&nbsp;&nbsp;</p></html>",new PnQTV(this.tenDangNhap));
         }
 	}
 
@@ -391,127 +341,127 @@ public class FrMain extends JFrame implements MouseListener,ActionListener{
         });
 	}
 
-	private void initMenuItem() {
-		// TODO Auto-generated method stub
-		// jmSystem => View All Room, Logout and Exit
-        JMenuItem jmSys1 = new JMenuItem();
-        jmSys1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmSys1.setText("Danh sách các phiên người dùng");
-        jmSys1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, InputEvent.CTRL_MASK));
-        jmSys1.setIcon(new ImageIcon(getClass().getResource("/images/room.png"))); 
-        jmSystem.add(jmSys1);
-        
-        JMenuItem jmSys2 = new JMenuItem();
-        jmSys2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmSys2.setText("Đăng xuất");
-        jmSys2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, InputEvent.CTRL_MASK));
-        jmSys2.setIcon(new ImageIcon(getClass().getResource("/images/logout.png"))); 
-        jmSystem.add(jmSys2);
-        
-        // http://icons.iconarchive.com + 16bit
-        JMenuItem jmSys3 = new JMenuItem();
-        jmSys3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmSys3.setText("Thoát");
-        jmSys3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, InputEvent.CTRL_MASK));
-        jmSys3.setIcon(new ImageIcon(getClass().getResource("/images/exit.png"))); 
-        jmSystem.add(jmSys3);
-        
-        // jmActivity => Đăng ký, Đặt phòng, Kiểm tra
-        JMenuItem jmAct1 = new JMenuItem();
-        jmAct1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmAct1.setText("Đăng ký");
-        jmAct1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, InputEvent.CTRL_MASK));
-        jmAct1.setIcon(new ImageIcon(getClass().getResource("/images/check_in.png"))); 
-        jmActivity.add(jmAct1);
-        
-        JMenuItem jmAct2 = new JMenuItem();
-        jmAct2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmAct2.setText("Thanh toán");
-        jmAct2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_5, InputEvent.CTRL_MASK));
-        jmAct2.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
-        jmActivity.add(jmAct2);
-        
-        JMenuItem jmAct3 = new JMenuItem();
-        jmAct3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmAct3.setText("Kiểm tra");
-        jmAct3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_6, InputEvent.CTRL_MASK));
-        jmAct3.setIcon(new ImageIcon(getClass().getResource("/images/checkout.png"))); 
-        jmActivity.add(jmAct3);
-        
-        // jmWarehouse => Checking + Booking
-        JMenuItem jmWare1 = new JMenuItem();
-        jmWare1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmWare1.setText("Máy");
-        jmWare1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_7, InputEvent.CTRL_MASK));
-        jmWare1.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
-        jmWarehouse.add(jmWare1);
-        
-        JMenuItem jmWare2 = new JMenuItem();
-        jmWare2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmWare2.setText("Dịch Vụ");
-        jmWare2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_8, InputEvent.CTRL_MASK));
-        jmWare2.setIcon(new ImageIcon(getClass().getResource("/images/checkout.png"))); 
-        jmWarehouse.add(jmWare2);
-        
-        // jmPrecious => Information Customer,Set Room Price, Room Information
-        JMenuItem jmPre1 = new JMenuItem();
-        jmPre1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPre1.setText("Tiện ích A");
-        jmPre1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_9, InputEvent.CTRL_MASK));
-        jmPre1.setIcon(new ImageIcon(getClass().getResource("/images/customer.png"))); 
-        jmPrecious.add(jmPre1);
-        
-        JMenuItem jmPre2 = new JMenuItem();
-        jmPre2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPre2.setText("Tiện ích B");
-        jmPre2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, InputEvent.CTRL_MASK));
-        jmPre2.setIcon(new ImageIcon(getClass().getResource("/images/price.png"))); 
-        jmPrecious.add(jmPre2);
-        
-        JMenuItem jmPre3 = new JMenuItem();
-        jmPre3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPre3.setText("Tiện ích C");
-        jmPre3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
-        jmPre3.setIcon(new ImageIcon(getClass().getResource("/images/roomdetail.png"))); 
-        jmPrecious.add(jmPre3);
-        
-        //jmPersonal => Set Up User,Change Username/Password
-        JMenuItem jmPer1 = new JMenuItem();
-        jmPer1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPer1.setText("Thiết lập người dùng");
-        jmPer1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
-        jmPer1.setIcon(new ImageIcon(getClass().getResource("/images/user.png"))); 
-        jmPersonel.add(jmPer1);
-        
-        JMenuItem jmPer2 = new JMenuItem();
-        jmPer2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmPer2.setText("Thay đổi username và password");
-        jmPer2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
-        jmPer2.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
-        jmPersonel.add(jmPer2);
-        
-        //jManager => Check in/Book ing/ Check out
-        JMenuItem jmMa1 = new JMenuItem();
-        jmMa1.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmMa1.setText("Thống Kê Ngày");
-        jmMa1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
-        jmMa1.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
-        jmManager.add(jmMa1);
-        
-        JMenuItem jmMa2 = new JMenuItem();
-        jmMa2.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmMa2.setText("Thống Kê Tháng");
-        jmMa2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
-        jmMa2.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
-        jmManager.add(jmMa2);
-        
-        JMenuItem jmMa3 = new JMenuItem();
-        jmMa3.setFont(new Font("Tahoma", Font.PLAIN, 11));
-        jmMa3.setText("Thống Kê Năm");
-        jmMa3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
-        jmMa3.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
-        jmManager.add(jmMa3);
-	}
+//	private void initMenuItem() {
+//		// TODO Auto-generated method stub
+//		// jmSystem => View All Room, Logout and Exit
+//        JMenuItem jmSys1 = new JMenuItem();
+//        jmSys1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmSys1.setText("Danh sách các phiên người dùng");
+//        jmSys1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_1, InputEvent.CTRL_MASK));
+//        jmSys1.setIcon(new ImageIcon(getClass().getResource("/images/room.png"))); 
+//        jmSystem.add(jmSys1);
+//        
+//        JMenuItem jmSys2 = new JMenuItem();
+//        jmSys2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmSys2.setText("Đăng xuất");
+//        jmSys2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_2, InputEvent.CTRL_MASK));
+//        jmSys2.setIcon(new ImageIcon(getClass().getResource("/images/logout.png"))); 
+//        jmSystem.add(jmSys2);
+//        
+//        // http://icons.iconarchive.com + 16bit
+//        JMenuItem jmSys3 = new JMenuItem();
+//        jmSys3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmSys3.setText("Thoát");
+//        jmSys3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_3, InputEvent.CTRL_MASK));
+//        jmSys3.setIcon(new ImageIcon(getClass().getResource("/images/exit.png"))); 
+//        jmSystem.add(jmSys3);
+//        
+//        // jmActivity => Đăng ký, Đặt phòng, Kiểm tra
+//        JMenuItem jmAct1 = new JMenuItem();
+//        jmAct1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmAct1.setText("Đăng ký");
+//        jmAct1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_4, InputEvent.CTRL_MASK));
+//        jmAct1.setIcon(new ImageIcon(getClass().getResource("/images/check_in.png"))); 
+//        jmActivity.add(jmAct1);
+//        
+//        JMenuItem jmAct2 = new JMenuItem();
+//        jmAct2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmAct2.setText("Thanh toán");
+//        jmAct2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_5, InputEvent.CTRL_MASK));
+//        jmAct2.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
+//        jmActivity.add(jmAct2);
+//        
+//        JMenuItem jmAct3 = new JMenuItem();
+//        jmAct3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmAct3.setText("Kiểm tra");
+//        jmAct3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_6, InputEvent.CTRL_MASK));
+//        jmAct3.setIcon(new ImageIcon(getClass().getResource("/images/checkout.png"))); 
+//        jmActivity.add(jmAct3);
+//        
+//        // jmWarehouse => Checking + Booking
+//        JMenuItem jmWare1 = new JMenuItem();
+//        jmWare1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmWare1.setText("Máy");
+//        jmWare1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_7, InputEvent.CTRL_MASK));
+//        jmWare1.setIcon(new ImageIcon(getClass().getResource("/images/booking.png"))); 
+//        jmWarehouse.add(jmWare1);
+//        
+//        JMenuItem jmWare2 = new JMenuItem();
+//        jmWare2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmWare2.setText("Dịch Vụ");
+//        jmWare2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_8, InputEvent.CTRL_MASK));
+//        jmWare2.setIcon(new ImageIcon(getClass().getResource("/images/checkout.png"))); 
+//        jmWarehouse.add(jmWare2);
+//        
+//        // jmPrecious => Information Customer,Set Room Price, Room Information
+//        JMenuItem jmPre1 = new JMenuItem();
+//        jmPre1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmPre1.setText("Tiện ích A");
+//        jmPre1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_9, InputEvent.CTRL_MASK));
+//        jmPre1.setIcon(new ImageIcon(getClass().getResource("/images/customer.png"))); 
+//        jmPrecious.add(jmPre1);
+//        
+//        JMenuItem jmPre2 = new JMenuItem();
+//        jmPre2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmPre2.setText("Tiện ích B");
+//        jmPre2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_B, InputEvent.CTRL_MASK));
+//        jmPre2.setIcon(new ImageIcon(getClass().getResource("/images/price.png"))); 
+//        jmPrecious.add(jmPre2);
+//        
+//        JMenuItem jmPre3 = new JMenuItem();
+//        jmPre3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmPre3.setText("Tiện ích C");
+//        jmPre3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+//        jmPre3.setIcon(new ImageIcon(getClass().getResource("/images/roomdetail.png"))); 
+//        jmPrecious.add(jmPre3);
+//        
+//        //jmPersonal => Set Up User,Change Username/Password
+//        JMenuItem jmPer1 = new JMenuItem();
+//        jmPer1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmPer1.setText("Thiết lập người dùng");
+//        jmPer1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+//        jmPer1.setIcon(new ImageIcon(getClass().getResource("/images/user.png"))); 
+//        jmPersonel.add(jmPer1);
+//        
+//        JMenuItem jmPer2 = new JMenuItem();
+//        jmPer2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmPer2.setText("Thay đổi username và password");
+//        jmPer2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+//        jmPer2.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+//        jmPersonel.add(jmPer2);
+//        
+//        //jManager => Check in/Book ing/ Check out
+//        JMenuItem jmMa1 = new JMenuItem();
+//        jmMa1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmMa1.setText("Thống Kê Ngày");
+//        jmMa1.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+//        jmMa1.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+//        jmManager.add(jmMa1);
+//        
+//        JMenuItem jmMa2 = new JMenuItem();
+//        jmMa2.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmMa2.setText("Thống Kê Tháng");
+//        jmMa2.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+//        jmMa2.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+//        jmManager.add(jmMa2);
+//        
+//        JMenuItem jmMa3 = new JMenuItem();
+//        jmMa3.setFont(new Font("Tahoma", Font.PLAIN, 11));
+//        jmMa3.setText("Thống Kê Năm");
+//        jmMa3.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, InputEvent.CTRL_MASK));
+//        jmMa3.setIcon(new ImageIcon(getClass().getResource("/images/password.png"))); 
+//        jmManager.add(jmMa3);
+//	}
 
 	private void initMenu() {
 		// TODO Auto-generated method stub

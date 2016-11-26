@@ -322,7 +322,7 @@ public class FrLogin extends JFrame{
         	return;
         }
         if(qtvBO.getItemByUser(tenDangNhap)){
-        	FrMain frMain = new FrMain();
+        	FrMain frMain = new FrMain(tenDangNhap);
         	frMain.setLocation(getLocation());
         	frMain.setVisible(true);
         	this.frInitial.setVisible(false);

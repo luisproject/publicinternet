@@ -26,10 +26,14 @@ public class ControllerQuanTriVien extends AbstractTableModel{
     };
     private ArrayList<QuanTriVien> alItem = new ArrayList<QuanTriVien>();
     
-    public ControllerQuanTriVien(JTable table) {
+    public ControllerQuanTriVien(JTable table,String tenDangNhap) {
     	this.table = table;
         model = new QuanTriVienBO();
-        alItem = model.getList();
+        if(model.getItemByName(tenDangNhap).isAdmin()){
+        	alItem = model.getList();
+        }else{
+        	alItem.add(model.getItemByName(tenDangNhap));
+        }
 	}
     
 	@Override

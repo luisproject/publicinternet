@@ -16,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
@@ -48,7 +49,7 @@ public class PnQTV extends JPanel {
 	
 	private JTextField tfId;
 	private JTextField tfUser;
-	private JTextField tfPass;
+	private JPasswordField tfPass;
 	private JTextField tfName;
 	
 	private JPanel qtvsearch;
@@ -75,10 +76,13 @@ public class PnQTV extends JPanel {
 	
 	private ButtonGroup btnAdmin;
 	private ControllerQuanTriVien controller;
+	private String tenDangNhap;
 	
-	public PnQTV() {
+	public PnQTV(String tenDangNhap) {
 		initComponents();
-		controller = new ControllerQuanTriVien(tbMain);
+		tfPass.setEchoChar('•');
+		this.tenDangNhap = tenDangNhap;
+		controller = new ControllerQuanTriVien(tbMain,tenDangNhap);
 		controller.loadTable();
 	}
 
@@ -92,7 +96,7 @@ public class PnQTV extends JPanel {
         jLabel4 = new javax.swing.JLabel();
         tfId = new javax.swing.JTextField();
         tfUser = new javax.swing.JTextField();
-        tfPass = new javax.swing.JTextField();
+        tfPass = new javax.swing.JPasswordField();
         qtvsearch = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         tfUserF = new javax.swing.JTextField();
@@ -363,31 +367,31 @@ public class PnQTV extends JPanel {
             String tenDangNhap = tfUser.getText();
             
             if(tenDangNhap.isEmpty()){
-            	JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập không được bỏ trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            	JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập không được bỏ trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
             	return;
             }else{	
             	if(!MessageBundle.isUsername(tenDangNhap)){
                 	if(tenDangNhap.length() < 3 || tenDangNhap.length() > 13){
                 		if(tenDangNhap.length() < 3){
-                			JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập ngắn quá (ít nhất >= 6)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                			JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập ngắn quá (ít nhất >= 6)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                 		}
                 		if(tenDangNhap.length() > 13){
-                			JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập dài quá (nhỏ hơn <= 50)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                			JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập dài quá (nhỏ hơn <= 50)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                 		}
                 		return;
                 	}
-                	JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                	JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                 	return;
                 }
             }
             
-            String matKhau = tfPass.getText();
+            String matKhau = tfPass.getPassword().toString();
             if(matKhau.isEmpty()){
-            	JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu không được bỏ trống!!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            	JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu không được bỏ trống!!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
             	return;
             }else{
             	if(matKhau.length() < 3 ){
-            		JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu quá ngắn(>=6 ký tự)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            		JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu quá ngắn(>=6 ký tự)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
             		return;
             	}
             }
@@ -399,16 +403,16 @@ public class PnQTV extends JPanel {
                     int result = controller.addItem(obj);
                     if(result > 0){
                         this.ResetForm();
-                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Thêm quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:blue; font-weight:bold;\">Thêm quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                     }else{
-                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Thêm quản trị viên  thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Thêm quản trị viên  thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                     }
                 }else{
-                    JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                 }
             }
         }catch(NumberFormatException ex){
-            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
         }	
 	}
 	protected void btSuaActionPerformed(ActionEvent evt) {
@@ -424,23 +428,23 @@ public class PnQTV extends JPanel {
 	              	if(!MessageBundle.isUsername(tenDangNhap)){
 	                  	if(tenDangNhap.length() < 3 || tenDangNhap.length() > 13){
 	                  		if(tenDangNhap.length() < 3){
-	                  			JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập ngắn quá (ít nhất >= 6)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                  			JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập ngắn quá (ít nhất >= 6)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 	                  		}
 	                  		if(tenDangNhap.length() > 13){
-	                  			JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập dài quá (nhỏ hơn <= 50)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                  			JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Tên đăng nhập dài quá (nhỏ hơn <= 50)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 	                  		}
 	                  		return;
 	                  	}
-	                  	JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                  	JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Không chứa ký tự đặc biệt!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 	                  	return;
 	                  }
 	              }
 	              
-	              String matKhau = tfPass.getText();
+	              String matKhau = tfPass.getPassword().toString();
 	              if(matKhau.isEmpty()){
 	            	  matKhau = new QuanTriVienBO().getItem(idqtv).getMatKhau();
 	            	  if(matKhau.length() < 3 ){
-		            		JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu quá ngắn(>=6 ký tự)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+		            		JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Mật khẩu quá ngắn(>=6 ký tự)!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 		            		return;
 		              }
 	              }
@@ -457,19 +461,19 @@ public class PnQTV extends JPanel {
 					        int result = controller.editItem(obj,row);
 					        if(result > 0){
 					            this.ResetForm();
-					            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Cập nhật quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					            JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:blue; font-weight:bold;\">Cập nhật quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 					        }else{
-					            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Cập nhật quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					            JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Cập nhật quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 					        }
 					    }else{
-					        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+					        JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Quản trị viên tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 					    }
 					}
 	            }catch(NumberFormatException ex){
-	                JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	                JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Vui lòng nhập thông tin vào trường trống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 	            }
 	        }else{
-	            JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+	            JOptionPane.showConfirmDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để cập nhật!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
 	        }		
 	}
 
@@ -483,12 +487,12 @@ public class PnQTV extends JPanel {
             // When i delete new from table, way to good to delete get id from textfield
             int id = Integer.parseInt(tfId.getText());
             if(controller.delItem(id,row)>0){
-                JOptionPane.showMessageDialog(new PnQTV(), "<html><p style=\"color:blue; font-weight:bold;\">Xóa quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:blue; font-weight:bold;\">Xóa quản trị viên thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
             }else{
-                JOptionPane.showMessageDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Xóa quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Xóa quản trị viên thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
             }
         }else{
-            JOptionPane.showMessageDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(new PnQTV(this.tenDangNhap), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn dòng để xóa!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
         }
 	}
 	

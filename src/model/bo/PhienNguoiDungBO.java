@@ -34,5 +34,9 @@ public class PhienNguoiDungBO {
     public int editItemTime(PhienNguoiDung obj){
     	return new PhienNguoiDungDAO().editItemTime(obj);
     }
+
+	public int delItemCom(int idm) {
+		return new PhienNguoiDungDAO().delItemCom(idm);
+	}
     
 }

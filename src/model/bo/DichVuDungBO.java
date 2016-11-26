@@ -15,4 +15,7 @@ public class DichVuDungBO {
     public DichVuDung getItem(String tenDichVuDung){
     	return new DichVuDungDAO().getItem(tenDichVuDung);
     }
+	public int delItemCom(int idm) {
+		return new DichVuDungDAO().delItemCom(idm);
+	}
 }

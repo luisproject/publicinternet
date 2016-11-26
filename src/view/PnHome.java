@@ -42,6 +42,7 @@ import model.dao.MayDAO;
 import model.dao.PhienNguoiDungDAO;
 import utils.LibraryString;
 import utils.MyTimesTamp;
+import utils.PrintReceipt;
 import utils.render.TinhTrangComboboxModel;
 
 @SuppressWarnings("all")
@@ -104,13 +105,18 @@ public class PnHome extends JPanel {
 	private PhienNguoiDungBO phienNguoiDungBO = new PhienNguoiDungBO();
 	private DichVuDungBO dichVuDungBO = new DichVuDungBO();
 	private ControllerDichVuDung controller;
+	private String phiDVD;
 	
 	private JButton btnRoom;
+	
+	private PrintReceipt objPrint;
+	private ArrayList<DichVuDung> listDVD;
 	
 	public PnHome() {
 		initComponents();
 		listMay = new MayBO().getList();
 		setRowList(new MayBO().getList().size());
+		listDVD = new ArrayList<>();
 		viewRoom(list);
 	}
 
@@ -487,7 +493,24 @@ public class PnHome extends JPanel {
 
 	protected void btnOffActionPerformed(ActionEvent evt) {
 		// TODO Auto-generated method stub
-		
+		May item = mayBO.getItemName(tfTenMay.getText());
+		if(tfTenMay.getText().equals("")){
+			JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn máy thực hiện thanh toán!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+			return;
+		}else{
+			if(item.getTrangThai()){
+				// item.setTrangThai(false);
+				listDVD = new DichVuDungBO().getList(item.getIdm());
+				// Call Print Receipt
+				objPrint = new PrintReceipt(listDVD,phiDVD);
+				// Update database
+				mayBO.editItem(new May(item.getIdm(),item.getTenMay(),item.getTinhTrang(),item.getTrangThai(),item.getMoTa(),item.getDonGia(),""));
+				new PhienNguoiDungBO().delItemCom(item.getIdm());
+				new DichVuDungBO().delItemCom(item.getIdm());
+			}else{
+				JOptionPane.showMessageDialog(new PnHome(), "<html><p style=\"color:red; font-weight:bold;\">Bạn chưa chọn máy thực hiện thanh toán!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+			}
+		}		
 	}
 
 	protected void btnOnActionPerformed(ActionEvent evt) {
@@ -540,6 +563,7 @@ public class PnHome extends JPanel {
 				public void run() {
 					while(true){
 						String money = LibraryString.operMoney(LibraryString.convertToTime(Math.abs(new Date().getTime() - phienNguoiDung.getThoiGianBatDau().getTime())/1000), item.getDonGia())+"";
+						phiDVD = money;
 						if(Integer.parseInt(money) > 1000){
 							
 							tfPhiDichVu.setText(LibraryString.changeCurrencyVND(money)+" VND");
@@ -551,7 +575,7 @@ public class PnHome extends JPanel {
 							// Update table PhienNguoiDung
 							phienNguoiDungBO.editItemTime(new PhienNguoiDung(item.getIdm(),item.getTrangThai(),phienNguoiDungBO.getItemCom(id).getThoiGianBatDau(),MyTimesTamp.getTimestampToDB(),LibraryString.formatTime(thoiGianChoi),money));
 						}else{
-							
+							phiDVD = "1000";
 							tfPhiDichVu.setText("1.000 VND");
 							
 							// View time to play

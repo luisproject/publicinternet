@@ -532,10 +532,10 @@ public class PnMay extends JPanel {
                         this.resetForm();
                         JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:blue; font-weight:bold;\">Thêm máy thành công!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                     }else{
-                        JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Thêm máy thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Thêm máy thất bại!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                     }
                 }else{
-                    JOptionPane.showConfirmDialog(new PnQTV(), "<html><p style=\"color:red; font-weight:bold;\">Tên máy tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showConfirmDialog(new PnMay(), "<html><p style=\"color:red; font-weight:bold;\">Tên máy tồn tại trong hệ thống!</p></html>","Thông báo",JOptionPane.WARNING_MESSAGE);
                 }
             }
         }catch(NumberFormatException ex){

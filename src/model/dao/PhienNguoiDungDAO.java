@@ -67,7 +67,7 @@ public class PhienNguoiDungDAO {
             rs = pst.executeQuery();
             if (rs.next()) {
             	May may = new MayDAO().getItem(rs.getInt("idm"));
-            	String thanhTien = 3000+"";
+            	String thanhTien = rs.getString("thanhtien");
                 c = new PhienNguoiDung(rs.getInt("id"),may.getIdm(),may.getTenMay(),may.getTinhTrang(),may.getTrangThai(),rs.getTimestamp("thoiGianBatDau"),rs.getTimestamp("thoiGianKetThuc"),rs.getString("thoiGianChoi"),thanhTien);
             }
         } catch (SQLException e) {
@@ -203,5 +203,26 @@ public class PhienNguoiDungDAO {
         }
         return result;
     }
+
+	public int delItemCom(int idm) {
+		int result = 0;
+        conn = lcdb.getConnectMySQL();
+
+        String sql = "DELETE FROM "+table+" WHERE idm = ? LIMIT 1";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setInt(1, idm);
+            pst.executeUpdate();
+            result = 1;
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return result;
+	}
 }
 

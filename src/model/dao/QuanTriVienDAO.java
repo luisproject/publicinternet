@@ -164,4 +164,25 @@ public class QuanTriVienDAO {
         }
         return (c!=null)?true:false;
 	}
+	public QuanTriVien getItemByName(String tenDangNhap) {
+		conn = lcdb.getConnectMySQL();
+        QuanTriVien c = null;
+        String sql = "SELECT * FROM "+table+" WHERE tendangnhap = ? LIMIT 1";
+        try {
+            pst = conn.prepareStatement(sql);
+            pst.setString(1, tenDangNhap);
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                c = new QuanTriVien(rs.getInt("idqt"),rs.getString("tendangnhap"),rs.getString("matkhau"),rs.getString("hoten"),rs.getBoolean("isadmin"));
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                pst.close();
+                conn.close();
+            } catch (SQLException e) {
+            }
+        }
+        return c;
+	}
 }

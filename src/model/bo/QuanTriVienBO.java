@@ -29,4 +29,8 @@ public class QuanTriVienBO {
     public boolean getItemByUser(String tenDangNhap) {
 		return new QuanTriVienDAO().getItemByUser(tenDangNhap);
 	}
+
+	public QuanTriVien getItemByName(String tenDangNhap) {
+		return new QuanTriVienDAO().getItemByName(tenDangNhap);
+	}
 }
