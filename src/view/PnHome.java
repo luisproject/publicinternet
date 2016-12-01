@@ -499,7 +499,7 @@ public class PnHome extends JPanel {
 			return;
 		}else{
 			if(item.getTrangThai()){
-				// item.setTrangThai(false);
+				item.setTrangThai(false);
 				listDVD = new DichVuDungBO().getList(item.getIdm());
 				// Call Print Receipt
 				objPrint = new PrintReceipt(listDVD,phiDVD);
